@@ -28,10 +28,10 @@ const Button = ({
   const baseStyles = 'rounded-full font-semibold transition-all duration-200 focus:outline-none'
   
   const variantStyles = {
-    primary: 'bg-gray-800 text-gray-50 shadow-lg hover:bg-gray-900 hover:shadow-xl',
-    secondary: 'bg-gray-500 text-gray-50 shadow-md hover:bg-gray-600 hover:shadow-lg',
-    tertiary: 'bg-gray-300 text-gray-900 shadow-md hover:bg-gray-400 hover:shadow-lg',
-    ghost: 'bg-transparent text-gray-700 shadow-sm hover:bg-gray-200 hover:shadow-md',
+    primary: 'bg-gray-800 text-gray-50 shadow-lg hover:bg-gray-700 hover:shadow-xl',
+    secondary: 'bg-gray-600 text-gray-50 shadow-md hover:bg-gray-500 hover:shadow-lg',
+    tertiary: 'bg-gray-700 text-gray-50 shadow-md hover:bg-gray-600 hover:shadow-lg',
+    ghost: 'bg-transparent text-gray-200 shadow-sm hover:bg-gray-800 hover:shadow-md',
   }
 
   const sizeStyles = {

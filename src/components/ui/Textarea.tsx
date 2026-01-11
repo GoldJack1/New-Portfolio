@@ -14,18 +14,18 @@ const Textarea = ({
   className = '',
   ...props
 }: TextareaProps) => {
-  const baseStyles = 'w-full px-4 py-3 rounded-lg bg-gray-50 text-gray-900 focus:outline-none transition-all resize-none'
+  const baseStyles = 'w-full px-4 py-3 rounded-lg bg-gray-800 text-gray-50 focus:outline-none transition-all resize-none'
   
   const stateStyles = error
-    ? 'focus:bg-gray-100 bg-gray-100'
+    ? 'focus:bg-gray-700 bg-gray-700'
     : success
-    ? 'focus:bg-gray-100 bg-gray-50'
-    : 'focus:bg-gray-100'
+    ? 'focus:bg-gray-700 bg-gray-800'
+    : 'focus:bg-gray-700'
 
   return (
     <div className="w-full min-w-0">
       {label && (
-        <label htmlFor={props.id} className="block text-sm font-medium text-gray-700 mb-2 break-words">
+        <label htmlFor={props.id} className="block text-sm font-medium text-gray-200 mb-2 break-words">
           {label}
         </label>
       )}

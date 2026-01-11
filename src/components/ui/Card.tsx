@@ -21,19 +21,19 @@ const Card = ({
     <div
       onClick={clickable ? onClick : undefined}
       className={`
-        bg-gray-200 rounded-2xl overflow-hidden shadow-md
+        bg-gray-800 rounded-2xl overflow-hidden shadow-md
         ${clickable ? 'cursor-pointer' : ''}
         ${className}
       `}
     >
       {header && (
-        <div className="px-6 py-4 bg-gray-300">
+        <div className="px-6 py-4 bg-gray-700">
           {header}
         </div>
       )}
       <div className="p-6">{children}</div>
       {footer && (
-        <div className="px-6 py-4 bg-gray-300">
+        <div className="px-6 py-4 bg-gray-700">
           {footer}
         </div>
       )}

@@ -11,6 +11,7 @@ export default {
     extend: {
       colors: {
         gray: {
+          0: '#FFFFFF',  // white
           50: '#E6E5F4',   // Lightest blue-gray
           100: '#D9E2EC',  // Very light blue-gray
           200: '#C5D4E3',  // Light blue-gray
@@ -21,6 +22,7 @@ export default {
           700: '#3A4757',  // Dark blue-gray
           800: '#2A3442',  // Darker blue-gray
           900: '#1A2332',  // Darkest blue-gray
+          1000: '#000000',  // black
         },
         primary: {
           DEFAULT: '#2A3442', // 800

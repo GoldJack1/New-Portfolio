@@ -6,11 +6,11 @@ import { PADDING_CLASSES } from '../utils/paddingClasses'
 const Contact = () => {
   return (
     <div className="w-full overflow-x-hidden">
-      <section className={`w-full ${PADDING_CLASSES.page.full} bg-gray-50`}>
-        <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-gray-900 mb-8 break-words">
+      <section className={`w-full ${PADDING_CLASSES.page.full}`}>
+        <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-gray-50 mb-8 break-words">
           Contact
         </h1>
-        <div className="bg-gray-200 p-6 sm:p-8 rounded-2xl w-full min-w-0">
+        <div className="bg-gray-800 p-6 sm:p-8 rounded-2xl w-full min-w-0">
           <form className="space-y-6 w-full">
             <Input
               label="Name"

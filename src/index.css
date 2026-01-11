@@ -77,7 +77,7 @@
 @layer base {
   html {
     overflow-x: hidden;
-    background-color: #C5D4E3; /* gray-200 - footer color for area below footer */
+    background-color: #000000; /* gray-1000 */
     position: relative;
     height: 100%;
     overscroll-behavior: none; /* Prevent overscroll that can move fixed elements */
@@ -85,7 +85,7 @@
   }
 
   body {
-    @apply font-geologica bg-gray-200 text-gray-900;
+    @apply font-geologica bg-gray-1000 text-gray-50;
     overflow-x: hidden;
     width: 100%;
     min-height: 100vh;
@@ -103,7 +103,7 @@
     min-height: 100vh;
     display: flex;
     flex-direction: column;
-    background-color: #C5D4E3; /* gray-200 */
+    background-color: #000000; /* gray-1000 */
   }
 
   * {
@@ -112,13 +112,12 @@
 
   /* Override browser default colors to use monochrome blue-gray */
   ::selection {
-    background-color: #4A5A6B;
-    color: #E6E5F4;
+    background-color: #4A5A6B; /* gray-600 */
+    color: #E6E5F4; /* gray-50 */
   }
-
   ::-moz-selection {
-    background-color: #4A5A6B;
-    color: #E6E5F4;
+    background-color: #4A5A6B; /* gray-600 */
+    color: #E6E5F4; /* gray-50 */
   }
 
   /* Override range input slider thumb color */
@@ -181,20 +180,9 @@
   /* Main content - no padding, let page content extend to top */
   main {
     padding-top: 0;
+    margin-top: 150px;
   }
 
-  /* Page sections with bg-gray-50 extend to top behind header */
-  section.bg-gray-50,
-  div.bg-gray-50 {
-    padding-top: calc(3.5rem + 4rem + max(0px, env(safe-area-inset-top)));
-  }
-
-  @media (min-width: 768px) {
-    section.bg-gray-50,
-    div.bg-gray-50 {
-      padding-top: calc(4.5rem + 6rem + max(0px, env(safe-area-inset-top)));
-    }
-  }
 
   /* Footer safe area extension for iOS Safari */
   footer {
@@ -212,7 +200,7 @@
     left: 0;
     right: 0;
     height: calc(2rem + env(safe-area-inset-bottom, 0px));
-    background-color: #C5D4E3; /* gray-200 - explicit color for iOS */
+    background-color: #000000; /* gray-1000 */
     z-index: -1;
     pointer-events: none;
   }
@@ -240,6 +228,12 @@
     background: linear-gradient(to bottom, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0) 100%);
     pointer-events: none;
     z-index: 49;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .nav-wrapper.gradient-visible::before {
+    opacity: 1;
   }
 
   .nav-bg {
@@ -351,6 +345,12 @@
       background: linear-gradient(to bottom, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0) 100%);
       pointer-events: none;
       z-index: 49;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .mobile-nav-wrapper.gradient-visible::before {
+      opacity: 1;
     }
 
     .mobile-nav-bg {

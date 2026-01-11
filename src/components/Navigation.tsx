@@ -58,6 +58,7 @@ const Navigation = () => {
   const navigate = useNavigate()
   const isMobile = useIsMobile()
   const [menuOpen, setMenuOpen] = useState(false)
+  const [showGradient, setShowGradient] = useState(false)
 
   // Reset menu state when switching between mobile and desktop
   useLayoutEffect(() => {
@@ -70,6 +71,20 @@ const Navigation = () => {
       })
     }
   }, [isMobile])
+
+  // Track scroll position to show/hide gradient
+  useLayoutEffect(() => {
+    const handleScroll = () => {
+      const scrollY = window.scrollY || window.pageYOffset
+      // Navbar height (~45px) + 40px = 85px threshold
+      setShowGradient(scrollY > 85)
+    }
+
+    // Check initial scroll position
+    handleScroll()
+    window.addEventListener('scroll', handleScroll, { passive: true })
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
 
   useLayoutEffect(() => {
     if (isMobile) return
@@ -152,7 +167,7 @@ const Navigation = () => {
 
   if (isMobile) {
     return (
-      <div key="mobile-nav" className="nav-wrapper mobile-nav-wrapper">
+      <div key="mobile-nav" className={`nav-wrapper mobile-nav-wrapper ${showGradient ? 'gradient-visible' : ''}`}>
         <nav className="nav-bg mobile-nav-bg">
           <div className={`mobile-pill ${menuOpen ? 'menu-open' : ''}`}>
             <span className="mobile-pill-title">{currentTitle}</span>
@@ -201,7 +216,7 @@ const Navigation = () => {
 
   // Desktop nav
   return (
-    <div key="desktop-nav" className="nav-wrapper">
+    <div key="desktop-nav" className={`nav-wrapper ${showGradient ? 'gradient-visible' : ''}`}>
       <nav className="nav-bg" role="navigation" aria-label="Main navigation">
         <div className="nav-indicator" ref={indicatorRef} aria-hidden="true"></div>
         {navItems.map((item, idx) => {

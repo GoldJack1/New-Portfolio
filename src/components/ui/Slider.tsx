@@ -38,7 +38,7 @@ const Slider = ({
   return (
     <div className={`w-full min-w-0 ${className}`}>
       {label && (
-        <label className="block text-sm font-medium text-gray-700 mb-2 break-words">
+        <label className="block text-sm font-medium text-gray-200 mb-2 break-words">
           {label}
         </label>
       )}
@@ -50,11 +50,11 @@ const Slider = ({
           step={step}
           value={value}
           onChange={handleChange}
-          className="flex-1 h-2 bg-gray-300 rounded-full appearance-none cursor-pointer"
-          style={{ accentColor: '#2A3442' }}
+          className="flex-1 h-2 bg-gray-700 rounded-full appearance-none cursor-pointer"
+          style={{ accentColor: '#E6E5F4' }}
         />
         {showValue && (
-          <span className="text-sm font-medium text-gray-700 min-w-[3rem] text-right">
+          <span className="text-sm font-medium text-gray-200 min-w-[3rem] text-right">
             {value}
           </span>
         )}

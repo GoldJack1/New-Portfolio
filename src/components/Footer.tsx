@@ -27,7 +27,7 @@ const Footer = () => {
 
   return (
     <footer 
-      className="bg-gray-200 text-gray-700 w-full relative"
+      className="bg-gray-1000 text-gray-300 w-full relative"
       style={{
         paddingTop: '2rem',
         paddingBottom: '2rem',
@@ -39,8 +39,8 @@ const Footer = () => {
           {/* Left side - Name, Copyright, Social Icons, and Links */}
           <div className="flex flex-col min-w-0 gap-4 flex-1">
             <div>
-              <h3 className="text-lg sm:text-xl font-bold text-gray-900 mb-2 break-words">Jack Wingate</h3>
-              <p className="text-xs sm:text-sm text-gray-600 break-words mb-4">
+              <h3 className="text-lg sm:text-xl font-bold text-gray-50 mb-2 break-words">Jack Wingate</h3>
+              <p className="text-xs sm:text-sm text-gray-200 break-words mb-4">
                 © {currentYear} Jack Wingate. All rights reserved.
               </p>
               
@@ -54,7 +54,7 @@ const Footer = () => {
                       href={social.url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="w-10 h-10 rounded-full bg-gray-300 flex items-center justify-center text-gray-700 hover:bg-gray-400 transition-colors"
+                      className="w-10 h-10 rounded-full bg-gray-700 flex items-center justify-center text-gray-50 hover:bg-gray-600 transition-colors"
                       aria-label={social.label}
                     >
                       <Icon className="w-5 h-5" />
@@ -68,12 +68,12 @@ const Footer = () => {
             <div className="flex flex-col sm:flex-row gap-6 sm:gap-8">
               {/* Footer Links - Stacked Vertically */}
               <div className="flex flex-col gap-2">
-                <span className="text-sm font-semibold text-gray-900">Page Links:</span>
+                <span className="text-sm font-semibold text-gray-50">Page Links:</span>
                 {footerLinks.map((link) => (
                   <Link
                     key={link.path}
                     to={link.path}
-                    className="text-sm text-gray-700 hover:text-gray-900 transition-colors"
+                    className="text-sm text-gray-200 hover:text-gray-50 transition-colors"
                   >
                     {link.label}
                   </Link>
@@ -82,12 +82,12 @@ const Footer = () => {
 
               {/* Other Links - Stacked Vertically */}
               <div className="flex flex-col gap-2">
-                <span className="text-sm font-semibold text-gray-900">Other Links:</span>
+                <span className="text-sm font-semibold text-gray-50">Other Links:</span>
                 {otherLinks.map((link) => (
                   <Link
                     key={link.path}
                     to={link.path}
-                    className="text-sm text-gray-700 hover:text-gray-900 transition-colors"
+                    className="text-sm text-gray-200 hover:text-gray-50 transition-colors"
                   >
                     {link.label}
                   </Link>
@@ -106,7 +106,7 @@ const Footer = () => {
                   href={social.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-10 h-10 rounded-full bg-gray-300 flex items-center justify-center text-gray-700 hover:bg-gray-400 transition-colors"
+                  className="w-10 h-10 rounded-full bg-gray-700 flex items-center justify-center text-gray-50 hover:bg-gray-600 transition-colors"
                   aria-label={social.label}
                 >
                   <Icon className="w-5 h-5" />

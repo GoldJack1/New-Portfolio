@@ -51,7 +51,7 @@ const Progress = ({
             stroke="currentColor"
             strokeWidth="8"
             fill="none"
-            className="text-gray-300"
+            className="text-gray-600"
           />
           <circle
             cx={radius + 10}
@@ -62,11 +62,11 @@ const Progress = ({
             fill="none"
             strokeDasharray={circumference}
             strokeDashoffset={offset}
-            className="text-gray-800 transition-all duration-300"
+            className="text-gray-50 transition-all duration-300"
           />
         </svg>
         {showLabel && (
-          <span className="mt-2 text-sm font-medium text-gray-700">
+          <span className="mt-2 text-sm font-medium text-gray-200">
             {label || `${Math.round(percentage)}%`}
           </span>
         )}
@@ -78,17 +78,17 @@ const Progress = ({
     <div className={`w-full ${className}`}>
       {showLabel && (
         <div className="flex justify-between items-center mb-2">
-          <span className="text-sm font-medium text-gray-700">
+          <span className="text-sm font-medium text-gray-200">
             {label || 'Progress'}
           </span>
-          <span className="text-sm font-medium text-gray-700">
+          <span className="text-sm font-medium text-gray-200">
             {Math.round(percentage)}%
           </span>
         </div>
       )}
-      <div className={`w-full bg-gray-300 rounded-full overflow-hidden ${sizeStyles[size]}`}>
+      <div className={`w-full bg-gray-700 rounded-full overflow-hidden ${sizeStyles[size]}`}>
         <div
-          className="bg-gray-800 h-full rounded-full transition-all duration-300"
+          className="bg-gray-50 h-full rounded-full transition-all duration-300"
           style={{ width: `${percentage}%` }}
         />
       </div>

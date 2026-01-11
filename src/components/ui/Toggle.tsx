@@ -44,7 +44,7 @@ const Toggle = ({
 
   return (
     <label className={`flex items-center gap-3 cursor-pointer ${className}`}>
-      {label && <span className="text-gray-700">{label}</span>}
+      {label && <span className="text-gray-200">{label}</span>}
       <button
         type="button"
         role="switch"
@@ -54,13 +54,13 @@ const Toggle = ({
         className={`
           relative inline-flex items-center rounded-full transition-colors duration-200 focus:outline-none focus:shadow-lg
           ${sizeStyles[size]}
-          ${checked ? 'bg-gray-800' : 'bg-gray-300'}
+          ${checked ? 'bg-gray-700' : 'bg-gray-700'}
           ${disabled ? 'opacity-50 cursor-not-allowed' : ''}
         `}
       >
         <span
           className={`
-            inline-block rounded-full bg-white transition-transform duration-200
+            inline-block rounded-full bg-gray-50 transition-transform duration-200
             ${thumbSizeStyles[size]}
             ${checked ? 'translate-x-6' : 'translate-x-1'}
           `}

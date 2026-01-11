@@ -18,24 +18,24 @@ const Input = ({
   className = '',
   ...props
 }: InputProps) => {
-  const baseStyles = 'w-full px-4 py-3 rounded-full bg-gray-50 text-gray-900 focus:outline-none transition-all'
+  const baseStyles = 'w-full px-4 py-3 rounded-full bg-gray-800 text-gray-50 focus:outline-none transition-all'
   
   const stateStyles = error
-    ? 'focus:bg-gray-100 bg-gray-100'
+    ? 'focus:bg-gray-700 bg-gray-700'
     : success
-    ? 'focus:bg-gray-100 bg-gray-50'
-    : 'focus:bg-gray-100'
+    ? 'focus:bg-gray-700 bg-gray-800'
+    : 'focus:bg-gray-700'
 
   return (
     <div className="w-full min-w-0">
       {label && (
-        <label htmlFor={props.id} className="block text-sm font-medium text-gray-700 mb-2 break-words">
+        <label htmlFor={props.id} className="block text-sm font-medium text-gray-200 mb-2 break-words">
           {label}
         </label>
       )}
       <div className="relative w-full min-w-0">
         {iconLeft && (
-          <span className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-500">
+          <span className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400">
             {iconLeft}
           </span>
         )}
@@ -50,7 +50,7 @@ const Input = ({
           `}
         />
         {iconRight && (
-          <span className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-500">
+          <span className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400">
             {iconRight}
           </span>
         )}

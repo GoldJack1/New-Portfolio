@@ -14,12 +14,12 @@ const Select = ({
   className = '',
   ...props
 }: SelectProps) => {
-  const baseStyles = 'w-full px-4 py-3 rounded-full bg-gray-50 text-gray-900 focus:outline-none focus:bg-gray-100 transition-all appearance-none cursor-pointer'
+  const baseStyles = 'w-full px-4 py-3 rounded-full bg-gray-800 text-gray-50 focus:outline-none focus:bg-gray-700 transition-all appearance-none cursor-pointer'
 
   return (
     <div className="w-full min-w-0">
       {label && (
-        <label htmlFor={props.id} className="block text-sm font-medium text-gray-700 mb-2 break-words">
+        <label htmlFor={props.id} className="block text-sm font-medium text-gray-200 mb-2 break-words">
           {label}
         </label>
       )}
@@ -43,7 +43,7 @@ const Select = ({
           ))}
         </select>
         <div className="absolute right-4 top-1/2 transform -translate-y-1/2 pointer-events-none">
-          <svg className="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg className="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
           </svg>
         </div>

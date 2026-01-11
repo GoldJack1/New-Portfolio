@@ -3,11 +3,11 @@ import { PADDING_CLASSES } from '../utils/paddingClasses'
 const About = () => {
   return (
     <div className="w-full overflow-x-hidden">
-      <section className={`w-full ${PADDING_CLASSES.page.full} bg-gray-50`}>
-        <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-gray-900 mb-8 break-words">
+      <section className={`w-full ${PADDING_CLASSES.page.full}`}>
+        <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-gray-50 mb-8 break-words">
           About
         </h1>
-        <div className="space-y-6 text-base sm:text-lg font-light text-gray-700">
+        <div className="space-y-6 text-base sm:text-lg font-light text-gray-200">
           <p className="break-words">
             Welcome to my portfolio! I'm Jack Wingate, and this is where I showcase
             my work and share a bit about myself.

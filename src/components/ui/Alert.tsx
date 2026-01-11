@@ -21,9 +21,9 @@ const Alert = ({
   if (!isVisible) return null
 
   const typeStyles = {
-    info: 'bg-gray-500 text-gray-50',
-    success: 'bg-gray-600 text-gray-50',
-    warning: 'bg-gray-400 text-gray-900',
+    info: 'bg-gray-700 text-gray-50',
+    success: 'bg-gray-700 text-gray-50',
+    warning: 'bg-gray-700 text-gray-50',
     error: 'bg-gray-700 text-gray-50',
   }
 

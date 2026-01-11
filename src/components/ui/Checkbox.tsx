@@ -15,15 +15,15 @@ const Checkbox = ({
   return (
     <label className={`flex items-center gap-3 cursor-pointer ${className}`}>
       {label && labelPosition === 'left' && (
-        <span className="text-gray-700">{label}</span>
+        <span className="text-gray-200">{label}</span>
       )}
       <input
         type="checkbox"
         {...props}
-        className="w-5 h-5 rounded text-gray-800 focus:outline-none cursor-pointer"
+        className="w-5 h-5 rounded text-gray-50 focus:outline-none cursor-pointer"
       />
       {label && labelPosition === 'right' && (
-        <span className="text-gray-700">{label}</span>
+        <span className="text-gray-200">{label}</span>
       )}
     </label>
   )
