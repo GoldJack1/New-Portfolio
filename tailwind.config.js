@@ -39,6 +39,10 @@ export default {
           light: '#C5D4E3',   // 200
           dark: '#7A8FA8',    // 400
         },
+        homeBackground: '#7F0000',
+        projectsBackground: '#397F00',
+        aboutBackground: '#00377F',
+        contactBackground: '#7F0070',
       },
       fontFamily: {
         geologica: ['Geologica Cursive', 'cursive'],

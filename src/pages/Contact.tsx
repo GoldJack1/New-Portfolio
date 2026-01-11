@@ -5,8 +5,8 @@ import { PADDING_CLASSES } from '../utils/paddingClasses'
 
 const Contact = () => {
   return (
-    <div className="w-full overflow-x-hidden">
-      <section className={`w-full ${PADDING_CLASSES.page.full}`}>
+    <div className="w-full overflow-x-hidden bg-contactBackground min-h-screen flex flex-col pt-[150px]">
+      <section className={`w-full ${PADDING_CLASSES.page.full} flex-grow flex flex-col justify-center`}>
         <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-gray-50 mb-8 break-words">
           Contact
         </h1>

@@ -180,7 +180,7 @@
   /* Main content - no padding, let page content extend to top */
   main {
     padding-top: 0;
-    margin-top: 150px;
+    margin-top: 0px;
   }
 
 
@@ -237,7 +237,7 @@
   }
 
   .nav-bg {
-    background-color: rgba(58, 71, 87, 0.3); /* gray-700 at 30% opacity */
+    background: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.2)), rgba(255,255,255,0.25);
     backdrop-filter: blur(18px);
     -webkit-backdrop-filter: blur(18px);
     display: flex;
@@ -284,7 +284,7 @@
   }
 
   .nav-link:hover:not(.active) {
-    background-color: rgba(26, 35, 50, 0.25); /* gray-900 at 25% opacity */
+    background-color: rgba(0, 0, 0, 0.25); /* black at 25% opacity */
     color: #E6E5F4; /* gray-50 */
   }
 
@@ -354,7 +354,7 @@
     }
 
     .mobile-nav-bg {
-      background-color: rgba(58, 71, 87, 0.3); /* gray-700 at 30% opacity */
+      background: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.2)), rgba(255,255,255,0.25);
       backdrop-filter: blur(18px);
       -webkit-backdrop-filter: blur(18px);
       display: flex;

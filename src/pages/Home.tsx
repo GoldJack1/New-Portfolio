@@ -2,8 +2,8 @@ import { PADDING_CLASSES } from '../utils/paddingClasses'
 
 const Home = () => {
   return (
-    <div className="w-full overflow-x-hidden">
-      <section className={`w-full ${PADDING_CLASSES.page.full}`}>
+    <div className="w-full overflow-x-hidden bg-homeBackground min-h-screen flex flex-col pt-[150px]">
+      <section className={`w-full ${PADDING_CLASSES.page.full} flex-grow flex flex-col justify-center`}>
         <div className="text-left">
           <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-gray-50 mb-6 break-words">
             Jack Wingate
