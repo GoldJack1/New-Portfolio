@@ -1,7 +1,7 @@
 import { ReactNode } from 'react'
 
 interface ButtonProps {
-  children: ReactNode
+  children?: ReactNode
   variant?: 'primary' | 'secondary' | 'tertiary' | 'ghost'
   size?: 'sm' | 'md' | 'lg'
   disabled?: boolean
@@ -25,7 +25,7 @@ const Button = ({
   type = 'button',
   className = '',
 }: ButtonProps) => {
-  const baseStyles = 'rounded-full font-medium transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-gray-600'
+  const baseStyles = 'rounded-full font-medium transition-all duration-200 focus:outline-none'
   
   const variantStyles = {
     primary: 'bg-gray-800 text-gray-50 shadow-lg hover:bg-gray-900 hover:shadow-xl',
@@ -41,7 +41,7 @@ const Button = ({
   }
 
   const disabledStyles = disabled || loading
-    ? 'opacity-50 cursor-not-allowed shadow-none'
+    ? 'opacity-50 cursor-not-allowed'
     : ''
 
   const shadowStyles = {

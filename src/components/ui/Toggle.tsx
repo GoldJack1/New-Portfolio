@@ -52,7 +52,7 @@ const Toggle = ({
         onClick={handleToggle}
         disabled={disabled}
         className={`
-          relative inline-flex items-center rounded-full transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-gray-600
+          relative inline-flex items-center rounded-full transition-colors duration-200 focus:outline-none focus:shadow-lg
           ${sizeStyles[size]}
           ${checked ? 'bg-gray-800' : 'bg-gray-300'}
           ${disabled ? 'opacity-50 cursor-not-allowed' : ''}

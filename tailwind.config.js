@@ -1,3 +1,6 @@
+import typography from '@tailwindcss/typography'
+import forms from '@tailwindcss/forms'
+
 /** @type {import('tailwindcss').Config} */
 export default {
   content: [
@@ -8,7 +11,7 @@ export default {
     extend: {
       colors: {
         gray: {
-          50: '#F0F4F8',   // Lightest blue-gray
+          50: '#E6E5F4',   // Lightest blue-gray
           100: '#D9E2EC',  // Very light blue-gray
           200: '#C5D4E3',  // Light blue-gray
           300: '#A8B8CC',  // Light-medium blue-gray
@@ -36,9 +39,12 @@ export default {
         },
       },
       fontFamily: {
-        geologica: ['Geologica', 'cursive'],
+        geologica: ['Geologica Cursive', 'cursive'],
       },
     },
   },
-  plugins: [],
+  plugins: [
+    typography,
+    forms,
+  ],
 }

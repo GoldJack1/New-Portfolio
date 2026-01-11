@@ -1,4 +1,4 @@
-import { SelectHTMLAttributes, ReactNode } from 'react'
+import { SelectHTMLAttributes } from 'react'
 
 interface SelectProps extends SelectHTMLAttributes<HTMLSelectElement> {
   label?: string
@@ -14,7 +14,7 @@ const Select = ({
   className = '',
   ...props
 }: SelectProps) => {
-  const baseStyles = 'w-full px-4 py-3 rounded-full bg-gray-50 text-gray-900 focus:outline-none focus:ring-2 focus:ring-gray-600 transition-all appearance-none cursor-pointer'
+  const baseStyles = 'w-full px-4 py-3 rounded-full bg-gray-50 text-gray-900 focus:outline-none focus:bg-gray-100 transition-all appearance-none cursor-pointer'
 
   return (
     <div className="w-full min-w-0">

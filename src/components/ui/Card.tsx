@@ -4,7 +4,6 @@ interface CardProps {
   children: ReactNode
   header?: ReactNode
   footer?: ReactNode
-  hover?: boolean
   clickable?: boolean
   onClick?: () => void
   className?: string
@@ -14,7 +13,6 @@ const Card = ({
   children,
   header,
   footer,
-  hover = false,
   clickable = false,
   onClick,
   className = '',
@@ -23,8 +21,7 @@ const Card = ({
     <div
       onClick={clickable ? onClick : undefined}
       className={`
-        bg-gray-200 rounded-2xl overflow-hidden
-        ${hover ? 'transition-transform duration-200 hover:scale-105' : ''}
+        bg-gray-200 rounded-2xl overflow-hidden shadow-md
         ${clickable ? 'cursor-pointer' : ''}
         ${className}
       `}
