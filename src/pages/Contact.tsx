@@ -5,8 +5,8 @@ import Button from '../components/ui/Button'
 const Contact = () => {
   return (
     <div className="min-h-screen w-full overflow-x-hidden">
-      <section className="max-w-2xl mx-auto px-4 md:px-8 py-16 md:py-24 w-full">
-        <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 mb-8 break-words">
+      <section className="w-full max-w-2xl px-4 md:px-8 py-16 md:py-24">
+        <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-gray-900 mb-8 break-words">
           Contact
         </h1>
         <div className="bg-gray-200 p-6 sm:p-8 rounded-2xl w-full min-w-0">

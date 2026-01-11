@@ -51,7 +51,7 @@ const Navigation = () => {
         <div className="md:hidden">
           {/* Mobile Header with Hamburger */}
           <div className="flex items-center justify-between py-3">
-            <h2 className="text-lg font-semibold text-gray-900">Menu</h2>
+            <h2 className="text-lg font-bold text-gray-900">Menu</h2>
             <button
               onClick={toggleMobileMenu}
               className="w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center text-gray-700 hover:bg-gray-300 transition-colors"

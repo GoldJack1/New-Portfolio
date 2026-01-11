@@ -25,7 +25,7 @@ const Button = ({
   type = 'button',
   className = '',
 }: ButtonProps) => {
-  const baseStyles = 'rounded-full font-medium transition-all duration-200 focus:outline-none'
+  const baseStyles = 'rounded-full font-semibold transition-all duration-200 focus:outline-none'
   
   const variantStyles = {
     primary: 'bg-gray-800 text-gray-50 shadow-lg hover:bg-gray-900 hover:shadow-xl',

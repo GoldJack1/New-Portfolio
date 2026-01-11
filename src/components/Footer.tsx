@@ -26,12 +26,12 @@ const Footer = () => {
 
   return (
     <footer className="bg-gray-200 text-gray-700 py-8 px-4 md:px-8 w-full overflow-x-hidden">
-      <div className="max-w-7xl mx-auto w-full">
+      <div className="w-full">
         <div className="flex flex-col md:flex-row justify-between items-start gap-6 w-full min-w-0">
           {/* Left side - Name, Copyright, Social Icons, and Links */}
           <div className="flex flex-col min-w-0 gap-4 flex-1">
             <div>
-              <h3 className="text-lg sm:text-xl font-semibold text-gray-900 mb-2 break-words">Jack Wingate</h3>
+              <h3 className="text-lg sm:text-xl font-bold text-gray-900 mb-2 break-words">Jack Wingate</h3>
               <p className="text-xs sm:text-sm text-gray-600 break-words mb-4">
                 © {currentYear} Jack Wingate. All rights reserved.
               </p>

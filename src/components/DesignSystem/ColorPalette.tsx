@@ -14,14 +14,14 @@ const ColorPalette = () => {
 
   return (
     <section className="mb-16 w-full overflow-x-auto">
-      <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-6 break-words">Color Palette</h2>
+      <h2 className="text-2xl sm:text-3xl font-extrabold text-gray-900 mb-6 break-words">Color Palette</h2>
       
       {/* Full Grayscale Palette */}
       <div className="mb-8">
-        <h3 className="text-xl font-semibold text-gray-900 mb-4">Grayscale with Blue Hue (50-900)</h3>
+        <h3 className="text-xl font-bold text-gray-900 mb-4">Grayscale with Blue Hue (50-900)</h3>
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 lg:grid-cols-10 gap-4 w-full min-w-0">
           {colorPalette.map((color) => (
-            <div key={color.name} className="text-center">
+            <div key={color.name} className="text-left">
               <div
                 className="w-full h-24 rounded-2xl mb-2"
                 style={{ backgroundColor: color.hex }}
@@ -36,7 +36,7 @@ const ColorPalette = () => {
 
       {/* Color Variants */}
       <div className="mb-8">
-        <h3 className="text-xl font-semibold text-gray-900 mb-4">Color Variants</h3>
+        <h3 className="text-xl font-bold text-gray-900 mb-4">Color Variants</h3>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <div className="bg-gray-800 p-6 rounded-2xl text-gray-50">
             <h4 className="font-semibold mb-2">Primary</h4>
@@ -58,7 +58,7 @@ const ColorPalette = () => {
 
       {/* Text Colors */}
       <div className="mb-8">
-        <h3 className="text-xl font-semibold text-gray-900 mb-4">Text Colors</h3>
+        <h3 className="text-xl font-bold text-gray-900 mb-4">Text Colors</h3>
         <div className="bg-gray-200 p-6 rounded-2xl space-y-4">
           <div className="bg-gray-50 p-4 rounded-2xl">
             <p className="text-gray-900 font-semibold mb-1">Text Primary (gray-900)</p>
@@ -85,7 +85,7 @@ const ColorPalette = () => {
 
       {/* Background Colors */}
       <div className="mb-8">
-        <h3 className="text-xl font-semibold text-gray-900 mb-4">Background Colors</h3>
+        <h3 className="text-xl font-bold text-gray-900 mb-4">Background Colors</h3>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="bg-gray-50 p-6 rounded-2xl border-2 border-gray-200">
             <h4 className="font-semibold text-gray-900 mb-2">Background Primary</h4>
@@ -108,7 +108,7 @@ const ColorPalette = () => {
 
       {/* Component State Colors */}
       <div>
-        <h3 className="text-xl font-semibold text-gray-900 mb-4">Component State Colors</h3>
+        <h3 className="text-xl font-bold text-gray-900 mb-4">Component State Colors</h3>
         <div className="bg-gray-200 p-6 rounded-2xl space-y-4">
           <div className="bg-gray-300 p-4 rounded-2xl hover:bg-gray-400 transition-colors cursor-pointer">
             <p className="font-semibold text-gray-900 mb-1">Hover State</p>

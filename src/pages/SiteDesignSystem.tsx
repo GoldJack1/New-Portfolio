@@ -12,11 +12,11 @@ const SiteDesignSystem = () => {
 
   return (
     <div className="min-h-screen bg-gray-50 w-full overflow-x-hidden">
-      <div className="max-w-7xl mx-auto px-4 md:px-8 py-16 md:py-24 w-full">
-        <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-4 break-words">
+      <div className="w-full px-4 md:px-8 py-16 md:py-24">
+        <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-gray-900 mb-4 break-words">
           Site Design System
         </h1>
-        <p className="text-lg text-gray-600 mb-12 break-words">
+        <p className="text-lg font-light text-gray-600 mb-12 break-words">
           Explore the design system components and guidelines
         </p>
 
@@ -24,8 +24,8 @@ const SiteDesignSystem = () => {
           {sections.map((section) => (
             <Link key={section.path} to={section.path}>
               <Card clickable className="h-full">
-                <h3 className="text-xl font-semibold text-gray-900 mb-2">{section.title}</h3>
-                <p className="text-gray-600 text-sm">{section.description}</p>
+                <h3 className="text-xl font-bold text-gray-900 mb-2">{section.title}</h3>
+                <p className="text-gray-600 text-sm font-light">{section.description}</p>
               </Card>
             </Link>
           ))}

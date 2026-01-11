@@ -4,10 +4,10 @@ import { FaHeart, FaStar } from 'react-icons/fa'
 const ButtonShowcase = () => {
   return (
     <section className="mb-16 w-full overflow-x-hidden">
-      <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-6 break-words">Buttons</h2>
+      <h2 className="text-2xl sm:text-3xl font-extrabold text-gray-900 mb-6 break-words">Buttons</h2>
       <div className="space-y-8 bg-gray-200 p-6 sm:p-8 rounded-2xl w-full min-w-0">
         <div>
-          <h3 className="text-xl font-semibold text-gray-900 mb-4">Variants</h3>
+          <h3 className="text-xl font-bold text-gray-900 mb-4">Variants</h3>
           <div className="flex flex-wrap gap-4">
             <Button variant="primary">Primary</Button>
             <Button variant="secondary">Secondary</Button>
@@ -16,7 +16,7 @@ const ButtonShowcase = () => {
           </div>
         </div>
         <div>
-          <h3 className="text-xl font-semibold text-gray-900 mb-4">Sizes</h3>
+          <h3 className="text-xl font-bold text-gray-900 mb-4">Sizes</h3>
           <div className="flex flex-wrap items-center gap-4">
             <Button size="sm">Small</Button>
             <Button size="md">Medium</Button>
@@ -24,7 +24,7 @@ const ButtonShowcase = () => {
           </div>
         </div>
         <div>
-          <h3 className="text-xl font-semibold text-gray-900 mb-4">States</h3>
+          <h3 className="text-xl font-bold text-gray-900 mb-4">States</h3>
           <div className="flex flex-wrap gap-4">
             <Button>Normal</Button>
             <Button disabled>Disabled</Button>
@@ -32,7 +32,7 @@ const ButtonShowcase = () => {
           </div>
         </div>
         <div>
-          <h3 className="text-xl font-semibold text-gray-900 mb-4">Icon Buttons</h3>
+          <h3 className="text-xl font-bold text-gray-900 mb-4">Icon Buttons</h3>
           <div className="flex flex-wrap gap-4">
             <Button iconOnly icon={<FaHeart />} />
             <Button iconOnly icon={<FaStar />} size="md" />
@@ -40,7 +40,7 @@ const ButtonShowcase = () => {
           </div>
         </div>
         <div>
-          <h3 className="text-xl font-semibold text-gray-900 mb-4">Buttons with Icons</h3>
+          <h3 className="text-xl font-bold text-gray-900 mb-4">Buttons with Icons</h3>
           <div className="flex flex-wrap gap-4">
             <Button icon={<FaHeart />}>With Icon</Button>
             <Button icon={<FaStar />} variant="secondary">Secondary Icon</Button>

@@ -29,12 +29,12 @@ const SiteMap = () => {
 
   return (
     <div className="min-h-screen w-full overflow-x-hidden">
-      <section className="max-w-4xl mx-auto px-4 md:px-8 py-16 md:py-24 w-full">
-        <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 mb-8 break-words">
+      <section className="w-full max-w-4xl px-4 md:px-8 py-16 md:py-24">
+        <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-gray-900 mb-8 break-words">
           Site Map
         </h1>
         <div className="space-y-4">
-          <h2 className="text-2xl font-semibold text-gray-900 mb-4">All Pages</h2>
+          <h2 className="text-2xl font-bold text-gray-900 mb-4">All Pages</h2>
           <ul className="space-y-2">
             {pages.map((page) => (
               <li key={page.path} className="space-y-1">
