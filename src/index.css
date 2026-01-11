@@ -77,12 +77,33 @@
 @layer base {
   html {
     overflow-x: hidden;
+    background-color: #C5D4E3; /* gray-200 - footer color for area below footer */
+    position: relative;
+    height: 100%;
+    overscroll-behavior: none; /* Prevent overscroll that can move fixed elements */
+    -webkit-overflow-scrolling: touch;
   }
 
   body {
-    @apply font-geologica bg-gray-50 text-gray-900;
+    @apply font-geologica bg-gray-200 text-gray-900;
     overflow-x: hidden;
     width: 100%;
+    min-height: 100vh;
+    min-height: -webkit-fill-available;
+    position: relative;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: none; /* Prevent overscroll that can move fixed elements */
+    /* iOS Safari safe area support - horizontal padding */
+    padding-left: max(0px, env(safe-area-inset-left));
+    padding-right: max(0px, env(safe-area-inset-right));
+  }
+
+  #root {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background-color: #C5D4E3; /* gray-200 */
   }
 
   * {
@@ -142,5 +163,56 @@
   /* Override any default link colors */
   a {
     color: inherit;
+  }
+
+  /* Fixed header - ensure it stays at top consistently across browsers */
+  nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    z-index: 50;
+    /* Prevent header from moving on scroll */
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+  }
+
+  /* Main content - no padding, let page content extend to top */
+  main {
+    padding-top: 0;
+  }
+
+  /* Page sections with bg-gray-50 extend to top behind header */
+  section.bg-gray-50,
+  div.bg-gray-50 {
+    padding-top: calc(3.5rem + 4rem + max(0px, env(safe-area-inset-top)));
+  }
+
+  @media (min-width: 768px) {
+    section.bg-gray-50,
+    div.bg-gray-50 {
+      padding-top: calc(4.5rem + 6rem + max(0px, env(safe-area-inset-top)));
+    }
+  }
+
+  /* Footer safe area extension for iOS Safari */
+  footer {
+    position: relative;
+    margin-top: auto; /* Push footer to bottom */
+    min-height: fit-content;
+  }
+
+  /* Extend footer background behind safe area on iOS */
+  footer::before {
+    content: '';
+    position: absolute;
+    bottom: calc(-1 * env(safe-area-inset-bottom, 0px));
+    left: 0;
+    right: 0;
+    height: calc(2rem + env(safe-area-inset-bottom, 0px));
+    background-color: #C5D4E3; /* gray-200 - explicit color for iOS */
+    z-index: -1;
+    pointer-events: none;
   }
 }

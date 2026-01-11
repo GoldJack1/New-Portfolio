@@ -25,8 +25,17 @@ const Footer = () => {
   ]
 
   return (
-    <footer className="bg-gray-200 text-gray-700 py-8 px-4 md:px-8 w-full overflow-x-hidden">
-      <div className="w-full">
+    <footer 
+      className="bg-gray-200 text-gray-700 w-full overflow-x-hidden relative"
+      style={{
+        paddingTop: '2rem',
+        paddingBottom: '2rem',
+        paddingLeft: 'max(1rem, env(safe-area-inset-left, 0px))',
+        paddingRight: 'max(1rem, env(safe-area-inset-right, 0px))',
+        marginBottom: 'env(safe-area-inset-bottom, 0px)',
+      }}
+    >
+      <div className="w-full px-4 md:px-8 relative z-10">
         <div className="flex flex-col md:flex-row justify-between items-start gap-6 w-full min-w-0">
           {/* Left side - Name, Copyright, Social Icons, and Links */}
           <div className="flex flex-col min-w-0 gap-4 flex-1">

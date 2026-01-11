@@ -4,8 +4,8 @@ import Button from '../../components/ui/Button'
 
 const Components = () => {
   return (
-    <div className="min-h-screen bg-gray-50 w-full overflow-x-hidden">
-      <div className="w-full px-4 md:px-8 py-16 md:py-24">
+    <div className="bg-gray-200 w-full overflow-x-hidden">
+      <div className="w-full px-4 md:px-8 pb-16 md:pb-24 bg-gray-50">
         <div className="mb-8">
           <Link to="/design-system">
             <Button variant="ghost" size="sm" className="mb-4">

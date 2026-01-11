@@ -11,8 +11,8 @@ const SiteDesignSystem = () => {
   ]
 
   return (
-    <div className="min-h-screen bg-gray-50 w-full overflow-x-hidden">
-      <div className="w-full px-4 md:px-8 py-16 md:py-24">
+    <div className="bg-gray-200 w-full overflow-x-hidden">
+      <div className="w-full px-4 md:px-8 pb-16 md:pb-24 bg-gray-50">
         <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-gray-900 mb-4 break-words">
           Site Design System
         </h1>

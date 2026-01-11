@@ -1,7 +1,7 @@
 const PrivacyPolicy = () => {
   return (
-    <div className="min-h-screen w-full overflow-x-hidden">
-      <section className="w-full max-w-4xl px-4 md:px-8 py-16 md:py-24">
+    <div className="w-full overflow-x-hidden">
+      <section className="w-full px-4 md:px-8 pb-16 md:pb-24 bg-gray-50">
         <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-gray-900 mb-8 break-words">
           Privacy Policy
         </h1>

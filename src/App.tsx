@@ -17,9 +17,9 @@ import SiteMap from './pages/SiteMap'
 function App() {
   return (
     <Router>
-      <div className="min-h-screen flex flex-col w-full overflow-x-hidden">
+      <div className="min-h-screen flex flex-col w-full overflow-x-hidden bg-gray-200">
         <Navigation />
-        <main className="flex-grow w-full overflow-x-hidden">
+        <main className="flex-grow w-full overflow-x-hidden bg-gray-200">
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/projects" element={<Projects />} />
