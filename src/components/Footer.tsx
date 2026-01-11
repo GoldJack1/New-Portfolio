@@ -27,7 +27,7 @@ const Footer = () => {
 
   return (
     <footer 
-      className="bg-gray-200 text-gray-700 w-full overflow-x-hidden relative"
+      className="bg-gray-200 text-gray-700 w-full relative"
       style={{
         paddingTop: '2rem',
         paddingBottom: '2rem',

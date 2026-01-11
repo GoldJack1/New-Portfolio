@@ -1,107 +1,234 @@
-import { Link, useLocation } from 'react-router-dom'
-import { useState } from 'react'
-import { FaBars, FaTimes } from 'react-icons/fa'
-import { PADDING_CLASSES } from '../utils/paddingClasses'
+import { useRef, useLayoutEffect, useState } from 'react'
+import { NavLink, useLocation, useNavigate } from 'react-router-dom'
+import { FaBars } from 'react-icons/fa'
+
+const navItems = [
+  { to: '/', label: 'Home' },
+  { to: '/projects', label: 'Projects' },
+  { to: '/about', label: 'About' },
+  { to: '/contact', label: 'Contact' },
+]
+
+// Page title mapping for all pages
+const pageTitles: Record<string, string> = {
+  '/': 'Home',
+  '/projects': 'Projects',
+  '/about': 'About',
+  '/contact': 'Contact',
+  '/design-system': 'Site Design System',
+  '/design-system/colors': 'Color Palette',
+  '/design-system/typography': 'Typography',
+  '/design-system/buttons': 'Buttons',
+  '/design-system/form-controls': 'Form Controls',
+  '/design-system/components': 'Components',
+  '/design-system/padding': 'Padding',
+  '/privacy-policy': 'Privacy Policy',
+  '/sitemap': 'Site Map',
+}
+
+// Helper function to check if we're on a main page (one of the four main nav items)
+const isMainPage = (pathname: string): boolean => {
+  return (
+    pathname === '/' ||
+    pathname === '/projects' ||
+    pathname.startsWith('/projects/') ||
+    pathname === '/about' ||
+    pathname === '/contact'
+  )
+}
+
+function useIsMobile() {
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768)
+  
+  useLayoutEffect(() => {
+    function handleResize() {
+      setIsMobile(window.innerWidth <= 768)
+    }
+    window.addEventListener('resize', handleResize)
+    return () => window.removeEventListener('resize', handleResize)
+  }, [])
+  
+  return isMobile
+}
 
 const Navigation = () => {
+  const indicatorRef = useRef<HTMLDivElement>(null)
+  const navRefs = useRef<(HTMLAnchorElement | null)[]>([])
   const location = useLocation()
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+  const navigate = useNavigate()
+  const isMobile = useIsMobile()
+  const [menuOpen, setMenuOpen] = useState(false)
 
-  const navItems = [
-    { path: '/', label: 'Home', mobileLabel: 'Home' },
-    { path: '/projects', label: 'Projects', mobileLabel: 'Projects' },
-    { path: '/about', label: 'About', mobileLabel: 'About' },
-    { path: '/contact', label: 'Contact', mobileLabel: 'Contact' },
-  ]
+  // Reset menu state when switching between mobile and desktop
+  useLayoutEffect(() => {
+    setMenuOpen(false)
+    // Force layout recalculation on breakpoint change
+    if (isMobile) {
+      // Small delay to ensure DOM has updated
+      requestAnimationFrame(() => {
+        document.body.offsetHeight // Force reflow
+      })
+    }
+  }, [isMobile])
 
-  const toggleMobileMenu = () => {
-    setIsMobileMenuOpen(!isMobileMenuOpen)
+  useLayoutEffect(() => {
+    if (isMobile) return
+
+    let animationFrame: number | undefined
+    let fontLoadListener: (() => void) | undefined
+
+    function updateIndicator() {
+      // Only show indicator on main pages
+      if (!isMainPage(location.pathname)) {
+        if (indicatorRef.current) {
+          indicatorRef.current.style.display = 'none'
+        }
+        return
+      }
+      
+      if (indicatorRef.current) {
+        indicatorRef.current.style.display = 'block'
+      }
+      
+      const activeIdx = navItems.findIndex((item) => {
+        if (item.to === '/projects') {
+          return location.pathname === '/projects' || location.pathname.startsWith('/projects/')
+        }
+        return item.to === location.pathname
+      })
+      const activeLink = navRefs.current[activeIdx]
+      const navBg = activeLink?.parentElement
+      if (activeLink && navBg && indicatorRef.current) {
+        const navRect = navBg.getBoundingClientRect()
+        const linkRect = activeLink.getBoundingClientRect()
+        // Set a minimum width (e.g., 60px) to prevent shrinking
+        const minWidth = 60
+        const width = Math.max(linkRect.width, minWidth)
+        // Match the height of the button
+        const height = linkRect.height
+        indicatorRef.current.style.left = linkRect.left - navRect.left + 'px'
+        indicatorRef.current.style.width = width + 'px'
+        indicatorRef.current.style.height = height + 'px'
+      }
+    }
+
+    function handleUpdate() {
+      // Use requestAnimationFrame to ensure layout is stable
+      animationFrame = requestAnimationFrame(updateIndicator)
+    }
+
+    // Initial update
+    handleUpdate()
+    // Update on window resize
+    window.addEventListener('resize', handleUpdate)
+
+    // Update after fonts are loaded (if browser supports it)
+    if (document.fonts && document.fonts.ready) {
+      fontLoadListener = () => handleUpdate()
+      document.fonts.ready.then(fontLoadListener)
+    }
+
+    return () => {
+      window.removeEventListener('resize', handleUpdate)
+      if (animationFrame !== undefined) cancelAnimationFrame(animationFrame)
+      // No need to remove fontLoadListener as it's a one-time promise
+    }
+  }, [location.pathname, isMobile])
+
+  // Get current page title - show for all pages
+  const getCurrentTitle = () => {
+    // Check exact match first
+    if (pageTitles[location.pathname]) {
+      return pageTitles[location.pathname]
+    }
+    // For projects sub-pages, show "Projects"
+    if (location.pathname.startsWith('/projects/')) {
+      return 'Projects'
+    }
+    // Fallback to empty string if no match
+    return ''
   }
+  const currentTitle = getCurrentTitle()
 
-  const closeMobileMenu = () => {
-    setIsMobileMenuOpen(false)
-  }
-
-  return (
-    <nav 
-      className="fixed top-0 left-0 right-0 z-50 bg-gray-400 shadow-sm w-full overflow-x-hidden"
-    >
-      <div 
-        className={`w-full ${PADDING_CLASSES.header.horizontal}`}
-        style={{
-          paddingTop: 'max(0px, env(safe-area-inset-top))',
-        }}
-      >
-        {/* Desktop Navigation */}
-        <div className="hidden md:flex items-center justify-center py-4 gap-3">
-          {navItems.map((item) => {
-            const isActive = location.pathname === item.path
-            return (
-              <Link
-                key={item.path}
-                to={item.path}
-                className={`
-                  px-6 py-2 rounded-full transition-all duration-200 text-sm md:text-base
-                  ${
-                    isActive
-                      ? 'bg-gray-800 text-gray-50 shadow-md'
-                      : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
-                  }
-                `}
-              >
-                {item.label}
-              </Link>
-            )
-          })}
-        </div>
-
-        {/* Mobile Navigation */}
-        <div className="md:hidden">
-          {/* Mobile Header with Hamburger */}
-          <div className="flex items-center justify-between py-3">
-            <h2 className="text-lg font-bold text-gray-900">Menu</h2>
+  if (isMobile) {
+    return (
+      <div key="mobile-nav" className="nav-wrapper mobile-nav-wrapper">
+        <nav className="nav-bg mobile-nav-bg">
+          <div className={`mobile-pill ${menuOpen ? 'menu-open' : ''}`}>
+            <span className="mobile-pill-title">{currentTitle}</span>
             <button
-              onClick={toggleMobileMenu}
-              className="w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center text-gray-700 hover:bg-gray-300 transition-colors"
-              aria-label="Toggle menu"
-              aria-expanded={isMobileMenuOpen}
+              className="mobile-hamburger"
+              aria-label="Open menu"
+              aria-expanded={menuOpen}
+              onClick={() => setMenuOpen((v) => !v)}
             >
-              {isMobileMenuOpen ? (
-                <FaTimes className="w-5 h-5" />
-              ) : (
-                <FaBars className="w-5 h-5" />
-              )}
+              <FaBars />
             </button>
           </div>
-
-          {/* Mobile Menu Dropdown */}
-          {isMobileMenuOpen && (
-            <div className="pb-4 space-y-2">
+          {menuOpen && (
+            <div className="mobile-dropdown">
               {navItems.map((item) => {
-                const isActive = location.pathname === item.path
+                // Only show active state on main pages
+                let isActive = false
+                if (isMainPage(location.pathname)) {
+                  if (item.to === '/projects') {
+                    isActive = location.pathname === '/projects' || location.pathname.startsWith('/projects/')
+                  } else {
+                    isActive = item.to === location.pathname
+                  }
+                }
                 return (
-                  <Link
-                    key={item.path}
-                    to={item.path}
-                    onClick={closeMobileMenu}
-                    className={`
-                      block w-full px-4 py-3 rounded-full transition-all duration-200 text-base
-                      ${
-                        isActive
-                          ? 'bg-gray-800 text-gray-50 shadow-md'
-                          : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
-                      }
-                    `}
+                  <button
+                    key={item.to}
+                    className={
+                      'mobile-dropdown-link' + (isActive ? ' active' : '')
+                    }
+                    onClick={() => {
+                      setMenuOpen(false)
+                      navigate(item.to)
+                    }}
                   >
-                    {item.mobileLabel}
-                  </Link>
+                    {item.label}
+                  </button>
                 )
               })}
             </div>
           )}
-        </div>
+        </nav>
       </div>
-    </nav>
+    )
+  }
+
+  // Desktop nav
+  return (
+    <div key="desktop-nav" className="nav-wrapper">
+      <nav className="nav-bg" role="navigation" aria-label="Main navigation">
+        <div className="nav-indicator" ref={indicatorRef} aria-hidden="true"></div>
+        {navItems.map((item, idx) => {
+          // Only show active state on main pages
+          let isActive = false
+          if (isMainPage(location.pathname)) {
+            if (item.to === '/projects') {
+              isActive = location.pathname === '/projects' || location.pathname.startsWith('/projects/')
+            } else {
+              isActive = item.to === location.pathname
+            }
+          }
+          return (
+            <NavLink
+              key={item.to}
+              to={item.to}
+              className={'nav-link font-geologica font-medium text-base' + (isActive ? ' active' : '')}
+              ref={(el) => (navRefs.current[idx] = el)}
+              end={item.to === '/'}
+              aria-current={isActive ? 'page' : undefined}
+            >
+              {item.label}
+            </NavLink>
+          )
+        })}
+      </nav>
+    </div>
   )
 }
 
