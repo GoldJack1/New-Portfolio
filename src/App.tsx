@@ -11,6 +11,7 @@ import Typography from './pages/design-system/Typography'
 import Buttons from './pages/design-system/Buttons'
 import FormControls from './pages/design-system/FormControls'
 import Components from './pages/design-system/Components'
+import Padding from './pages/design-system/Padding'
 import PrivacyPolicy from './pages/PrivacyPolicy'
 import SiteMap from './pages/SiteMap'
 
@@ -31,6 +32,7 @@ function App() {
             <Route path="/design-system/buttons" element={<Buttons />} />
             <Route path="/design-system/form-controls" element={<FormControls />} />
             <Route path="/design-system/components" element={<Components />} />
+            <Route path="/design-system/padding" element={<Padding />} />
             <Route path="/privacy-policy" element={<PrivacyPolicy />} />
             <Route path="/sitemap" element={<SiteMap />} />
           </Routes>

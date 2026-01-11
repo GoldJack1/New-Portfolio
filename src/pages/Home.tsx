@@ -1,7 +1,9 @@
+import { PADDING_CLASSES } from '../utils/paddingClasses'
+
 const Home = () => {
   return (
     <div className="w-full overflow-x-hidden">
-      <section className="w-full px-4 md:px-8 pb-16 md:pb-24 bg-gray-50">
+      <section className={`w-full ${PADDING_CLASSES.page.full} bg-gray-50`}>
         <div className="text-left">
           <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-gray-900 mb-6 break-words">
             Jack Wingate

@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 import { FaGithub, FaLinkedin, FaTwitter, FaEnvelope } from 'react-icons/fa'
+import { PADDING_CLASSES } from '../utils/paddingClasses'
 
 const Footer = () => {
   const currentYear = new Date().getFullYear()
@@ -30,12 +31,10 @@ const Footer = () => {
       style={{
         paddingTop: '2rem',
         paddingBottom: '2rem',
-        paddingLeft: 'max(1rem, env(safe-area-inset-left, 0px))',
-        paddingRight: 'max(1rem, env(safe-area-inset-right, 0px))',
         marginBottom: 'env(safe-area-inset-bottom, 0px)',
       }}
     >
-      <div className="w-full px-4 md:px-8 relative z-10">
+      <div className={`w-full ${PADDING_CLASSES.footer.horizontal} relative z-10`}>
         <div className="flex flex-col md:flex-row justify-between items-start gap-6 w-full min-w-0">
           {/* Left side - Name, Copyright, Social Icons, and Links */}
           <div className="flex flex-col min-w-0 gap-4 flex-1">

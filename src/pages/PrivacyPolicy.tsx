@@ -1,7 +1,9 @@
+import { PADDING_CLASSES } from '../utils/paddingClasses'
+
 const PrivacyPolicy = () => {
   return (
     <div className="w-full overflow-x-hidden">
-      <section className="w-full px-4 md:px-8 pb-16 md:pb-24 bg-gray-50">
+      <section className={`w-full ${PADDING_CLASSES.page.full} bg-gray-50`}>
         <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-gray-900 mb-8 break-words">
           Privacy Policy
         </h1>

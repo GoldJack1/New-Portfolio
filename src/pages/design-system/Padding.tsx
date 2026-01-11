@@ -1,9 +1,9 @@
-import ComponentShowcase from '../../components/DesignSystem/ComponentShowcase'
+import PaddingShowcase from '../../components/DesignSystem/PaddingShowcase'
 import { Link } from 'react-router-dom'
 import Button from '../../components/ui/Button'
 import { PADDING_CLASSES } from '../../utils/paddingClasses'
 
-const Components = () => {
+const Padding = () => {
   return (
     <div className="bg-gray-200 w-full overflow-x-hidden">
       <div className={`w-full ${PADDING_CLASSES.page.full} bg-gray-50`}>
@@ -14,17 +14,17 @@ const Components = () => {
             </Button>
           </Link>
           <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-gray-900 mb-4 break-words">
-            Components
+            Padding
           </h1>
           <p className="text-lg text-gray-600 break-words">
-            Cards, badges, alerts, progress bars, and navigation components
+            Universal padding system for consistent spacing across the site
           </p>
         </div>
 
-        <ComponentShowcase />
+        <PaddingShowcase />
       </div>
     </div>
   )
 }
 
-export default Components
+export default Padding

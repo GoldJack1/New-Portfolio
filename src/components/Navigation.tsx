@@ -1,6 +1,7 @@
 import { Link, useLocation } from 'react-router-dom'
 import { useState } from 'react'
 import { FaBars, FaTimes } from 'react-icons/fa'
+import { PADDING_CLASSES } from '../utils/paddingClasses'
 
 const Navigation = () => {
   const location = useLocation()
@@ -26,7 +27,7 @@ const Navigation = () => {
       className="fixed top-0 left-0 right-0 z-50 bg-gray-400 shadow-sm w-full overflow-x-hidden"
     >
       <div 
-        className="max-w-7xl mx-auto px-4 md:px-8 w-full"
+        className={`w-full ${PADDING_CLASSES.header.horizontal}`}
         style={{
           paddingTop: 'max(0px, env(safe-area-inset-top))',
         }}

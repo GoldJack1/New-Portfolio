@@ -1,11 +1,12 @@
 import TypographyShowcase from '../../components/DesignSystem/TypographyShowcase'
 import { Link } from 'react-router-dom'
 import Button from '../../components/ui/Button'
+import { PADDING_CLASSES } from '../../utils/paddingClasses'
 
 const Typography = () => {
   return (
     <div className="bg-gray-200 w-full overflow-x-hidden">
-      <div className="w-full px-4 md:px-8 pb-16 md:pb-24 bg-gray-50">
+      <div className={`w-full ${PADDING_CLASSES.page.full} bg-gray-50`}>
         <div className="mb-8">
           <Link to="/design-system">
             <Button variant="ghost" size="sm" className="mb-4">

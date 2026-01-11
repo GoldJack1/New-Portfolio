@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 import Card from '../components/ui/Card'
+import { PADDING_CLASSES } from '../utils/paddingClasses'
 
 const SiteDesignSystem = () => {
   const sections = [
@@ -8,11 +9,12 @@ const SiteDesignSystem = () => {
     { path: '/design-system/buttons', title: 'Buttons', description: 'See all button variants, sizes, and states with drop shadows' },
     { path: '/design-system/form-controls', title: 'Form Controls', description: 'Browse all form components including inputs, checkboxes, toggles, and sliders' },
     { path: '/design-system/components', title: 'Components', description: 'View cards, badges, alerts, progress bars, and navigation' },
+    { path: '/design-system/padding', title: 'Padding', description: 'Universal padding system for consistent spacing across the site' },
   ]
 
   return (
     <div className="bg-gray-200 w-full overflow-x-hidden">
-      <div className="w-full px-4 md:px-8 pb-16 md:pb-24 bg-gray-50">
+      <div className={`w-full ${PADDING_CLASSES.page.full} bg-gray-50`}>
         <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-gray-900 mb-4 break-words">
           Site Design System
         </h1>
