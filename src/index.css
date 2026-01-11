@@ -1,0 +1,76 @@
+@import url('https://fonts.googleapis.com/css2?family=Geologica:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    overflow-x: hidden;
+  }
+
+  body {
+    @apply font-geologica bg-gray-50 text-gray-900;
+    overflow-x: hidden;
+    width: 100%;
+  }
+
+  * {
+    max-width: 100%;
+  }
+
+  /* Override browser default colors to use monochrome blue-gray */
+  ::selection {
+    background-color: #4A5A6B;
+    color: #F0F4F8;
+  }
+
+  ::-moz-selection {
+    background-color: #4A5A6B;
+    color: #F0F4F8;
+  }
+
+  /* Override range input slider thumb color */
+  input[type="range"] {
+    -webkit-appearance: none;
+    appearance: none;
+  }
+
+  input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: #2A3442;
+    cursor: pointer;
+  }
+
+  input[type="range"]::-moz-range-thumb {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: #2A3442;
+    cursor: pointer;
+    border: none;
+  }
+
+  /* Override checkbox and radio default accent colors */
+  input[type="checkbox"] {
+    accent-color: #2A3442;
+  }
+
+  input[type="radio"] {
+    accent-color: #2A3442;
+  }
+
+  /* Override any default focus colors */
+  *:focus {
+    outline-color: #4A5A6B;
+  }
+
+  /* Override any default link colors */
+  a {
+    color: inherit;
+  }
+}
