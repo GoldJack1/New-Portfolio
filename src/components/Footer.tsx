@@ -92,10 +92,12 @@ const Footer = () => {
                     href={social.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="w-7 h-7 flex items-center justify-center text-text-primary hover:opacity-80 transition-opacity"
+                    className="w-7 h-7 flex items-center justify-center text-gray-0 hover:text-hover transition-colors"
                     aria-label={social.label}
                   >
-                    <Icon />
+                    <span className="relative z-10 w-full h-full flex items-center justify-center">
+                      <Icon />
+                    </span>
                   </a>
                 )
               })}

@@ -28,6 +28,7 @@ export default {
         projectsBackground: '#397F00',
         aboutBackground: '#00377F',
         contactBackground: '#7F0070',
+        hover: '#ACACB7',
       },
       fontFamily: {
         geologica: ['Geologica Cursive', 'cursive'],
