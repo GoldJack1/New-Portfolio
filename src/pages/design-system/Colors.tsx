@@ -6,7 +6,7 @@ import { PADDING_CLASSES } from '../../utils/paddingClasses'
 const Colors = () => {
   return (
     <div className="w-full overflow-x-hidden bg-gray-900 min-h-screen flex flex-col pt-[150px]">
-      <div className={`w-full ${PADDING_CLASSES.page.full} flex-grow flex flex-col`}>
+      <section className={`w-full ${PADDING_CLASSES.page.full} flex-grow flex flex-col`}>
         <div className="mb-8">
           <Link to="/design-system">
             <Button variant="ghost" size="sm" className="mb-4">
@@ -22,7 +22,7 @@ const Colors = () => {
         </div>
 
         <ColorPalette />
-      </div>
+      </section>
     </div>
   )
 }

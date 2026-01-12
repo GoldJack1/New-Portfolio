@@ -14,7 +14,7 @@ const SiteDesignSystem = () => {
 
   return (
     <div className="w-full overflow-x-hidden bg-gray-900 min-h-screen flex flex-col pt-[150px]">
-      <div className={`w-full ${PADDING_CLASSES.page.full} flex-grow flex flex-col`}>
+      <section className={`w-full ${PADDING_CLASSES.page.full} flex-grow flex flex-col`}>
         <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-text-primary mb-4 break-words">
           Site Design System
         </h1>
@@ -32,7 +32,7 @@ const SiteDesignSystem = () => {
             </Link>
           ))}
         </div>
-      </div>
+      </section>
     </div>
   )
 }
