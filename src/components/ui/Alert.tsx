@@ -4,6 +4,7 @@ import { FaInfoCircle, FaCheckCircle, FaExclamationTriangle, FaTimesCircle, FaTi
 interface AlertProps {
   children: ReactNode
   type?: 'info' | 'success' | 'warning' | 'error'
+  variant?: 'primary' | 'secondary' | 'tertiary'
   dismissible?: boolean
   onDismiss?: () => void
   className?: string
@@ -12,6 +13,7 @@ interface AlertProps {
 const Alert = ({
   children,
   type = 'info',
+  variant,
   dismissible = false,
   onDismiss,
   className = '',
@@ -20,12 +22,21 @@ const Alert = ({
 
   if (!isVisible) return null
 
-  const typeStyles = {
-    info: 'bg-gray-700 text-text-primary',
-    success: 'bg-gray-700 text-text-primary',
-    warning: 'bg-gray-700 text-text-primary',
-    error: 'bg-gray-700 text-text-primary',
+  const variantStyles = {
+    primary: 'bg-gray-800 text-text-primary',
+    secondary: 'bg-gray-600 text-text-primary',
+    tertiary: 'bg-gray-700 text-text-primary',
   }
+
+  const typeStyles = {
+    info: 'bg-gray-800 text-text-primary',
+    success: 'bg-gray-600 text-text-primary',
+    warning: 'bg-gray-700 text-text-primary',
+    error: 'bg-gray-800 text-text-primary',
+  }
+
+  // Use variant if provided, otherwise fall back to type-based styling
+  const backgroundStyle = variant ? variantStyles[variant] : typeStyles[type]
 
   const icons = {
     info: FaInfoCircle,
@@ -45,7 +56,7 @@ const Alert = ({
     <div
       className={`
         flex items-start gap-3 p-4 rounded-2xl
-        ${typeStyles[type]}
+        ${backgroundStyle}
         ${className}
       `}
     >

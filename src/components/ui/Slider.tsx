@@ -38,7 +38,7 @@ const Slider = ({
   return (
     <div className={`w-full min-w-0 ${className}`}>
       {label && (
-        <label className="block text-sm font-medium text-gray-200 mb-2 break-words">
+        <label className="block text-sm font-medium text-text-secondary mb-2 break-words">
           {label}
         </label>
       )}
@@ -54,7 +54,7 @@ const Slider = ({
           style={{ accentColor: '#E6E5F4' }}
         />
         {showValue && (
-          <span className="text-sm font-medium text-gray-200 min-w-[3rem] text-right">
+          <span className="text-sm font-medium text-text-secondary min-w-[3rem] text-right">
             {value}
           </span>
         )}

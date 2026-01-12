@@ -29,13 +29,13 @@ const Input = ({
   return (
     <div className="w-full min-w-0">
       {label && (
-        <label htmlFor={props.id} className="block text-sm font-medium text-gray-200 mb-2 break-words">
+        <label htmlFor={props.id} className="block text-sm font-medium text-text-secondary mb-2 break-words">
           {label}
         </label>
       )}
       <div className="relative w-full min-w-0">
         {iconLeft && (
-          <span className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400">
+          <span className="absolute left-4 top-1/2 transform -translate-y-1/2 text-text-tertiary">
             {iconLeft}
           </span>
         )}
@@ -50,7 +50,7 @@ const Input = ({
           `}
         />
         {iconRight && (
-          <span className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400">
+          <span className="absolute right-4 top-1/2 transform -translate-y-1/2 text-text-tertiary">
             {iconRight}
           </span>
         )}

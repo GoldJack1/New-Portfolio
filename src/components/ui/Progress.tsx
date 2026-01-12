@@ -51,7 +51,7 @@ const Progress = ({
             stroke="currentColor"
             strokeWidth="8"
             fill="none"
-            className="text-gray-600"
+            className="text-text-primary"
           />
           <circle
             cx={radius + 10}
@@ -66,7 +66,7 @@ const Progress = ({
           />
         </svg>
         {showLabel && (
-          <span className="mt-2 text-sm font-medium text-gray-200">
+          <span className="mt-2 text-sm font-medium text-text-secondary">
             {label || `${Math.round(percentage)}%`}
           </span>
         )}
@@ -78,10 +78,10 @@ const Progress = ({
     <div className={`w-full ${className}`}>
       {showLabel && (
         <div className="flex justify-between items-center mb-2">
-          <span className="text-sm font-medium text-gray-200">
+          <span className="text-sm font-medium text-text-secondary">
             {label || 'Progress'}
           </span>
-          <span className="text-sm font-medium text-gray-200">
+          <span className="text-sm font-medium text-text-secondary">
             {Math.round(percentage)}%
           </span>
         </div>

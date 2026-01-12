@@ -15,7 +15,7 @@ const Radio = ({
   return (
     <label className={`flex items-center gap-3 cursor-pointer ${className}`}>
       {label && labelPosition === 'left' && (
-        <span className="text-gray-200">{label}</span>
+        <span className="text-text-secondary">{label}</span>
       )}
       <input
         type="radio"
@@ -23,7 +23,7 @@ const Radio = ({
         className="w-5 h-5 text-text-primary focus:outline-none cursor-pointer"
       />
       {label && labelPosition === 'right' && (
-        <span className="text-gray-200">{label}</span>
+        <span className="text-text-secondary">{label}</span>
       )}
     </label>
   )

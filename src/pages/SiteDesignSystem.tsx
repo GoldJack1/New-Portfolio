@@ -13,12 +13,12 @@ const SiteDesignSystem = () => {
   ]
 
   return (
-    <div className="w-full overflow-x-hidden bg-gray-900 min-h-screen flex flex-col pt-[150px]">
+    <div className="w-full overflow-x-hidden bg-gray-1000 min-h-screen flex flex-col pt-[150px]">
       <section className={`w-full ${PADDING_CLASSES.page.full} flex-grow flex flex-col`}>
         <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-text-primary mb-4 break-words">
           Site Design System
         </h1>
-        <p className="text-lg font-light text-gray-300 mb-12 break-words">
+        <p className="text-lg font-light text-text-secondary mb-12 break-words">
           Explore the design system components and guidelines
         </p>
 
@@ -27,7 +27,7 @@ const SiteDesignSystem = () => {
             <Link key={section.path} to={section.path}>
               <Card clickable className="h-full">
                 <h3 className="text-xl font-bold text-text-primary mb-2">{section.title}</h3>
-                <p className="text-gray-300 text-sm font-light">{section.description}</p>
+                <p className="text-text-secondary text-sm font-light">{section.description}</p>
               </Card>
             </Link>
           ))}

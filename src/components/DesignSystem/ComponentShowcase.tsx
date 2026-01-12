@@ -11,9 +11,9 @@ const ComponentShowcase = () => {
       <div className="space-y-8 w-full min-w-0">
         <div>
           <h3 className="text-xl font-bold text-text-primary mb-4">Navigation</h3>
-          <div className="bg-gray-800 p-4 rounded-2xl">
-            <p className="text-sm text-gray-300 mb-4">Pill navigation header with active/inactive states</p>
-            <div className="bg-gray-900 p-4 rounded-2xl">
+          <div className="bg-gray-900 p-4 rounded-2xl">
+            <p className="text-sm text-text-secondary mb-4">Pill navigation header with active/inactive states</p>
+            <div className="bg-gray-800 p-4 rounded-2xl">
               <Navigation />
             </div>
           </div>
@@ -23,16 +23,16 @@ const ComponentShowcase = () => {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <Card>
               <h4 className="text-xl font-semibold text-text-primary mb-2">Basic Card</h4>
-              <p className="text-gray-200">Card content goes here</p>
+              <p className="text-text-primary">Card content goes here</p>
             </Card>
             <Card header={<h4 className="text-xl font-semibold text-text-primary">Card with Header</h4>}>
-              <p className="text-gray-200">Card with header section</p>
+              <p className="text-text-primary">Card with header section</p>
             </Card>
             <Card
               header={<h4 className="text-xl font-semibold text-text-primary">Card with Footer</h4>}
-              footer={<p className="text-sm text-gray-300">Footer content</p>}
+              footer={<p className="text-sm text-text-secondary">Footer content</p>}
             >
-              <p className="text-gray-200">Card with header and footer</p>
+              <p className="text-text-primary">Card with header and footer</p>
             </Card>
           </div>
         </div>
@@ -60,6 +60,15 @@ const ComponentShowcase = () => {
             </Alert>
             <Alert type="error" dismissible>
               Error: Something went wrong. Please try again.
+            </Alert>
+            <Alert type="info" variant="primary">
+              Primary variant alert (gray-800)
+            </Alert>
+            <Alert type="info" variant="secondary">
+              Secondary variant alert (gray-600)
+            </Alert>
+            <Alert type="info" variant="tertiary">
+              Tertiary variant alert (gray-700)
             </Alert>
           </div>
         </div>

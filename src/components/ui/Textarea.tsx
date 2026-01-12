@@ -25,7 +25,7 @@ const Textarea = ({
   return (
     <div className="w-full min-w-0">
       {label && (
-        <label htmlFor={props.id} className="block text-sm font-medium text-gray-200 mb-2 break-words">
+        <label htmlFor={props.id} className="block text-sm font-medium text-text-secondary mb-2 break-words">
           {label}
         </label>
       )}

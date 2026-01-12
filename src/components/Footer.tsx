@@ -63,7 +63,7 @@ const Footer = () => {
 
   return (
     <footer 
-      className="bg-gray-1000 text-gray-300 w-full relative"
+      className="bg-gray-1000 text-text-primary w-full relative"
       style={{
         paddingTop: '2rem',
         paddingBottom: '2rem',
@@ -77,7 +77,7 @@ const Footer = () => {
             {/* Copyright Section - Far Left */}
             <div className="flex flex-col gap-[5px] justify-start items-start h-fit" style={{ flexDirection: 'column' }}>
               <h3 className="text-lg sm:text-xl font-normal text-text-primary mb-0 break-words" style={{ height: '25px' }}>Jack Wingate</h3>
-              <p className="text-xs sm:text-sm font-thin text-text-tertiary break-words mb-0" style={{ height: '16px' }}>
+              <p className="text-xs sm:text-sm font-thin text-text-secondary break-words mb-0" style={{ height: '16px' }}>
                 © 2026 All Rights Reserved
               </p>
             </div>

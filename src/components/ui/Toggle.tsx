@@ -44,7 +44,7 @@ const Toggle = ({
 
   return (
     <label className={`flex items-center gap-3 cursor-pointer ${className}`}>
-      {label && <span className="text-gray-200">{label}</span>}
+      {label && <span className="text-text-secondary">{label}</span>}
       <button
         type="button"
         role="switch"

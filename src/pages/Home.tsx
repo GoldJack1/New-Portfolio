@@ -11,7 +11,7 @@ const Home = () => {
           <p className="text-lg sm:text-xl md:text-2xl font-light text-text-secondary mb-0 break-words">
             Welcome to my portfolio
           </p>
-          <p className="text-base sm:text-lg font-light text-text-tertiary max-w-2xl break-words">
+          <p className="text-base sm:text-lg font-light text-text-secondary max-w-2xl break-words">
             Explore my projects, learn about me, and get in touch.
           </p>
         </div>

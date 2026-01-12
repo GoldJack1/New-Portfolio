@@ -118,12 +118,12 @@
 
   /* Override browser default colors to use monochrome blue-gray */
   ::selection {
-    background-color: #4A5A6B; /* gray-600 */
-    color: #E6E5F4; /* gray-50 */
+    background-color: #000000; /* gray-1000 */
+    color: var(--text-primary); /* Text Primary - white at 100% */
   }
   ::-moz-selection {
-    background-color: #4A5A6B; /* gray-600 */
-    color: #E6E5F4; /* gray-50 */
+    background-color: #000000; /* gray-1000 */
+    color: var(--text-primary); /* Text Primary - white at 100% */
   }
 
   /* Override range input slider thumb color */
@@ -280,7 +280,7 @@
     border-radius: 37px;
     font-size: 1rem;
     font-weight: 500;
-    color: #E6E5F4; /* gray-50 */
+    color: var(--text-primary); /* Text Primary */
     text-decoration: none;
     background: none;
     transition: background 0.2s, color 0.2s;
@@ -291,12 +291,12 @@
 
   .nav-link:hover:not(.active) {
     background-color: rgba(0, 0, 0, 0.25); /* black at 25% opacity */
-    color: #E6E5F4; /* gray-50 */
+    color: var(--text-primary); /* Text Primary */
   }
 
   .nav-link.active {
     /* No background fill - indicator handles visual state */
-    color: #1A2332; /* gray-900 */
+    color: #000000; /* gray-1000 */
   }
 
   .nav-link.active:hover {
@@ -398,7 +398,7 @@
       border-radius: 37px;
       font-size: 1.1rem;
       font-weight: 500;
-      color: #FFFFFF; /* white */
+      color: var(--text-primary); /* Text Primary */
       padding: 0 20px;
       height: 33px;
       display: flex;
@@ -459,7 +459,7 @@
       justify-content: flex-start;
       background: none;
       border: none;
-      color: #E6E5F4; /* gray-50 */
+      color: var(--text-primary); /* Text Primary */
       font-size: 1.1rem;
       font-weight: 500;
       padding: 0 20px;
@@ -475,12 +475,12 @@
     .mobile-dropdown-link.active,
     .mobile-dropdown-link:focus {
       background-color: #E6E5F4; /* gray-50 */
-      color: #1A2332; /* gray-900 */
+      color: #000000; /* gray-1000 */
     }
 
     .mobile-dropdown-link:hover {
-      background-color: rgba(230, 229, 244, 0.12); /* gray-50 at 12% opacity */
-      color: #E6E5F4; /* gray-50 */
+      background-color: rgba(0, 0, 0, 0.25); /* Primary hover - black at 25% opacity */
+      color: var(--text-primary); /* Text Primary */
     }
   }
 }

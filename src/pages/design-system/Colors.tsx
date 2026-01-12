@@ -5,7 +5,7 @@ import { PADDING_CLASSES } from '../../utils/paddingClasses'
 
 const Colors = () => {
   return (
-    <div className="w-full overflow-x-hidden bg-gray-900 min-h-screen flex flex-col pt-[150px]">
+    <div className="w-full overflow-x-hidden bg-gray-1000 min-h-screen flex flex-col pt-[150px]">
       <section className={`w-full ${PADDING_CLASSES.page.full} flex-grow flex flex-col`}>
         <div className="mb-8">
           <Link to="/design-system">
@@ -16,7 +16,7 @@ const Colors = () => {
           <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-text-primary mb-4 break-words">
             Color Palette
           </h1>
-          <p className="text-lg text-gray-300 break-words">
+          <p className="text-lg text-text-secondary break-words">
             Complete monochrome blue-hued color system with usage examples
           </p>
         </div>

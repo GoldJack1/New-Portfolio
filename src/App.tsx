@@ -135,10 +135,8 @@ function AppRoutes() {
       // Strategy 1: Measure from first to last child (most accurate for most layouts)
       const children = Array.from(pageDiv.children) as HTMLElement[]
       if (children.length > 0) {
-        const firstChild = children[0]
         const lastChild = children[children.length - 1]
         
-        const firstRect = firstChild.getBoundingClientRect()
         const lastRect = lastChild.getBoundingClientRect()
         const pageRect = pageDiv.getBoundingClientRect()
         

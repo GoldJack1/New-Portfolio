@@ -28,10 +28,10 @@ const Button = ({
   const baseStyles = 'rounded-full font-semibold transition-all duration-200 focus:outline-none'
   
   const variantStyles = {
-    primary: 'bg-gray-800 text-text-primary shadow-lg hover:bg-gray-700 hover:shadow-xl',
-    secondary: 'bg-gray-600 text-text-primary shadow-md hover:bg-gray-500 hover:shadow-lg',
-    tertiary: 'bg-gray-700 text-text-primary shadow-md hover:bg-gray-600 hover:shadow-lg',
-    ghost: 'bg-transparent text-gray-200 shadow-sm hover:bg-gray-800 hover:shadow-md',
+    primary: 'bg-gray-800 text-text-primary shadow-lg hover:shadow-xl relative overflow-hidden before:content-[""] before:absolute before:inset-0 before:bg-[rgba(255,255,255,0.25)] before:opacity-0 hover:before:opacity-100 before:transition-opacity before:duration-200',
+    secondary: 'bg-gray-600 text-text-primary shadow-md hover:shadow-lg relative overflow-hidden before:content-[""] before:absolute before:inset-0 before:bg-[rgba(0,0,0,0.25)] before:opacity-0 hover:before:opacity-100 before:transition-opacity before:duration-200',
+    tertiary: 'bg-gray-700 text-text-primary shadow-md hover:shadow-lg relative overflow-hidden before:content-[""] before:absolute before:inset-0 before:bg-[rgba(0,0,0,0.25)] before:opacity-0 hover:before:opacity-100 before:transition-opacity before:duration-200',
+    ghost: 'bg-transparent text-text-primary shadow-sm hover:shadow-md relative overflow-hidden before:content-[""] before:absolute before:inset-0 before:bg-[rgba(255,255,255,0.25)] before:opacity-0 hover:before:opacity-100 before:transition-opacity before:duration-200',
   }
 
   const sizeStyles = {
@@ -65,6 +65,7 @@ const Button = ({
         ${className}
       `}
     >
+      <span className="relative z-10">
       {loading ? (
         <span className="flex items-center justify-center">
           <span className="animate-spin">⏳</span>
@@ -79,6 +80,7 @@ const Button = ({
       ) : (
         children
       )}
+      </span>
     </button>
   )
 }

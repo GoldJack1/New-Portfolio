@@ -5,7 +5,7 @@ const ButtonShowcase = () => {
   return (
     <section className="mb-16 w-full overflow-x-hidden">
       <h2 className="text-2xl sm:text-3xl font-extrabold text-text-primary mb-6 break-words">Buttons</h2>
-      <div className="space-y-8 bg-gray-800 p-6 sm:p-8 rounded-2xl w-full min-w-0">
+      <div className="space-y-8 bg-gray-900 p-6 sm:p-8 rounded-2xl w-full min-w-0">
         <div>
           <h3 className="text-xl font-bold text-text-primary mb-4">Variants</h3>
           <div className="flex flex-wrap gap-4">

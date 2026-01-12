@@ -7,7 +7,7 @@ const About = () => {
         <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-text-primary mb-8 break-words">
           About
         </h1>
-        <div className="space-y-6 text-base sm:text-lg font-light text-gray-200">
+        <div className="space-y-6 text-base sm:text-lg font-light text-text-primary">
           <p className="break-words">
             Welcome to my portfolio! I'm Jack Wingate, and this is where I showcase
             my work and share a bit about myself.

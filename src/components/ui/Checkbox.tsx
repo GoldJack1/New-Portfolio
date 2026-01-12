@@ -15,7 +15,7 @@ const Checkbox = ({
   return (
     <label className={`flex items-center gap-3 cursor-pointer ${className}`}>
       {label && labelPosition === 'left' && (
-        <span className="text-gray-200">{label}</span>
+        <span className="text-text-secondary">{label}</span>
       )}
       <input
         type="checkbox"
@@ -23,7 +23,7 @@ const Checkbox = ({
         className="w-5 h-5 rounded text-text-primary focus:outline-none cursor-pointer"
       />
       {label && labelPosition === 'right' && (
-        <span className="text-gray-200">{label}</span>
+        <span className="text-text-secondary">{label}</span>
       )}
     </label>
   )

@@ -2,12 +2,12 @@ import { PADDING_CLASSES } from '../utils/paddingClasses'
 
 const PrivacyPolicy = () => {
   return (
-    <div className="w-full overflow-x-hidden bg-gray-900 min-h-screen flex flex-col pt-[150px]">
+    <div className="w-full overflow-x-hidden bg-gray-1000 min-h-screen flex flex-col pt-[150px]">
       <section className={`w-full ${PADDING_CLASSES.page.full} flex-grow flex flex-col`}>
         <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-text-primary mb-8 break-words">
           Privacy Policy
         </h1>
-        <div className="space-y-6 text-base sm:text-lg font-light text-gray-200">
+        <div className="space-y-6 text-base sm:text-lg font-light text-text-primary">
           <p className="break-words">
             This privacy policy describes how we collect, use, and protect your personal information.
           </p>

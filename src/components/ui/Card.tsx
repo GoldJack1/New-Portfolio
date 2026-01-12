@@ -27,13 +27,13 @@ const Card = ({
       `}
     >
       {header && (
-        <div className="px-6 py-4 bg-gray-700">
+        <div className="px-6 py-4 bg-gray-600">
           {header}
         </div>
       )}
       <div className="p-6">{children}</div>
       {footer && (
-        <div className="px-6 py-4 bg-gray-700">
+        <div className="px-6 py-4 bg-gray-600">
           {footer}
         </div>
       )}
