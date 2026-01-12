@@ -24,20 +24,10 @@ export default {
           900: '#1A2332',  // Darkest blue-gray
           1000: '#000000',  // black
         },
-        primary: {
-          DEFAULT: '#2A3442', // 800
-          light: '#3A4757',   // 700
-          dark: '#1A2332',    // 900
-        },
-        secondary: {
-          DEFAULT: '#5A6B7F', // 500
-          light: '#7A8FA8',   // 400
-          dark: '#4A5A6B',    // 600
-        },
-        tertiary: {
-          DEFAULT: '#A8B8CC', // 300
-          light: '#C5D4E3',   // 200
-          dark: '#7A8FA8',    // 400
+        text: {
+          primary: 'var(--text-primary)',      // Primary Text - white at 100%
+          secondary: 'var(--text-secondary)',  // Secondary Text - white at 75%
+          tertiary: 'var(--text-tertiary)',    // Tertiary Text - white at 50%
         },
         homeBackground: '#7F0000',
         projectsBackground: '#397F00',

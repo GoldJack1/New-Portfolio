@@ -20,7 +20,7 @@ const Checkbox = ({
       <input
         type="checkbox"
         {...props}
-        className="w-5 h-5 rounded text-gray-50 focus:outline-none cursor-pointer"
+        className="w-5 h-5 rounded text-text-primary focus:outline-none cursor-pointer"
       />
       {label && labelPosition === 'right' && (
         <span className="text-gray-200">{label}</span>

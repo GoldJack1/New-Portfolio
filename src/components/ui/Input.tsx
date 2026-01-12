@@ -18,7 +18,7 @@ const Input = ({
   className = '',
   ...props
 }: InputProps) => {
-  const baseStyles = 'w-full px-4 py-3 rounded-full bg-gray-800 text-gray-50 focus:outline-none transition-all'
+  const baseStyles = 'w-full px-4 py-3 rounded-full bg-gray-800 text-text-primary focus:outline-none transition-all'
   
   const stateStyles = error
     ? 'focus:bg-gray-700 bg-gray-700'

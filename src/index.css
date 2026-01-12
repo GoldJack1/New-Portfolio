@@ -75,6 +75,12 @@
 @tailwind utilities;
 
 @layer base {
+  :root {
+    /* Text Color Tokens */
+    --text-primary: rgba(255, 255, 255, 1);      /* Primary Text - white at 100% */
+    --text-secondary: rgba(255, 255, 255, 0.75); /* Secondary Text - white at 75% */
+    --text-tertiary: rgba(255, 255, 255, 0.5);   /* Tertiary Text - white at 50% */
+  }
   html {
     overflow-x: hidden;
     background-color: #000000; /* gray-1000 */
@@ -85,7 +91,7 @@
   }
 
   body {
-    @apply font-geologica bg-gray-1000 text-gray-50;
+    @apply font-geologica bg-gray-1000 text-text-primary;
     overflow-x: hidden;
     width: 100%;
     min-height: 100vh;

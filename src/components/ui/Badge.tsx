@@ -16,9 +16,9 @@ const Badge = ({
   className = '',
 }: BadgeProps) => {
   const variantStyles = {
-    primary: 'bg-gray-700 text-gray-50',
-    secondary: 'bg-gray-600 text-gray-50',
-    tertiary: 'bg-gray-700 text-gray-50',
+    primary: 'bg-gray-700 text-text-primary',
+    secondary: 'bg-gray-600 text-text-primary',
+    tertiary: 'bg-gray-700 text-text-primary',
   }
 
   const sizeStyles = {

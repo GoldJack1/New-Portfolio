@@ -14,7 +14,7 @@ const Textarea = ({
   className = '',
   ...props
 }: TextareaProps) => {
-  const baseStyles = 'w-full px-4 py-3 rounded-lg bg-gray-800 text-gray-50 focus:outline-none transition-all resize-none'
+  const baseStyles = 'w-full px-4 py-3 rounded-lg bg-gray-800 text-text-primary focus:outline-none transition-all resize-none'
   
   const stateStyles = error
     ? 'focus:bg-gray-700 bg-gray-700'

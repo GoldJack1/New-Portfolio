@@ -35,84 +35,66 @@ const Footer = () => {
       }}
     >
       <div className={`w-full ${PADDING_CLASSES.footer.horizontal} relative z-10`}>
-        <div className="flex flex-col md:flex-row justify-between items-start gap-6 w-full min-w-0">
-          {/* Left side - Name, Copyright, Social Icons, and Links */}
-          <div className="flex flex-col min-w-0 gap-4 flex-1">
-            <div>
-              <h3 className="text-lg sm:text-xl font-bold text-gray-50 mb-2 break-words">Jack Wingate</h3>
-              <p className="text-xs sm:text-sm text-gray-200 break-words mb-4">
+        <div className="flex flex-col gap-6 w-full min-w-0">
+          {/* Row 1: Copyright on far left, Social icons on far right */}
+          <div className="flex flex-col md:flex-row justify-between items-start gap-4 w-full">
+            {/* Copyright Section - Far Left */}
+            <div className="flex flex-col gap-[5px] justify-start items-start h-fit" style={{ flexDirection: 'column' }}>
+              <h3 className="text-lg sm:text-xl font-normal text-text-primary mb-0 break-words" style={{ height: '25px' }}>Jack Wingate</h3>
+              <p className="text-xs sm:text-sm font-thin text-text-tertiary break-words mb-0" style={{ height: '16px' }}>
                 © {currentYear} Jack Wingate. All rights reserved.
               </p>
-              
-              {/* Social Media Icons - Below copyright on mobile, on right on desktop */}
-              <div className="flex gap-4 md:hidden">
-                {socialLinks.map((social) => {
-                  const Icon = social.icon
-                  return (
-                    <a
-                      key={social.label}
-                      href={social.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="w-10 h-10 rounded-full bg-gray-700 flex items-center justify-center text-gray-50 hover:bg-gray-600 transition-colors"
-                      aria-label={social.label}
-                    >
-                      <Icon className="w-5 h-5" />
-                    </a>
-                  )
-                })}
-              </div>
             </div>
-
-            {/* Links - Side by Side */}
-            <div className="flex flex-col sm:flex-row gap-6 sm:gap-8">
-              {/* Footer Links - Stacked Vertically */}
-              <div className="flex flex-col gap-2">
-                <span className="text-sm font-semibold text-gray-50">Page Links:</span>
-                {footerLinks.map((link) => (
-                  <Link
-                    key={link.path}
-                    to={link.path}
-                    className="text-sm text-gray-200 hover:text-gray-50 transition-colors"
+            
+            {/* Social Media Icons - Far Right */}
+            <div className="flex gap-4 justify-end items-start pt-1 h-[46px]">
+              {socialLinks.map((social) => {
+                const Icon = social.icon
+                return (
+                  <a
+                    key={social.label}
+                    href={social.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-10 h-10 rounded-full bg-gray-700 flex items-center justify-center text-text-primary hover:bg-gray-600 transition-colors"
+                    aria-label={social.label}
                   >
-                    {link.label}
-                  </Link>
-                ))}
-              </div>
-
-              {/* Other Links - Stacked Vertically */}
-              <div className="flex flex-col gap-2">
-                <span className="text-sm font-semibold text-gray-50">Other Links:</span>
-                {otherLinks.map((link) => (
-                  <Link
-                    key={link.path}
-                    to={link.path}
-                    className="text-sm text-gray-200 hover:text-gray-50 transition-colors"
-                  >
-                    {link.label}
-                  </Link>
-                ))}
-              </div>
+                    <Icon className="w-5 h-5" />
+                  </a>
+                )
+              })}
             </div>
           </div>
 
-          {/* Right side - Social Media Icons (Desktop only) */}
-          <div className="hidden md:flex gap-4">
-            {socialLinks.map((social) => {
-              const Icon = social.icon
-              return (
-                <a
-                  key={social.label}
-                  href={social.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="w-10 h-10 rounded-full bg-gray-700 flex items-center justify-center text-gray-50 hover:bg-gray-600 transition-colors"
-                  aria-label={social.label}
+          {/* Row 2: Page Links (100px wide) and Other Links (fixed 100px width) */}
+          <div className="flex flex-col sm:flex-row gap-6 sm:gap-8">
+            {/* Footer Links - Stacked Vertically, 100px wide */}
+            <div className="flex flex-col gap-2" style={{ width: '150px' }}>
+              <span className="text-sm font-normal text-text-secondary">Page Links:</span>
+              {footerLinks.map((link) => (
+                <Link
+                  key={link.path}
+                  to={link.path}
+                  className="text-sm text-text-primary hover:text-text-primary transition-colors font-extralight"
                 >
-                  <Icon className="w-5 h-5" />
-                </a>
-              )
-            })}
+                  {link.label}
+                </Link>
+              ))}
+            </div>
+
+            {/* Other Links - Stacked Vertically, fixed 100px width */}
+            <div className="flex flex-col gap-2" style={{ width: '100px' }}>
+              <span className="text-sm font-normal text-text-secondary">Other Links:</span>
+              {otherLinks.map((link) => (
+                <Link
+                  key={link.path}
+                  to={link.path}
+                  className="text-sm text-text-primary hover:text-text-primary transition-colors font-extralight"
+                >
+                  {link.label}
+                </Link>
+              ))}
+            </div>
           </div>
         </div>
       </div>

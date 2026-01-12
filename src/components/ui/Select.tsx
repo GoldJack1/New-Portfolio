@@ -14,7 +14,7 @@ const Select = ({
   className = '',
   ...props
 }: SelectProps) => {
-  const baseStyles = 'w-full px-4 py-3 rounded-full bg-gray-800 text-gray-50 focus:outline-none focus:bg-gray-700 transition-all appearance-none cursor-pointer'
+  const baseStyles = 'w-full px-4 py-3 rounded-full bg-gray-800 text-text-primary focus:outline-none focus:bg-gray-700 transition-all appearance-none cursor-pointer'
 
   return (
     <div className="w-full min-w-0">

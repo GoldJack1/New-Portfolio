@@ -16,10 +16,10 @@ const FormControlsShowcase = () => {
 
   return (
     <section className="mb-16 w-full overflow-x-hidden">
-      <h2 className="text-2xl sm:text-3xl font-extrabold text-gray-50 mb-6 break-words">Form Controls</h2>
+      <h2 className="text-2xl sm:text-3xl font-extrabold text-text-primary mb-6 break-words">Form Controls</h2>
       <div className="space-y-8 bg-gray-800 p-6 sm:p-8 rounded-2xl w-full min-w-0">
         <div>
-          <h3 className="text-xl font-bold text-gray-50 mb-4">Inputs</h3>
+          <h3 className="text-xl font-bold text-text-primary mb-4">Inputs</h3>
           <div className="space-y-4 max-w-md">
             <Input label="Text Input" placeholder="Enter text" />
             <Input label="Email Input" type="email" placeholder="email@example.com" />
@@ -29,13 +29,13 @@ const FormControlsShowcase = () => {
           </div>
         </div>
         <div>
-          <h3 className="text-xl font-bold text-gray-50 mb-4">Textarea</h3>
+          <h3 className="text-xl font-bold text-text-primary mb-4">Textarea</h3>
           <div className="max-w-md">
             <Textarea label="Message" rows={4} placeholder="Enter your message" />
           </div>
         </div>
         <div>
-          <h3 className="text-xl font-bold text-gray-50 mb-4">Select</h3>
+          <h3 className="text-xl font-bold text-text-primary mb-4">Select</h3>
           <div className="max-w-md">
             <Select
               label="Choose Option"
@@ -49,7 +49,7 @@ const FormControlsShowcase = () => {
           </div>
         </div>
         <div>
-          <h3 className="text-xl font-bold text-gray-50 mb-4">Checkboxes</h3>
+          <h3 className="text-xl font-bold text-text-primary mb-4">Checkboxes</h3>
           <div className="space-y-3">
             <Checkbox label="Single Checkbox" checked={checkboxValue} onChange={(e) => setCheckboxValue(e.target.checked)} />
             <Checkbox label="Checked" checked />
@@ -58,7 +58,7 @@ const FormControlsShowcase = () => {
           </div>
         </div>
         <div>
-          <h3 className="text-xl font-bold text-gray-50 mb-4">Radio Buttons</h3>
+          <h3 className="text-xl font-bold text-text-primary mb-4">Radio Buttons</h3>
           <div className="space-y-3">
             <Radio name="radio-group" label="Option 1" value="option1" checked={radioValue === 'option1'} onChange={(e) => setRadioValue(e.target.value)} />
             <Radio name="radio-group" label="Option 2" value="option2" checked={radioValue === 'option2'} onChange={(e) => setRadioValue(e.target.value)} />
@@ -67,7 +67,7 @@ const FormControlsShowcase = () => {
           </div>
         </div>
         <div>
-          <h3 className="text-xl font-bold text-gray-50 mb-4">Toggle</h3>
+          <h3 className="text-xl font-bold text-text-primary mb-4">Toggle</h3>
           <div className="space-y-3">
             <Toggle label="Toggle Switch" checked={toggleValue} onChange={setToggleValue} />
             <Toggle label="Checked" checked />
@@ -76,7 +76,7 @@ const FormControlsShowcase = () => {
           </div>
         </div>
         <div>
-          <h3 className="text-xl font-bold text-gray-50 mb-4">Slider</h3>
+          <h3 className="text-xl font-bold text-text-primary mb-4">Slider</h3>
           <div className="max-w-md space-y-4">
             <Slider label="Value Slider" value={sliderValue} onChange={setSliderValue} min={0} max={100} />
             <Slider label="Default Slider" defaultValue={30} />

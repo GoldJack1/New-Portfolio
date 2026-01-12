@@ -13,7 +13,7 @@ const Padding = () => {
               ← Back to Design System
             </Button>
           </Link>
-          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-gray-50 mb-4 break-words">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-text-primary mb-4 break-words">
             Padding
           </h1>
           <p className="text-lg text-gray-300 break-words">

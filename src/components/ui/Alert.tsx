@@ -21,10 +21,10 @@ const Alert = ({
   if (!isVisible) return null
 
   const typeStyles = {
-    info: 'bg-gray-700 text-gray-50',
-    success: 'bg-gray-700 text-gray-50',
-    warning: 'bg-gray-700 text-gray-50',
-    error: 'bg-gray-700 text-gray-50',
+    info: 'bg-gray-700 text-text-primary',
+    success: 'bg-gray-700 text-text-primary',
+    warning: 'bg-gray-700 text-text-primary',
+    error: 'bg-gray-700 text-text-primary',
   }
 
   const icons = {

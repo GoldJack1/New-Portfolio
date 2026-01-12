@@ -32,17 +32,17 @@ const SiteMap = () => {
   return (
     <div className="w-full overflow-x-hidden bg-gray-900 min-h-screen flex flex-col pt-[150px]">
       <section className={`w-full ${PADDING_CLASSES.page.full} flex-grow flex flex-col`}>
-        <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-gray-50 mb-8 break-words">
+        <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-text-primary mb-8 break-words">
           Site Map
         </h1>
         <div className="space-y-4">
-          <h2 className="text-2xl font-bold text-gray-50 mb-4">All Pages</h2>
+          <h2 className="text-2xl font-bold text-text-primary mb-4">All Pages</h2>
           <ul className="space-y-2">
             {pages.map((page) => (
               <li key={page.path} className="space-y-1">
                 <Link
                   to={page.path}
-                  className="text-lg text-gray-200 hover:text-gray-50 transition-colors underline"
+                  className="text-lg text-gray-200 hover:text-text-primary transition-colors underline"
                 >
                   {page.label}
                 </Link>
@@ -52,7 +52,7 @@ const SiteMap = () => {
                       <li key={child.path}>
                         <Link
                           to={child.path}
-                          className="text-base text-gray-300 hover:text-gray-50 transition-colors underline"
+                          className="text-base text-gray-300 hover:text-text-primary transition-colors underline"
                         >
                           {child.label}
                         </Link>

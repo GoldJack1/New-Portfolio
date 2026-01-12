@@ -62,7 +62,7 @@ const Progress = ({
             fill="none"
             strokeDasharray={circumference}
             strokeDashoffset={offset}
-            className="text-gray-50 transition-all duration-300"
+            className="text-text-primary transition-all duration-300"
           />
         </svg>
         {showLabel && (

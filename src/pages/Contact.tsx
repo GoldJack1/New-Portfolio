@@ -7,7 +7,7 @@ const Contact = () => {
   return (
     <div className="w-full overflow-x-hidden bg-contactBackground min-h-screen flex flex-col pt-[150px]">
       <section className={`w-full ${PADDING_CLASSES.page.full} flex-grow flex flex-col justify-center`}>
-        <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-gray-50 mb-8 break-words">
+        <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-text-primary mb-8 break-words">
           Contact
         </h1>
         <div className="bg-gray-800 p-6 sm:p-8 rounded-2xl w-full min-w-0">
