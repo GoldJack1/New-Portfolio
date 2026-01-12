@@ -125,7 +125,7 @@ const Footer = () => {
                 <Link
                   key={link.path}
                   to={link.path}
-                  className="text-sm text-text-primary hover:text-text-primary transition-colors font-extralight"
+                  className="text-xs text-text-primary hover:text-text-primary transition-colors font-extralight"
                 >
                   {link.label}
                 </Link>
