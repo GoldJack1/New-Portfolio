@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import Navigation from './components/Navigation'
 import Footer from './components/Footer'
+import ScrollToTop from './components/ScrollToTop'
 import Home from './pages/Home'
 import Projects from './pages/Projects'
 import About from './pages/About'
@@ -18,6 +19,7 @@ import SiteMap from './pages/SiteMap'
 function App() {
   return (
     <Router>
+      <ScrollToTop />
       <div className="min-h-screen flex flex-col w-full overflow-x-hidden bg-gray-1000">
         <Navigation />
         <main className="flex-grow w-full overflow-x-hidden bg-gray-1000">
