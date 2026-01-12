@@ -135,6 +135,7 @@ const TypographyShowcase = () => {
       <div className="mt-8">
         <h3 className="text-xl font-bold text-text-primary mb-4">Fixed Typography Scale</h3>
         <p className="text-sm text-text-secondary mb-6">Typography sizes that remain consistent for each breakpoint</p>
+        <p className="text-xs text-text-tertiary mb-6 italic">Note: Some browsers may enforce minimum font sizes (typically 12-14px) for accessibility, which may cause smaller text to render larger than specified.</p>
         
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {/* Mobile */}
@@ -206,6 +207,15 @@ const TypographyShowcase = () => {
 
             <div className="space-y-1">
               <p className="text-xs text-text-tertiary">Caption - Tertiary text with lowest contrast</p>
+              <p className="text-sm text-text-primary">
+                Size: 12px
+                <br />
+                Line Height: 1.4 • Letter Spacing: 0.01em
+              </p>
+            </div>
+
+            <div className="space-y-1">
+              <p className="text-xs text-text-tertiary">Small Caption - Smallest text size for fine print</p>
               <p className="text-sm text-text-primary">
                 Size: 12px
                 <br />
@@ -289,6 +299,15 @@ const TypographyShowcase = () => {
                 Line Height: 1.4 • Letter Spacing: 0.01em
               </p>
             </div>
+
+            <div className="space-y-1">
+              <p className="text-xs text-text-tertiary">Small Caption - Smallest text size for fine print</p>
+              <p className="text-sm text-text-primary">
+                Size: 12px
+                <br />
+                Line Height: 1.4 • Letter Spacing: 0.01em
+              </p>
+            </div>
           </div>
 
           {/* Desktop */}
@@ -362,6 +381,15 @@ const TypographyShowcase = () => {
               <p className="text-sm text-text-tertiary">Caption - Tertiary text with lowest contrast</p>
               <p className="text-sm text-text-primary">
                 Size: 14px
+                <br />
+                Line Height: 1.4 • Letter Spacing: 0.01em
+              </p>
+            </div>
+
+            <div className="space-y-1">
+              <span className="text-text-tertiary block text-xs" style={{ fontSize: '12px', lineHeight: '1.4', letterSpacing: '0.01em', WebkitTextSizeAdjust: '100%' }}>Small Caption - Smallest text size for fine print</span>
+              <p className="text-sm text-text-primary">
+                Size: 12px (may render larger due to browser minimum font size settings)
                 <br />
                 Line Height: 1.4 • Letter Spacing: 0.01em
               </p>
