@@ -26,7 +26,7 @@ const Projects = () => {
     {
       backgroundType: 'video',
       backgroundValue: project3Video,
-      heading: 'IN TERNET + TELETEXT = WEBTEXT',
+      heading: 'INTERNET + TELETEXT = WEBTEXT',
       subtext: 'A retro-inspired concept blending the nostalgia of teletext with the use of todays modern web.',
       buttonText: 'View Project',
     },
