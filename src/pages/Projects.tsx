@@ -1,27 +1,33 @@
 import Hero, { HeroSlide } from '../components/ui/Hero'
 import { HERO_GRADIENTS } from '../utils/heroGradients'
+import project1Image from '../assets/images/projects/Hero Imgs/Project 1.jpg'
+import project2Image from '../assets/images/projects/Hero Imgs/Project 2.jpg'
+import project3Video from '../assets/images/projects/Hero Imgs/Project 3.mp4'
 
 const Projects = () => {
   const projectSlides: HeroSlide[] = [
     {
-      backgroundType: 'gradient',
-      backgroundValue: HERO_GRADIENTS.projects,
-      heading: 'Project 1',
-      subtext: 'Description of project 1 goes here.',
+      backgroundType: 'image',
+      backgroundValue: project1Image,
+      fallbackBackground: HERO_GRADIENTS.projects,
+      heading: 'Great British Railways',
+      subtext: "A new era for Britain's Railways, uniting track and Train under one brand.",
       buttonText: 'View Project',
     },
     {
-      backgroundType: 'gradient',
-      backgroundValue: HERO_GRADIENTS.projects,
-      heading: 'Project 2',
-      subtext: 'Description of project 2 goes here.',
+      backgroundType: 'image',
+      backgroundValue: project2Image,
+      fallbackBackground: HERO_GRADIENTS.projects,
+      heading: 'Rail Statistics',
+      subtext: "A functional app, for train enthusiasts to track stations visited across Great Britain and train tickets.",
+      caption: "(Major Update & Android Relase coming February 2026)",
       buttonText: 'View Project',
     },
     {
-      backgroundType: 'gradient',
-      backgroundValue: HERO_GRADIENTS.projects,
-      heading: 'Project 3',
-      subtext: 'Description of project 3 goes here.',
+      backgroundType: 'video',
+      backgroundValue: project3Video,
+      heading: 'IN TERNET + TELETEXT = WEBTEXT',
+      subtext: 'A retro-inspired concept blending the nostalgia of teletext with the use of todays modern web.',
       buttonText: 'View Project',
     },
   ]

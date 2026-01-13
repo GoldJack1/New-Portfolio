@@ -9,7 +9,7 @@ const Contact = () => {
           backgroundType: 'gradient',
           backgroundValue: HERO_GRADIENTS.contact,
           heading: 'Contact',
-          subtext: 'Get in touch with me. Feel free to reach out if you have any questions or would like to connect!',
+          subtext: "This page is under construction, please check back soon for updates.",
         }]}
         height="100vh"
       />

@@ -5,11 +5,13 @@ export interface HeroSlide {
   backgroundType: 'solid' | 'gradient' | 'image' | 'video'
   backgroundValue: string
   heading: string
+  caption?: string
   subtext?: string
   buttonText?: string
   buttonLink?: string
   buttonOnClick?: () => void
   gradientOverlay?: string
+  fallbackBackground?: string
 }
 
 interface HeroProps {
@@ -135,32 +137,56 @@ const Hero = ({
   }, [isCarousel, displaySlides.length])
 
   // Render background based on type
-  const renderBackground = (slide: HeroSlide) => {
+  const renderBackground = (slide: HeroSlide, isActive: boolean = true) => {
     const { backgroundType, backgroundValue } = slide
 
     switch (backgroundType) {
       case 'video':
         return (
-          <video
-            className="absolute inset-0 w-full h-full object-cover"
-            autoPlay
-            loop
-            muted
-            playsInline
-            preload="metadata"
-          >
-            <source src={backgroundValue} type="video/mp4" />
-            Your browser does not support the video tag.
-          </video>
+          <>
+            {!isActive && slide.fallbackBackground && (
+              <div
+                className="absolute inset-0 w-full h-full"
+                style={{ background: slide.fallbackBackground }}
+              />
+            )}
+            {isActive && (
+              <video
+                key={`video-${backgroundValue}`}
+                className="absolute inset-0 w-full h-full object-cover"
+                autoPlay
+                loop
+                muted
+                playsInline
+                preload="auto"
+              >
+                <source src={backgroundValue} type="video/mp4" />
+                Your browser does not support the video tag.
+              </video>
+            )}
+          </>
         )
       case 'image':
         return (
-          <img
-            src={backgroundValue}
-            alt=""
-            className="absolute inset-0 w-full h-full object-cover"
-            loading="lazy"
-          />
+          <>
+            {slide.fallbackBackground && (
+              <div
+                className="absolute inset-0 w-full h-full"
+                style={{ background: slide.fallbackBackground }}
+              />
+            )}
+            <img
+              src={backgroundValue}
+              alt=""
+              className="absolute inset-0 w-full h-full object-cover"
+              loading="lazy"
+              onError={(e) => {
+                // Hide broken image and show fallback
+                const target = e.target as HTMLImageElement
+                target.style.display = 'none'
+              }}
+            />
+          </>
         )
       case 'gradient':
         return (
@@ -181,13 +207,13 @@ const Hero = ({
   }
 
   // Render slide content
-  const renderSlideContent = (slide: HeroSlide) => {
+  const renderSlideContent = (slide: HeroSlide, isActive: boolean = true) => {
     const gradientOverlay = slide.gradientOverlay || defaultGradient
 
     return (
       <div className="relative w-full h-full">
         {/* Background layer */}
-        {renderBackground(slide)}
+        {renderBackground(slide, isActive)}
 
         {/* Gradient overlay - responsive for mobile */}
         <div
@@ -201,17 +227,22 @@ const Hero = ({
 
         {/* Content layer */}
         <div className="relative z-10 flex items-center justify-start h-full py-12 sm:py-16 lg:py-24 pl-4 lg:pl-8">
-          <div className="max-w-full sm:max-w-2xl lg:max-w-4xl w-full text-left flex flex-col gap-4 sm:gap-6 lg:gap-8">
-            <h1 className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl 2xl:text-7xl font-semibold text-text-primary leading-tight sm:leading-snug lg:leading-normal break-words">
+          <div className="max-w-full sm:max-w-[50%] lg:max-w-[50%] w-full text-left flex flex-col gap-2 sm:gap-3 lg:gap-4">
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl 2xl:text-7xl font-semibold text-text-primary break-words" style={{ lineHeight: '1.2', letterSpacing: '-0.02em' }}>
               {slide.heading}
             </h1>
             {slide.subtext && (
-              <p className="text-base sm:text-lg lg:text-xl xl:text-2xl font-light text-text-secondary break-words">
+              <p className="text-base sm:text-lg lg:text-xl xl:text-2xl font-light text-text-secondary break-words" style={{ lineHeight: '1.5', letterSpacing: '0' }}>
                 {slide.subtext}
               </p>
             )}
+            {slide.caption && (
+              <p className="text-sm sm:text-base lg:text-lg font-light text-text-tertiary break-words" style={{ lineHeight: '1.4', letterSpacing: '0.01em' }}>
+                {slide.caption}
+              </p>
+            )}
             {slide.buttonText && (
-              <div className="mt-4 sm:mt-6 lg:mt-8">
+              <div className="mt-1 sm:mt-2 lg:mt-3">
                 {slide.buttonLink ? (
                   <a href={slide.buttonLink}>
                     <Button
@@ -252,17 +283,20 @@ const Hero = ({
         <>
           {/* Carousel slides */}
           <div className="relative w-full h-full">
-            {displaySlides.map((slide, index) => (
-              <div
-                key={index}
-                className={`absolute inset-0 w-full h-full transition-opacity duration-500 ${
-                  index === currentSlide ? 'opacity-100 z-10' : 'opacity-0 z-0'
-                }`}
-                aria-hidden={index !== currentSlide}
-              >
-                {renderSlideContent(slide)}
-              </div>
-            ))}
+            {displaySlides.map((slide, index) => {
+              const isActive = index === currentSlide
+              return (
+                <div
+                  key={index}
+                  className={`absolute inset-0 w-full h-full transition-opacity duration-500 ${
+                    isActive ? 'opacity-100 z-10' : 'opacity-0 z-0'
+                  }`}
+                  aria-hidden={!isActive}
+                >
+                  {renderSlideContent(slide, isActive)}
+                </div>
+              )
+            })}
           </div>
 
           {/* Navigation controls container (buttons + indicators) */}

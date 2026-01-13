@@ -9,7 +9,7 @@ const About = () => {
           backgroundType: 'gradient',
           backgroundValue: HERO_GRADIENTS.about,
           heading: 'About',
-          subtext: "Welcome to my portfolio! I'm Jack Wingate, and this is where I showcase my work and share a bit about myself. I'm passionate about creating beautiful, functional web experiences that make a difference. Feel free to explore my projects and reach out if you'd like to connect!",
+          subtext: "This page is under construction, please check back soon for updates.",
         }]}
         height="100vh"
       />

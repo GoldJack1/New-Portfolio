@@ -1,15 +1,18 @@
 import Hero from '../components/ui/Hero'
 import { HERO_GRADIENTS } from '../utils/heroGradients'
+import homeImage from '../assets/images/home/IMG_6734.JPG'
 
 const Home = () => {
   return (
     <div className="w-full overflow-x-hidden bg-gray-1000 min-h-screen flex flex-col">
       <Hero
         slides={[{
-          backgroundType: 'gradient',
-          backgroundValue: HERO_GRADIENTS.home,
-          heading: 'Jack Wingate',
-          subtext: 'Welcome to my portfolio. Explore my projects, learn about me, and get in touch.',
+          backgroundType: 'image',
+          backgroundValue: homeImage,
+          fallbackBackground: HERO_GRADIENTS.home,
+          heading: 'Welcome to my portfolio!',
+          subtext: 'This website is currently under construction, please check back soon for updates.',
+          caption: '(Will be completed by Spring 2026)',
         }]}
         height="100vh"
       />
