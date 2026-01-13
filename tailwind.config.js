@@ -24,10 +24,10 @@ export default {
           secondary: 'var(--text-secondary)',  // Secondary Text - white at 75%
           tertiary: 'var(--text-tertiary)',    // Tertiary Text - white at 50%
         },
-        homeBackground: '#7F0000',
-        projectsBackground: '#397F00',
-        aboutBackground: '#00377F',
-        contactBackground: '#7F0070',
+        homeBackground: '#FFE100',
+        projectsBackground: '#00FF37',
+        aboutBackground: '#00CFFF',
+        contactBackground: '#FF0000',
         hover: '#ACACB7',
       },
       fontFamily: {

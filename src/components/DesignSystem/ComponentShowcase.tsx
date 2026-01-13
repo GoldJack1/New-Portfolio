@@ -3,6 +3,7 @@ import Badge from '../ui/Badge'
 import Alert from '../ui/Alert'
 import Progress from '../ui/Progress'
 import Navigation from '../Navigation'
+import Hero from '../ui/Hero'
 
 const ComponentShowcase = () => {
   return (
@@ -83,6 +84,79 @@ const ComponentShowcase = () => {
               <Progress value={60} variant="circular" size="sm" />
               <Progress value={60} variant="circular" size="md" />
               <Progress value={60} variant="circular" size="lg" />
+            </div>
+          </div>
+        </div>
+        <div>
+          <h3 className="text-xl font-bold text-text-primary mb-4">Hero</h3>
+          <div className="space-y-8">
+            <div>
+              <p className="text-sm text-text-secondary mb-4">Standalone Hero with Solid Background</p>
+              <div className="bg-gray-900 p-4 rounded-2xl overflow-hidden">
+                <Hero
+                  slides={[
+                    {
+                      backgroundType: 'solid',
+                      backgroundValue: '#7F0000',
+                      heading: 'Welcome to My Portfolio',
+                      subtext: 'Explore my projects and get in touch',
+                      buttonText: 'View Projects',
+                      buttonOnClick: () => alert('Button clicked!'),
+                    },
+                  ]}
+                  height="400px"
+                />
+              </div>
+            </div>
+            <div>
+              <p className="text-sm text-text-secondary mb-4">Standalone Hero with Gradient Background</p>
+              <div className="bg-gray-900 p-4 rounded-2xl overflow-hidden">
+                <Hero
+                  slides={[
+                    {
+                      backgroundType: 'gradient',
+                      backgroundValue: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+                      heading: 'Creative Solutions',
+                      subtext: 'Building amazing experiences',
+                      buttonText: 'Learn More',
+                    },
+                  ]}
+                  height="400px"
+                />
+              </div>
+            </div>
+            <div>
+              <p className="text-sm text-text-secondary mb-4">Carousel Hero (Auto-play enabled)</p>
+              <div className="bg-gray-900 p-4 rounded-2xl overflow-hidden">
+                <Hero
+                  slides={[
+                    {
+                      backgroundType: 'solid',
+                      backgroundValue: '#397F00',
+                      heading: 'Project One',
+                      subtext: 'First slide in carousel',
+                      buttonText: 'Explore',
+                    },
+                    {
+                      backgroundType: 'solid',
+                      backgroundValue: '#00377F',
+                      heading: 'Project Two',
+                      subtext: 'Second slide in carousel',
+                      buttonText: 'Discover',
+                    },
+                    {
+                      backgroundType: 'solid',
+                      backgroundValue: '#7F0070',
+                      heading: 'Project Three',
+                      subtext: 'Third slide in carousel',
+                      buttonText: 'View More',
+                    },
+                  ]}
+                  autoPlay={true}
+                  autoPlayInterval={4000}
+                  height="400px"
+                />
+              </div>
             </div>
           </div>
         </div>

@@ -10,6 +10,8 @@ const SiteDesignSystem = () => {
     { path: '/design-system/form-controls', title: 'Form Controls', description: 'Browse all form components including inputs, checkboxes, toggles, and sliders' },
     { path: '/design-system/components', title: 'Components', description: 'View cards, badges, alerts, progress bars, and navigation' },
     { path: '/design-system/padding', title: 'Padding', description: 'Universal padding system for consistent spacing across the site' },
+    { path: '/design-system/static-hero', title: 'Static Hero', description: 'Standalone hero component with various background types' },
+    { path: '/design-system/carousel-hero', title: 'Carousel Hero', description: 'Hero component with carousel functionality, auto-play, and navigation' },
   ]
 
   return (

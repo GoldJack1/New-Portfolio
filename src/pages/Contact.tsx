@@ -1,43 +1,18 @@
-import Input from '../components/ui/Input'
-import Textarea from '../components/ui/Textarea'
-import Button from '../components/ui/Button'
-import { PADDING_CLASSES } from '../utils/paddingClasses'
+import Hero from '../components/ui/Hero'
+import { HERO_GRADIENTS } from '../utils/heroGradients'
 
 const Contact = () => {
   return (
-    <div className="w-full overflow-x-hidden bg-contactBackground min-h-screen flex flex-col pt-[150px]">
-      <section className={`w-full ${PADDING_CLASSES.page.full} flex-grow flex flex-col justify-center`}>
-        <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-text-primary mb-8 break-words">
-          Contact
-        </h1>
-        <div className="bg-gray-800 p-6 sm:p-8 rounded-2xl w-full min-w-0">
-          <form className="space-y-6 w-full">
-            <Input
-              label="Name"
-              id="name"
-              name="name"
-              placeholder="Your name"
-            />
-            <Input
-              label="Email"
-              id="email"
-              name="email"
-              type="email"
-              placeholder="your.email@example.com"
-            />
-            <Textarea
-              label="Message"
-              id="message"
-              name="message"
-              rows={6}
-              placeholder="Your message"
-            />
-            <Button type="submit" variant="primary" size="lg" className="w-full">
-              Send Message
-            </Button>
-          </form>
-        </div>
-      </section>
+    <div className="w-full overflow-x-hidden bg-gray-1000 min-h-screen flex flex-col">
+      <Hero
+        slides={[{
+          backgroundType: 'gradient',
+          backgroundValue: HERO_GRADIENTS.contact,
+          heading: 'Contact',
+          subtext: 'Get in touch with me. Feel free to reach out if you have any questions or would like to connect!',
+        }]}
+        height="100vh"
+      />
     </div>
   )
 }
