@@ -249,7 +249,11 @@ const Hero = ({
             {slide.buttonText && (
               <div>
                 {slide.buttonLink ? (
-                  <a href={slide.buttonLink}>
+                  <a 
+                    href={slide.buttonLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
                     <Button
                       size={buttonSize}
                       variant="primary"

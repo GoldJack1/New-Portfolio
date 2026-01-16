@@ -40,12 +40,12 @@ const ThreadsIcon = () => (
 
 const Footer = () => {
   const socialLinks = [
-    { icon: LinkedInIcon, url: 'https://linkedin.com', label: 'LinkedIn' },
-    { icon: TwitterIcon, url: 'https://twitter.com', label: 'Twitter' },
-    { icon: InstagramIcon, url: 'https://instagram.com', label: 'Instagram' },
-    { icon: YouTubeIcon, url: 'https://youtube.com', label: 'YouTube' },
-    { icon: BlueskyIcon, url: 'https://bsky.app', label: 'Bluesky' },
-    { icon: ThreadsIcon, url: 'https://threads.net', label: 'Threads' },
+    { icon: LinkedInIcon, url: 'https://www.linkedin.com/in/jackwingate2023/', label: 'LinkedIn' },
+    { icon: TwitterIcon, url: 'https://x.com/jackrailsecrets', label: 'Twitter' },
+    { icon: InstagramIcon, url: 'https://www.instagram.com/jackawingate/', label: 'Instagram' },
+    { icon: YouTubeIcon, url: 'https://www.youtube.com/@RailwaySecrets', label: 'YouTube' },
+    { icon: BlueskyIcon, url: 'https://bsky.app/profile/jackrailsecrets.bsky.social', label: 'Bluesky' },
+    { icon: ThreadsIcon, url: 'https://www.threads.com/@jackawingate', label: 'Threads' },
   ]
 
   const footerLinks = [
