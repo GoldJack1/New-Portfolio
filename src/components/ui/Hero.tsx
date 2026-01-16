@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react'
 import Button from './Button'
+import { FaChevronLeft, FaChevronRight } from 'react-icons/fa'
 
 export interface HeroSlide {
   backgroundType: 'solid' | 'gradient' | 'image' | 'video'
@@ -60,6 +61,10 @@ const Hero = ({
     window.addEventListener('resize', handleResize)
     return () => window.removeEventListener('resize', handleResize)
   }, [])
+
+  // Determine button size based on breakpoint (desktop: md, mobile/tablet: sm)
+  // Desktop breakpoint is typically 1024px (lg in Tailwind)
+  const buttonSize = windowWidth >= 1024 ? 'md' : 'sm'
 
   // Default gradient overlay: left to right
   // gray-1000 at 90% opacity at 0%, 70% opacity at 33%, 0% opacity at 70% and 100%
@@ -246,7 +251,7 @@ const Hero = ({
                 {slide.buttonLink ? (
                   <a href={slide.buttonLink}>
                     <Button
-                      size={windowWidth < 640 ? 'sm' : windowWidth < 1024 ? 'md' : 'lg'}
+                      size={buttonSize}
                       variant="primary"
                     >
                       {slide.buttonText}
@@ -254,7 +259,7 @@ const Hero = ({
                   </a>
                 ) : (
                   <Button
-                    size={windowWidth < 640 ? 'sm' : windowWidth < 1024 ? 'md' : 'lg'}
+                    size={buttonSize}
                     variant="primary"
                     onClick={slide.buttonOnClick}
                   >
@@ -306,20 +311,15 @@ const Hero = ({
             >
               {/* Previous button */}
               {showNavigation && (
-                <button
+                <Button
+                  iconOnly
+                  icon={<FaChevronLeft />}
+                  size="sm"
+                  variant="ghost"
                   onClick={goToPrevious}
-                  className="w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-12 bg-gray-800 bg-opacity-75 hover:bg-opacity-100 text-text-primary rounded-full flex items-center justify-center transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-gray-600 flex-shrink-0"
+                  className="flex-shrink-0"
                   aria-label="Previous slide"
-                >
-                  <svg
-                    className="w-4 h-4 sm:w-5 sm:h-5 lg:w-6 lg:h-6"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-                  </svg>
-                </button>
+                />
               )}
 
               {/* Indicators */}
@@ -348,20 +348,15 @@ const Hero = ({
 
               {/* Next button */}
               {showNavigation && (
-                <button
+                <Button
+                  iconOnly
+                  icon={<FaChevronRight />}
+                  size="sm"
+                  variant="ghost"
                   onClick={goToNext}
-                  className="w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-12 bg-gray-800 bg-opacity-75 hover:bg-opacity-100 text-text-primary rounded-full flex items-center justify-center transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-gray-600 flex-shrink-0"
+                  className="flex-shrink-0"
                   aria-label="Next slide"
-                >
-                  <svg
-                    className="w-4 h-4 sm:w-5 sm:h-5 lg:w-6 lg:h-6"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                  </svg>
-                </button>
+                />
               )}
             </div>
           )}

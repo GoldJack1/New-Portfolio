@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import Button from '../../components/ui/Button'
 import Hero, { HeroSlide } from '../../components/ui/Hero'
@@ -5,6 +6,18 @@ import { PADDING_CLASSES } from '../../utils/paddingClasses'
 import { HERO_GRADIENTS } from '../../utils/heroGradients'
 
 const CarouselHero = () => {
+  const [windowWidth, setWindowWidth] = useState(typeof window !== 'undefined' ? window.innerWidth : 1024)
+
+  useEffect(() => {
+    const handleResize = () => {
+      setWindowWidth(window.innerWidth)
+    }
+    window.addEventListener('resize', handleResize)
+    return () => window.removeEventListener('resize', handleResize)
+  }, [])
+
+  // Determine button size based on breakpoint (desktop: md, mobile/tablet: sm)
+  const buttonSize = windowWidth >= 1024 ? 'md' : 'sm'
   const carouselSlides: HeroSlide[] = [
     {
       backgroundType: 'solid',
@@ -58,7 +71,7 @@ const CarouselHero = () => {
       <section className={`w-full ${PADDING_CLASSES.page.full} flex-grow flex flex-col`}>
         <div className="mb-8">
           <Link to="/design-system">
-            <Button variant="ghost" size="sm" className="mb-4">
+            <Button variant="ghost" size={buttonSize} className="mb-4">
               ← Back to Design System
             </Button>
           </Link>

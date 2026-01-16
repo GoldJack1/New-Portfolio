@@ -1,13 +1,14 @@
-import { ReactNode } from 'react'
+import React, { ReactNode, CSSProperties } from 'react'
 
 interface ButtonProps {
   children?: ReactNode
-  variant?: 'primary' | 'secondary' | 'tertiary' | 'ghost'
+  variant?: 'primary' | 'ghost'
   size?: 'sm' | 'md' | 'lg'
-  disabled?: boolean
-  loading?: boolean
+  fontWeight?: 100 | 200 | 300 | 400 | 500 | 600 | 700 | 800 | 900
   icon?: ReactNode
   iconOnly?: boolean
+  iconPosition?: 'left' | 'right'
+  disabled?: boolean
   onClick?: () => void
   type?: 'button' | 'submit' | 'reset'
   className?: string
@@ -17,70 +18,233 @@ const Button = ({
   children,
   variant = 'primary',
   size = 'md',
-  disabled = false,
-  loading = false,
+  fontWeight = 400,
   icon,
   iconOnly = false,
+  iconPosition = 'left',
+  disabled = false,
   onClick,
   type = 'button',
   className = '',
 }: ButtonProps) => {
-  const baseStyles = 'rounded-full font-semibold transition-all duration-200 focus:outline-none'
-  
-  const variantStyles = {
-    primary: 'bg-gray-800 text-text-primary shadow-lg hover:shadow-xl relative overflow-hidden before:content-[""] before:absolute before:inset-0 before:bg-[rgba(255,255,255,0.25)] before:opacity-0 hover:before:opacity-100 before:transition-opacity before:duration-200',
-    secondary: 'bg-gray-600 text-text-primary shadow-md hover:shadow-lg relative overflow-hidden before:content-[""] before:absolute before:inset-0 before:bg-[rgba(0,0,0,0.25)] before:opacity-0 hover:before:opacity-100 before:transition-opacity before:duration-200',
-    tertiary: 'bg-gray-700 text-text-primary shadow-md hover:shadow-lg relative overflow-hidden before:content-[""] before:absolute before:inset-0 before:bg-[rgba(0,0,0,0.25)] before:opacity-0 hover:before:opacity-100 before:transition-opacity before:duration-200',
-    ghost: 'bg-transparent text-text-primary shadow-sm hover:shadow-md relative overflow-hidden before:content-[""] before:absolute before:inset-0 before:bg-[rgba(255,255,255,0.25)] before:opacity-0 hover:before:opacity-100 before:transition-opacity before:duration-200',
+  // Icon sizes based on button size
+  const iconSizes: Record<'sm' | 'md' | 'lg', string> = {
+    sm: '16px',
+    md: '18px',
+    lg: '20px',
   }
 
-  const sizeStyles = {
-    sm: iconOnly ? 'w-8 h-8' : 'px-4 py-2 text-sm',
-    md: iconOnly ? 'w-10 h-10' : 'px-6 py-3 text-base',
-    lg: iconOnly ? 'w-12 h-12' : 'px-8 py-4 text-lg',
+  // Gap spacing between icon and text
+  const iconTextGaps: Record<'sm' | 'md' | 'lg', string> = {
+    sm: '10px',
+    md: '12px',
+    lg: '14px',
   }
 
-  const disabledStyles = disabled || loading
+  // Size-specific styles for text buttons
+  const textSizeStyles: Record<'sm' | 'md' | 'lg', CSSProperties> = {
+    sm: {
+      padding: '8px 16px',
+      minWidth: '100px',
+      fontSize: '16px',
+      lineHeight: '24px',
+      letterSpacing: '0.01em',
+    },
+    md: {
+      padding: '10px 24px',
+      minWidth: '116px',
+      fontSize: '18px',
+      lineHeight: '28px',
+      letterSpacing: '0',
+    },
+    lg: {
+      padding: '12px 32px',
+      minWidth: '132px',
+      fontSize: '20px',
+      lineHeight: '30px',
+      letterSpacing: '0',
+    },
+  }
+
+  // Size-specific styles for icon-only buttons
+  const iconSizeStyles: Record<'sm' | 'md' | 'lg', CSSProperties> = {
+    sm: {
+      width: '40px',
+      height: '40px',
+      padding: '0',
+      minWidth: '0',
+    },
+    md: {
+      width: '48px',
+      height: '48px',
+      padding: '0',
+      minWidth: '0',
+    },
+    lg: {
+      width: '54px',
+      height: '54px',
+      padding: '0',
+      minWidth: '0',
+    },
+  }
+
+  // Get background style based on variant
+  const getBackgroundStyle = (): string => {
+    if (variant === 'primary') {
+      return 'linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.2)), rgba(255,255,255,0.25)'
+    } else {
+      return 'transparent'
+    }
+  }
+
+  // Get hover background style
+  const getHoverBackgroundStyle = (): string => {
+    if (variant === 'primary') {
+      return 'rgba(0, 0, 0, 0.25)'
+    } else {
+      return 'rgba(255, 255, 255, 0.25)'
+    }
+  }
+
+  // Determine if we should render text + icon variant
+  const hasTextAndIcon = !iconOnly && icon && children
+
+  const baseStyles = iconOnly
+    ? 'rounded-full text-text-primary focus:outline-none cursor-pointer transition-all duration-200 flex items-center justify-center'
+    : hasTextAndIcon
+    ? 'rounded-full text-text-primary focus:outline-none cursor-pointer transition-all duration-200 flex items-center'
+    : 'rounded-full text-text-primary focus:outline-none cursor-pointer transition-all duration-200'
+  const disabledStyles = disabled
     ? 'opacity-50 cursor-not-allowed'
     : ''
 
-  const shadowStyles = {
-    primary: 'shadow-lg',
-    secondary: 'shadow-md',
-    tertiary: 'shadow-md',
-    ghost: 'shadow-sm',
+  const combinedStyle: CSSProperties = {
+    ...(iconOnly ? iconSizeStyles[size] : textSizeStyles[size]),
+    background: getBackgroundStyle(),
+    ...(variant === 'primary' ? {
+      backdropFilter: 'blur(18px)',
+      WebkitBackdropFilter: 'blur(18px)',
+    } : {}),
+    ...(iconOnly ? {} : { fontWeight, height: 'auto', width: 'auto' }),
+    ...(hasTextAndIcon ? { gap: iconTextGaps[size] } : {}),
+  }
+
+  // Handle hover with inline style approach using onMouseEnter/onMouseLeave
+  const handleMouseEnter = (e: React.MouseEvent<HTMLButtonElement>) => {
+    if (!disabled) {
+      e.currentTarget.style.background = getHoverBackgroundStyle()
+      // Add backdrop blur on hover for ghost variant
+      if (variant === 'ghost') {
+        e.currentTarget.style.backdropFilter = 'blur(18px)'
+        ;(e.currentTarget.style as any).webkitBackdropFilter = 'blur(18px)'
+      }
+    }
+  }
+
+  const handleMouseLeave = (e: React.MouseEvent<HTMLButtonElement>) => {
+    if (!disabled) {
+      e.currentTarget.style.background = getBackgroundStyle()
+      // Remove backdrop blur on mouse leave for ghost variant
+      if (variant === 'ghost') {
+        e.currentTarget.style.backdropFilter = 'none'
+        ;(e.currentTarget.style as any).webkitBackdropFilter = 'none'
+      }
+    }
+  }
+
+  // Render icon with proper sizing and frame
+  const renderIcon = () => {
+    if (!icon) return null
+    const iconSize = iconSizes[size]
+    
+    return (
+      <span
+        style={{
+          width: iconSize,
+          height: iconSize,
+          minWidth: iconSize,
+          minHeight: iconSize,
+          maxWidth: iconSize,
+          maxHeight: iconSize,
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          fontSize: iconSize,
+          lineHeight: 1,
+          flexShrink: 0,
+          overflow: 'hidden',
+        }}
+      >
+        <span
+          style={{
+            width: iconSize,
+            height: iconSize,
+            minWidth: iconSize,
+            minHeight: iconSize,
+            maxWidth: iconSize,
+            maxHeight: iconSize,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            fontSize: iconSize,
+          }}
+        >
+          {React.isValidElement(icon)
+            ? React.cloneElement(icon as React.ReactElement<any>, {
+                style: {
+                  width: iconSize,
+                  height: iconSize,
+                  minWidth: iconSize,
+                  minHeight: iconSize,
+                  maxWidth: iconSize,
+                  maxHeight: iconSize,
+                  display: 'block',
+                  flexShrink: 0,
+                },
+              })
+            : icon}
+        </span>
+      </span>
+    )
+  }
+
+  // Render button content based on mode
+  const renderContent = () => {
+    if (iconOnly) {
+      return renderIcon()
+    }
+    
+    if (hasTextAndIcon) {
+      const iconElement = renderIcon()
+      const textElement = <span>{children}</span>
+      
+      return iconPosition === 'left' ? (
+        <>
+          {iconElement}
+          {textElement}
+        </>
+      ) : (
+        <>
+          {textElement}
+          {iconElement}
+        </>
+      )
+    }
+    
+    return children
   }
 
   return (
     <button
       type={type}
       onClick={onClick}
-      disabled={disabled || loading}
-      className={`
-        ${baseStyles}
-        ${variantStyles[variant]}
-        ${sizeStyles[size]}
-        ${disabledStyles}
-        ${shadowStyles[variant]}
-        ${className}
-      `}
+      disabled={disabled}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+      className={`${baseStyles} ${disabledStyles} ${className}`.trim()}
+      style={combinedStyle}
     >
-      <span className="relative z-10">
-      {loading ? (
-        <span className="flex items-center justify-center">
-          <span className="animate-spin">⏳</span>
-        </span>
-      ) : iconOnly && icon ? (
-        <span className="flex items-center justify-center">{icon}</span>
-      ) : icon ? (
-        <span className="flex items-center gap-2">
-          {icon}
-          {children}
-        </span>
-      ) : (
-        children
-      )}
-      </span>
+      {renderContent()}
     </button>
   )
 }
