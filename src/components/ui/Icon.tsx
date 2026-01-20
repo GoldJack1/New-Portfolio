@@ -1,15 +1,61 @@
 import { getStrokeWidth } from '../../config/iconWeights'
 
+// ViewBox size
+const VIEWBOX_SIZE = 32
+
+// Base stroke width the paths were designed for (weight 100)
+const BASE_STROKE_WIDTH = 2.22
+
 // SVG path data for each icon (32x32 viewBox)
-const iconPaths: Record<string, string[]> = {
-  'cross': [
-    'M29.195,2.805L2.805,29.195',
-    'M2.805,2.805l26.39,26.39'
-  ],
-  'plus': [
-    'M16,2.805v26.39',
-    'M29.195,16H2.805'
-  ],
+// Paths are designed with coordinates from 1.11 to 30.89 (half of base stroke inset)
+const iconPaths: Record<string, { paths: string[]; strokeLinejoin?: 'round' }> = {
+  'cross': {
+    paths: [
+      'M30.89,1.11L1.11,30.89',
+      'M1.11,1.11l29.78,29.78'
+    ]
+  },
+  'plus': {
+    paths: [
+      'M16,1.11v29.78',
+      'M30.89,16H1.11'
+    ]
+  },
+  'minus': {
+    paths: [
+      'M30.89,16H1.11'
+    ]
+  },
+  'chevron-left': {
+    paths: [
+      'M22.872,1.11l-12.711,12.434c-1.378,1.348-1.378,3.565,0,4.913l12.711,12.434'
+    ],
+    strokeLinejoin: 'round'
+  },
+  'chevron-right': {
+    paths: [
+      'M9.128,1.11l12.711,12.434c1.378,1.348,1.378,3.565,0,4.913l-12.711,12.434'
+    ],
+    strokeLinejoin: 'round'
+  },
+}
+
+/**
+ * Calculate the scale factor needed to fit the icon with its stroke within the viewBox
+ * 
+ * The paths are designed for BASE_STROKE_WIDTH (2.22px).
+ * When stroke is thicker, we need to scale down the paths so that
+ * the stroke + path still fits within the viewBox.
+ * 
+ * Formula:
+ * - Original content size = VIEWBOX_SIZE - BASE_STROKE_WIDTH (accounts for half stroke on each side)
+ * - Available size with new stroke = VIEWBOX_SIZE - strokeWidth
+ * - Scale = available size / original content size
+ */
+function calculateScaleFactor(strokeWidth: number): number {
+  const originalContentSize = VIEWBOX_SIZE - BASE_STROKE_WIDTH
+  const availableSize = VIEWBOX_SIZE - strokeWidth
+  return availableSize / originalContentSize
 }
 
 export type StrokeIconName = keyof typeof iconPaths
@@ -64,15 +110,23 @@ export function Icon({
   'aria-label': ariaLabel,
   'aria-hidden': ariaHidden,
 }: IconProps) {
-  const paths = iconPaths[name]
+  const iconData = iconPaths[name]
   
-  if (!paths) {
+  if (!iconData) {
     console.warn(`Icon "${name}" not found`)
     return null
   }
   
   // Calculate stroke width from weight or use custom value
   const calculatedStrokeWidth = customStrokeWidth ?? getStrokeWidth(weight)
+  
+  // Calculate scale factor to fit the icon with its stroke
+  const scaleFactor = calculateScaleFactor(calculatedStrokeWidth)
+  
+  // Calculate translation to keep the scaled content centered
+  // We scale from the center of the viewBox (16, 16)
+  const center = VIEWBOX_SIZE / 2
+  const translateOffset = center * (1 - scaleFactor)
   
   // Determine size styling
   const sizeValue = size ?? '1em'
@@ -99,13 +153,15 @@ export function Icon({
         viewBox="0 0 32 32"
         fill="none"
         stroke={color || 'currentColor'}
-        strokeWidth={calculatedStrokeWidth}
         strokeLinecap="round"
+        strokeLinejoin={iconData.strokeLinejoin}
         style={{ width: '100%', height: '100%' }}
       >
-        {paths.map((d, i) => (
-          <path key={i} d={d} strokeWidth={calculatedStrokeWidth} />
-        ))}
+        <g transform={`translate(${translateOffset}, ${translateOffset}) scale(${scaleFactor})`}>
+          {iconData.paths.map((d, i) => (
+            <path key={i} d={d} strokeWidth={calculatedStrokeWidth / scaleFactor} />
+          ))}
+        </g>
       </svg>
     </span>
   )

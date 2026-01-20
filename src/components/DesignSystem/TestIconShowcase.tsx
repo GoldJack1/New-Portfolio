@@ -38,7 +38,7 @@ function calculateStrokeForSize(weight: number, iconSize: number): number {
 }
 
 // Available stroke icons
-const strokeIcons: StrokeIconName[] = ['cross', 'plus']
+const strokeIcons: StrokeIconName[] = ['cross', 'plus', 'minus', 'chevron-left', 'chevron-right']
 
 const TestIconShowcase = () => {
   // Calculator state
@@ -72,28 +72,30 @@ const TestIconShowcase = () => {
       </h2>
       
       {/* Introduction */}
-      <div className="bg-gray-800/50 rounded-xl p-6 mb-8">
-        <p className="text-text-secondary mb-4">
+      <div className="bg-gray-800/50 rounded-xl p-4 sm:p-6 mb-6 sm:mb-8">
+        <p className="text-text-secondary text-sm sm:text-base mb-3 sm:mb-4">
           These icons use stroke-based SVG paths with stroke widths calibrated to match 
           Geologica font weights (100-900). The stroke scales proportionally with the icon size.
         </p>
-        <p className="text-text-tertiary text-sm">
-          Usage: <code className="bg-gray-700 px-2 py-1 rounded">{'<Icon name="cross" weight={400} className="w-5 h-5" />'}</code>
-        </p>
+        <div className="text-text-tertiary text-xs sm:text-sm overflow-x-auto">
+          <code className="bg-gray-700 px-2 py-1 rounded whitespace-nowrap">{'<Icon name="cross" weight={400} />'}</code>
+        </div>
       </div>
       
       {/* Weight comparison */}
-      <div className="space-y-8 bg-gray-900 p-6 sm:p-8 rounded-2xl w-full min-w-0 mb-8">
-        <h3 className="text-xl font-bold text-text-primary">Weight Comparison</h3>
-        <p className="text-text-secondary text-sm -mt-4 mb-4">
-          Each row shows icons at a specific weight, matching the corresponding font weight.
-        </p>
+      <div className="space-y-6 bg-gray-900 p-4 sm:p-6 md:p-8 rounded-2xl w-full min-w-0 mb-8">
+        <div>
+          <h3 className="text-xl font-bold text-text-primary">Weight Comparison</h3>
+          <p className="text-text-secondary text-sm mt-1">
+            Each row shows icons at a specific weight, matching the corresponding font weight.
+          </p>
+        </div>
         
         {weights.map((weight) => (
-          <div key={weight} className="border-b border-gray-700 pb-6 last:border-0 last:pb-0">
-            <div className="flex items-center gap-4 mb-4">
+          <div key={weight} className="border-b border-gray-700 pb-4 last:border-0 last:pb-0">
+            <div className="flex flex-wrap items-center gap-2 sm:gap-4 mb-3">
               <span 
-                className="text-text-primary min-w-[120px]"
+                className="text-text-primary text-sm sm:text-base"
                 style={{ fontWeight: weight }}
               >
                 {weight} {weightNames[weight]}
@@ -103,16 +105,25 @@ const TestIconShowcase = () => {
               </span>
             </div>
             
-            <div className="flex items-center gap-8">
+            {/* Mobile: 3 per row grid, Desktop: flex row */}
+            <div className="grid grid-cols-3 gap-3 sm:flex sm:items-center sm:gap-6">
               {strokeIcons.map((iconName) => (
                 <div
                   key={iconName}
-                  className="flex items-center gap-3"
+                  className="flex flex-col sm:flex-row items-center gap-1 sm:gap-2"
                 >
-                  <div className="w-8 h-8 flex items-center justify-center text-text-primary">
-                    <Icon name={iconName} weight={weight} className="w-full h-full" />
+                  {/* Mobile: 24px, Desktop: 32px */}
+                  <div className="flex items-center justify-center text-text-primary">
+                    <span className="sm:hidden">
+                      <Icon name={iconName} weight={weight} size={24} />
+                    </span>
+                    <span className="hidden sm:inline">
+                      <Icon name={iconName} weight={weight} size={32} />
+                    </span>
                   </div>
-                  <span className="text-xs text-text-tertiary">{iconName}</span>
+                  <span className="text-[10px] sm:text-xs text-text-tertiary text-center truncate max-w-full">
+                    {iconName.replace('chevron-', '')}
+                  </span>
                 </div>
               ))}
             </div>
@@ -121,13 +132,35 @@ const TestIconShowcase = () => {
       </div>
       
       {/* Size comparison */}
-      <div className="space-y-8 bg-gray-900 p-6 sm:p-8 rounded-2xl w-full min-w-0 mb-8">
-        <h3 className="text-xl font-bold text-text-primary">Size Comparison</h3>
-        <p className="text-text-secondary text-sm -mt-4 mb-4">
-          Icons at different sizes with weight 400. Stroke scales proportionally.
-        </p>
+      <div className="space-y-4 bg-gray-900 p-4 sm:p-6 md:p-8 rounded-2xl w-full min-w-0 mb-8">
+        <div>
+          <h3 className="text-xl font-bold text-text-primary">Size Comparison</h3>
+          <p className="text-text-secondary text-sm mt-1">
+            Icons at different sizes with weight 400. Stroke scales proportionally.
+          </p>
+        </div>
         
-        <div className="overflow-x-auto">
+        {/* Mobile: Card layout */}
+        <div className="block sm:hidden space-y-4">
+          {strokeIcons.map((iconName) => (
+            <div key={iconName} className="bg-gray-800 rounded-lg p-4">
+              <div className="text-text-secondary text-sm mb-3 font-medium">{iconName}</div>
+              <div className="flex items-end justify-between gap-2">
+                {sizes.map((size) => (
+                  <div key={size.px} className="flex flex-col items-center gap-2">
+                    <div className="flex items-center justify-center text-text-primary">
+                      <Icon name={iconName} weight={400} size={size.px} />
+                    </div>
+                    <span className="text-[10px] text-text-tertiary">{size.px}px</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+        
+        {/* Desktop: Table layout */}
+        <div className="hidden sm:block overflow-x-auto">
           <table className="w-full">
             <thead>
               <tr className="text-left text-text-tertiary text-xs uppercase tracking-wider">
@@ -145,15 +178,8 @@ const TestIconShowcase = () => {
                   <td className="py-4 pr-8 text-text-secondary text-sm">{iconName}</td>
                   {sizes.map((size) => (
                     <td key={size.px} className="py-4 px-4">
-                      <div 
-                        className="flex items-center justify-center text-text-primary"
-                        style={{ width: size.px, height: size.px, margin: '0 auto' }}
-                      >
-                        <Icon 
-                          name={iconName} 
-                          weight={400} 
-                          className="w-full h-full"
-                        />
+                      <div className="flex items-center justify-center text-text-primary">
+                        <Icon name={iconName} weight={400} size={size.px} />
                       </div>
                     </td>
                   ))}
@@ -165,20 +191,26 @@ const TestIconShowcase = () => {
       </div>
       
       {/* Icon catalog */}
-      <div className="space-y-8 bg-gray-900 p-6 sm:p-8 rounded-2xl w-full min-w-0 mb-8">
+      <div className="space-y-4 bg-gray-900 p-4 sm:p-6 md:p-8 rounded-2xl w-full min-w-0 mb-6 sm:mb-8">
         <h3 className="text-xl font-bold text-text-primary">Available Icons</h3>
         
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+        <div className="grid grid-cols-3 xs:grid-cols-5 gap-2 sm:gap-4">
           {strokeIcons.map((iconName) => (
             <div
               key={iconName}
-              className="flex flex-col items-center justify-center p-4 bg-gray-800 rounded-xl hover:bg-gray-750 transition-colors"
+              className="flex flex-col items-center justify-center p-3 sm:p-4 bg-gray-800 rounded-xl hover:bg-gray-750 transition-colors"
             >
-              <div className="w-8 h-8 flex items-center justify-center mb-2 text-text-primary">
-                <Icon name={iconName} weight={400} className="w-full h-full" />
+              <div className="flex items-center justify-center mb-1.5 sm:mb-2 text-text-primary">
+                {/* Mobile: 24px, Desktop: 32px */}
+                <span className="sm:hidden">
+                  <Icon name={iconName} weight={400} size={24} />
+                </span>
+                <span className="hidden sm:inline">
+                  <Icon name={iconName} weight={400} size={32} />
+                </span>
               </div>
-              <span className="text-xs text-text-secondary text-center break-words">
-                {iconName}
+              <span className="text-[10px] sm:text-xs text-text-secondary text-center break-words">
+                {iconName.replace('chevron-', '')}
               </span>
             </div>
           ))}
@@ -186,159 +218,208 @@ const TestIconShowcase = () => {
       </div>
       
       {/* Inline with text examples */}
-      <div className="space-y-8 bg-gray-900 p-6 sm:p-8 rounded-2xl w-full min-w-0 mb-8">
-        <h3 className="text-xl font-bold text-text-primary">Inline with Text</h3>
-        <p className="text-text-secondary text-sm -mt-4 mb-4">
-          Icons displayed inline with text at matching weights.
-        </p>
+      <div className="space-y-4 bg-gray-900 p-4 sm:p-6 md:p-8 rounded-2xl w-full min-w-0 mb-8">
+        <div>
+          <h3 className="text-xl font-bold text-text-primary">Inline with Text</h3>
+          <p className="text-text-secondary text-sm mt-1">
+            Icons displayed inline with text at matching weights.
+          </p>
+        </div>
         
-        <div className="space-y-4">
+        <div className="space-y-3 sm:space-y-4">
           {[100, 300, 400, 500, 700, 900].map((weight) => (
             <div 
               key={weight}
-              className="flex items-center gap-2 text-text-primary"
-              style={{ fontWeight: weight, fontSize: '18px' }}
+              className="bg-gray-800/50 rounded-lg p-3 sm:p-4"
             >
-              <span className="inline-flex items-center gap-1.5">
-                <Icon name="plus" weight={weight as IconWeight} size={18} />
-                <span>Add Item</span>
-              </span>
-              <span className="mx-4 text-text-tertiary">|</span>
-              <span className="inline-flex items-center gap-1.5">
-                <Icon name="cross" weight={weight as IconWeight} size={18} />
-                <span>Close</span>
-              </span>
-              <span className="ml-auto text-xs text-text-tertiary">
+              {/* Weight label - always visible at top on mobile */}
+              <div className="text-xs text-text-tertiary mb-2 sm:hidden">
                 {weight} ({weightNames[weight]})
-              </span>
+              </div>
+              
+              {/* Mobile: 3 per row grid */}
+              <div 
+                className="grid grid-cols-3 gap-2 sm:hidden text-text-primary"
+                style={{ fontWeight: weight, fontSize: '14px' }}
+              >
+                <span className="inline-flex items-center gap-1">
+                  <Icon name="plus" weight={weight as IconWeight} size={14} />
+                  <span>Add</span>
+                </span>
+                <span className="inline-flex items-center gap-1">
+                  <Icon name="minus" weight={weight as IconWeight} size={14} />
+                  <span>Remove</span>
+                </span>
+                <span className="inline-flex items-center gap-1">
+                  <Icon name="cross" weight={weight as IconWeight} size={14} />
+                  <span>Close</span>
+                </span>
+                <span className="inline-flex items-center gap-1">
+                  <Icon name="chevron-left" weight={weight as IconWeight} size={14} />
+                  <span>Back</span>
+                </span>
+                <span className="inline-flex items-center gap-1">
+                  <span>Next</span>
+                  <Icon name="chevron-right" weight={weight as IconWeight} size={14} />
+                </span>
+              </div>
+              
+              {/* Desktop: flex row */}
+              <div 
+                className="hidden sm:flex flex-wrap items-center gap-x-3 gap-y-2 text-text-primary"
+                style={{ fontWeight: weight, fontSize: '16px' }}
+              >
+                <span className="inline-flex items-center gap-1">
+                  <Icon name="plus" weight={weight as IconWeight} size={16} />
+                  <span>Add</span>
+                </span>
+                <span className="text-text-tertiary">|</span>
+                <span className="inline-flex items-center gap-1">
+                  <Icon name="minus" weight={weight as IconWeight} size={16} />
+                  <span>Remove</span>
+                </span>
+                <span className="text-text-tertiary">|</span>
+                <span className="inline-flex items-center gap-1">
+                  <Icon name="cross" weight={weight as IconWeight} size={16} />
+                  <span>Close</span>
+                </span>
+                <span className="text-text-tertiary">|</span>
+                <span className="inline-flex items-center gap-1">
+                  <Icon name="chevron-left" weight={weight as IconWeight} size={16} />
+                  <span>Back</span>
+                </span>
+                <span className="text-text-tertiary">|</span>
+                <span className="inline-flex items-center gap-1">
+                  <span>Next</span>
+                  <Icon name="chevron-right" weight={weight as IconWeight} size={16} />
+                </span>
+                
+                {/* Weight label - right aligned */}
+                <span className="ml-auto text-xs text-text-tertiary font-normal">
+                  {weight} ({weightNames[weight]})
+                </span>
+              </div>
             </div>
           ))}
         </div>
       </div>
       
       {/* Stroke Width Reference Table */}
-      <div className="space-y-8 bg-gray-900 p-6 sm:p-8 rounded-2xl w-full min-w-0">
-        <h3 className="text-xl font-bold text-text-primary">Stroke Width Reference</h3>
-        <p className="text-text-secondary text-sm -mt-4 mb-4">
-          Calculated stroke width (in pixels) for each weight at different icon sizes.
-          Base values are calibrated for a 32x32 viewBox and scale proportionally.
-        </p>
+      <div className="space-y-6 bg-gray-900 p-4 sm:p-6 md:p-8 rounded-2xl w-full min-w-0">
+        <div>
+          <h3 className="text-xl font-bold text-text-primary">Stroke Width Reference</h3>
+          <p className="text-text-secondary text-sm mt-1">
+            Calculated stroke width for each weight at different icon sizes.
+          </p>
+        </div>
         
         {/* Base values for 32px */}
-        <div className="mb-6">
-          <h4 className="text-sm font-semibold text-text-secondary mb-3">Base Stroke Widths (32x32 viewBox)</h4>
-          <div className="flex flex-wrap gap-3">
+        <div>
+          <h4 className="text-sm font-semibold text-text-secondary mb-3">Base Stroke Widths (32x32)</h4>
+          <div className="grid grid-cols-3 xs:grid-cols-5 sm:grid-cols-9 gap-2">
             {weights.map((weight) => (
-              <div key={weight} className="bg-gray-800 px-3 py-2 rounded-lg text-center">
-                <div className="text-xs text-text-tertiary">{weight}</div>
-                <div className="text-sm text-text-primary font-mono">{strokeWidths[weight]?.toFixed(2)}px</div>
+              <div key={weight} className="bg-gray-800 px-2 py-2 rounded-lg text-center">
+                <div className="text-[10px] sm:text-xs text-text-tertiary">{weight}</div>
+                <div className="text-xs sm:text-sm text-text-primary font-mono">{strokeWidths[weight]?.toFixed(2)}</div>
               </div>
             ))}
           </div>
         </div>
         
-        {/* Full reference table */}
-        <div className="overflow-x-auto">
-          <table className="w-full text-sm">
-            <thead>
-              <tr className="text-left text-text-tertiary text-xs uppercase tracking-wider">
-                <th className="pb-3 pr-4 sticky left-0 bg-gray-900">Size</th>
-                {weights.map((weight) => (
-                  <th key={weight} className="pb-3 px-2 text-center whitespace-nowrap">
-                    {weight}
-                    <div className="text-[10px] font-normal normal-case">{weightNames[weight]}</div>
-                  </th>
-                ))}
-              </tr>
-            </thead>
-            <tbody className="font-mono">
-              {referenceSizes.map((size) => (
-                <tr key={size} className="border-t border-gray-700/50">
-                  <td className="py-2 pr-4 text-text-secondary sticky left-0 bg-gray-900">
-                    {size}x{size}
-                  </td>
-                  {weights.map((weight) => {
-                    const stroke = calculateStrokeForSize(weight, size)
-                    return (
-                      <td key={weight} className="py-2 px-2 text-center text-text-primary">
-                        {stroke.toFixed(2)}
-                      </td>
-                    )
-                  })}
+        {/* Full reference table - hidden on mobile, scrollable on tablet */}
+        <div className="hidden sm:block">
+          <h4 className="text-sm font-semibold text-text-secondary mb-3">Full Reference Table</h4>
+          <div className="overflow-x-auto -mx-4 sm:mx-0 px-4 sm:px-0">
+            <table className="w-full text-sm">
+              <thead>
+                <tr className="text-left text-text-tertiary text-xs uppercase tracking-wider">
+                  <th className="pb-3 pr-2 sticky left-0 bg-gray-900 z-10">Size</th>
+                  {weights.map((weight) => (
+                    <th key={weight} className="pb-3 px-1 text-center whitespace-nowrap text-[10px] sm:text-xs">
+                      {weight}
+                    </th>
+                  ))}
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody className="font-mono text-xs">
+                {referenceSizes.map((size) => (
+                  <tr key={size} className="border-t border-gray-700/50">
+                    <td className="py-1.5 pr-2 text-text-secondary sticky left-0 bg-gray-900 z-10">
+                      {size}
+                    </td>
+                    {weights.map((weight) => {
+                      const stroke = calculateStrokeForSize(weight, size)
+                      return (
+                        <td key={weight} className="py-1.5 px-1 text-center text-text-primary">
+                          {stroke.toFixed(2)}
+                        </td>
+                      )
+                    })}
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </div>
         
         {/* Formula explanation */}
-        <div className="mt-6 p-4 bg-gray-800/50 rounded-lg">
+        <div className="p-3 sm:p-4 bg-gray-800/50 rounded-lg">
           <h4 className="text-sm font-semibold text-text-secondary mb-2">Formula</h4>
-          <code className="text-xs text-text-tertiary block mb-3">
+          <code className="text-xs text-text-tertiary block mb-3 break-all">
             strokeWidth = (baseStroke / 32) × iconSize
           </code>
-          <p className="text-xs text-text-tertiary mb-4">
-            Where <code className="bg-gray-700 px-1 rounded">baseStroke</code> is the calibrated 
-            stroke width for the weight (shown above), and <code className="bg-gray-700 px-1 rounded">iconSize</code> is 
-            the rendered size in pixels.
-          </p>
           
-          <h4 className="text-sm font-semibold text-text-secondary mb-2">Example</h4>
-          <div className="bg-gray-900 p-3 rounded-lg text-xs">
+          <h4 className="text-sm font-semibold text-text-secondary mb-2 mt-4">Example</h4>
+          <div className="bg-gray-900 p-3 rounded-lg text-xs overflow-x-auto">
             <p className="text-text-tertiary mb-2">
-              For a <span className="text-text-primary">24×24px</span> icon at weight <span className="text-text-primary">400 (Regular)</span>:
+              24×24px icon at weight 400:
             </p>
             <div className="font-mono text-text-primary space-y-1">
-              <p>baseStroke (weight 400) = <span className="text-blue-400">{strokeWidths[400]?.toFixed(2)}px</span></p>
-              <p>iconSize = <span className="text-blue-400">24px</span></p>
-              <p className="pt-2 border-t border-gray-700 mt-2">
-                strokeWidth = ({strokeWidths[400]?.toFixed(2)} / 32) × 24
-              </p>
-              <p className="pl-[88px]">= {((strokeWidths[400] || 0) / 32).toFixed(4)} × 24</p>
-              <p className="pl-[88px]">= <span className="text-green-400 font-bold">{(((strokeWidths[400] || 0) / 32) * 24).toFixed(2)}px</span></p>
+              <p>= ({strokeWidths[400]?.toFixed(2)} / 32) × 24</p>
+              <p>= <span className="text-green-400 font-bold">{(((strokeWidths[400] || 0) / 32) * 24).toFixed(2)}px</span></p>
             </div>
           </div>
         </div>
         
         {/* Interactive Calculator */}
-        <div className="mt-6 p-4 bg-blue-900/20 border border-blue-700/30 rounded-lg">
+        <div className="p-3 sm:p-4 bg-blue-900/20 border border-blue-700/30 rounded-lg">
           <h4 className="text-sm font-semibold text-text-primary mb-4">Stroke Width Calculator</h4>
           
-          <div className="space-y-6">
+          <div className="space-y-4 sm:space-y-6">
             {/* Weight selector - multi-select */}
             <div>
-              <div className="flex items-center justify-between mb-2">
-                <label className="text-xs text-text-secondary">Font Weights (click to toggle)</label>
+              <div className="flex flex-wrap items-center justify-between gap-2 mb-2">
+                <label className="text-xs text-text-secondary">Font Weights</label>
                 <div className="flex gap-2">
                   <button
                     onClick={selectAllWeights}
-                    className="text-xs px-2 py-1 bg-gray-700 hover:bg-gray-600 text-text-secondary rounded transition-colors"
+                    className="text-[10px] sm:text-xs px-2 py-1 bg-gray-700 hover:bg-gray-600 text-text-secondary rounded transition-colors"
                   >
-                    Select All
+                    All
                   </button>
                   <button
                     onClick={() => selectSingleWeight(400)}
-                    className="text-xs px-2 py-1 bg-gray-700 hover:bg-gray-600 text-text-secondary rounded transition-colors"
+                    className="text-[10px] sm:text-xs px-2 py-1 bg-gray-700 hover:bg-gray-600 text-text-secondary rounded transition-colors"
                   >
                     Reset
                   </button>
                 </div>
               </div>
-              <div className="flex flex-wrap gap-2">
+              <div className="grid grid-cols-3 xs:grid-cols-5 sm:flex sm:flex-wrap gap-1.5 sm:gap-2">
                 {weights.map((w) => {
                   const isSelected = calcWeights.includes(w)
                   return (
                     <button
                       key={w}
                       onClick={() => toggleWeight(w)}
-                      className={`px-3 py-2 rounded-lg text-sm transition-colors ${
+                      className={`px-2 sm:px-3 py-1.5 sm:py-2 rounded-lg text-xs sm:text-sm transition-colors ${
                         isSelected
                           ? 'bg-blue-600 text-white'
                           : 'bg-gray-800 text-text-secondary hover:bg-gray-700'
                       }`}
                     >
                       <span className="font-semibold">{w}</span>
-                      <span className="text-xs ml-1 opacity-75">{weightNames[w]}</span>
+                      <span className="hidden sm:inline text-xs ml-1 opacity-75">{weightNames[w]}</span>
                     </button>
                   )
                 })}
@@ -363,28 +444,25 @@ const TestIconShowcase = () => {
                   max="512"
                   value={calcSize}
                   onChange={(e) => setCalcSize(Math.max(1, Number(e.target.value) || 1))}
-                  className="w-20 px-2 py-1 bg-gray-800 border border-gray-600 rounded text-text-primary text-sm text-center focus:outline-none focus:border-blue-500"
+                  className="w-16 sm:w-20 px-2 py-1 bg-gray-800 border border-gray-600 rounded text-text-primary text-sm text-center focus:outline-none focus:border-blue-500"
                 />
               </div>
             </div>
             
             {/* Results for selected weights */}
             <div>
-              <div className="text-xs text-text-secondary mb-3">Calculated Stroke Widths at {calcSize}×{calcSize}px</div>
-              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3">
+              <div className="text-xs text-text-secondary mb-2">Results at {calcSize}×{calcSize}px</div>
+              <div className="grid grid-cols-2 xs:grid-cols-3 sm:grid-cols-4 lg:grid-cols-5 gap-2 sm:gap-3">
                 {calcWeights.map((weight) => {
                   const baseStroke = strokeWidths[weight] || strokeWidths[400]
                   const result = (baseStroke / 32) * calcSize
                   return (
-                    <div key={weight} className="bg-gray-900 p-3 rounded-lg">
-                      <div className="text-xs text-text-tertiary mb-1">
-                        {weight} <span className="opacity-75">{weightNames[weight]}</span>
+                    <div key={weight} className="bg-gray-900 p-2 sm:p-3 rounded-lg">
+                      <div className="text-[10px] sm:text-xs text-text-tertiary mb-1">
+                        {weight}
                       </div>
-                      <div className="text-xl font-bold text-green-400 font-mono">
-                        {result.toFixed(2)}px
-                      </div>
-                      <div className="text-[10px] text-text-tertiary mt-1 font-mono">
-                        ({baseStroke.toFixed(2)} / 32) × {calcSize}
+                      <div className="text-lg sm:text-xl font-bold text-green-400 font-mono">
+                        {result.toFixed(2)}
                       </div>
                     </div>
                   )
@@ -394,33 +472,32 @@ const TestIconShowcase = () => {
           </div>
           
           {/* Live preview */}
-          <div className="mt-6 pt-4 border-t border-gray-700">
+          <div className="mt-4 sm:mt-6 pt-4 border-t border-gray-700">
             <div className="text-xs text-text-secondary mb-3">Live Preview</div>
-            <div className="overflow-x-auto">
-              <div className="flex gap-4" style={{ minWidth: 'min-content' }}>
-                {calcWeights.map((weight) => {
-                  const baseStroke = strokeWidths[weight] || strokeWidths[400]
-                  const result = (baseStroke / 32) * calcSize
-                  return (
-                    <div key={weight} className="flex flex-col items-center gap-2">
-                      <div 
-                        className="bg-gray-800 rounded-lg p-3 flex items-center justify-center gap-3 text-text-primary"
-                        style={{ 
-                          minWidth: Math.max(calcSize * 2 + 48, 80),
-                          minHeight: Math.max(calcSize + 24, 56)
-                        }}
-                      >
-                        <Icon name="cross" weight={weight as IconWeight} size={calcSize} />
-                        <Icon name="plus" weight={weight as IconWeight} size={calcSize} />
-                      </div>
-                      <div className="text-center">
-                        <div className="text-xs text-text-secondary">{weight}</div>
-                        <div className="text-xs text-green-400 font-mono">{result.toFixed(2)}px</div>
-                      </div>
+            <div className="space-y-4">
+              {calcWeights.map((weight) => {
+                const baseStroke = strokeWidths[weight] || strokeWidths[400]
+                const result = (baseStroke / 32) * calcSize
+                return (
+                  <div key={weight} className="bg-gray-800 rounded-lg p-3">
+                    <div className="flex items-center justify-between mb-2">
+                      <div className="text-xs text-text-secondary">{weight} ({weightNames[weight]})</div>
+                      <div className="text-xs text-green-400 font-mono">{result.toFixed(2)}px</div>
                     </div>
-                  )
-                })}
-              </div>
+                    <div className="grid grid-cols-3 sm:grid-cols-6 lg:grid-cols-9 gap-2 text-text-primary">
+                      {strokeIcons.map((iconName) => (
+                        <div 
+                          key={iconName} 
+                          className="flex items-center justify-center bg-gray-900 rounded p-2"
+                          style={{ minHeight: Math.max(calcSize + 16, 40) }}
+                        >
+                          <Icon name={iconName} weight={weight as IconWeight} size={calcSize} />
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )
+              })}
             </div>
           </div>
         </div>

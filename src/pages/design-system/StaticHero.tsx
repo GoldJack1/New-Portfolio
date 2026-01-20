@@ -3,7 +3,7 @@ import Button from '../../components/ui/Button'
 import Hero, { HeroSlide } from '../../components/ui/Hero'
 import { PADDING_CLASSES } from '../../utils/paddingClasses'
 import { HERO_GRADIENTS } from '../../utils/heroGradients'
-import { JWPChevronLeft } from '../../utils/iconMap'
+import { Icon } from '../../components/ui/Icon'
 
 const StaticHero = () => {
   const solidHero: HeroSlide = {
@@ -28,7 +28,7 @@ const StaticHero = () => {
       <section className={`w-full ${PADDING_CLASSES.page.full} flex-grow flex flex-col`}>
         <div className="mb-8">
           <Link to="/design-system">
-            <Button variant="ghost" icon={<JWPChevronLeft />} className="mb-4">
+            <Button variant="ghost" icon={<Icon name="chevron-left" weight={400} size={20} />} className="mb-4">
               Back to Design System
             </Button>
           </Link>

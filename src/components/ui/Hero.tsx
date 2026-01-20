@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react'
 import Button from './Button'
-import { JWPChevronLeft, JWPChevronRight } from '../../utils/iconMap'
+import { Icon } from './Icon'
 
 export interface HeroSlide {
   backgroundType: 'solid' | 'gradient' | 'image' | 'video'
@@ -301,7 +301,7 @@ const Hero = ({
               {showNavigation && (
                 <Button
                   iconOnly
-                  icon={<JWPChevronLeft />}
+                  icon={<Icon name="chevron-left" weight={400} size={20} />}
                   variant="ghost"
                   onClick={goToPrevious}
                   className="flex-shrink-0"
@@ -337,7 +337,7 @@ const Hero = ({
               {showNavigation && (
                 <Button
                   iconOnly
-                  icon={<JWPChevronRight />}
+                  icon={<Icon name="chevron-right" weight={400} size={20} />}
                   variant="ghost"
                   onClick={goToNext}
                   className="flex-shrink-0"

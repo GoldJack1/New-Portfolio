@@ -2,7 +2,7 @@ import ColorPalette from '../../components/DesignSystem/ColorPalette'
 import { Link } from 'react-router-dom'
 import Button from '../../components/ui/Button'
 import { PADDING_CLASSES } from '../../utils/paddingClasses'
-import { JWPChevronLeft } from '../../utils/iconMap'
+import { Icon } from '../../components/ui/Icon'
 
 const Colors = () => {
   return (
@@ -10,7 +10,7 @@ const Colors = () => {
       <section className={`w-full ${PADDING_CLASSES.page.full} flex-grow flex flex-col`}>
         <div className="mb-8">
           <Link to="/design-system">
-            <Button variant="ghost" icon={<JWPChevronLeft />} className="mb-4">
+            <Button variant="ghost" icon={<Icon name="chevron-left" weight={400} size={20} />} className="mb-4">
               Back to Design System
             </Button>
           </Link>
