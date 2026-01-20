@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react'
 import Button from './Button'
-import { FaChevronLeft, FaChevronRight } from 'react-icons/fa'
+import { JWPChevronLeft, JWPChevronRight } from '../../utils/iconMap'
 
 export interface HeroSlide {
   backgroundType: 'solid' | 'gradient' | 'image' | 'video'
@@ -49,22 +49,8 @@ const Hero = ({
 
   const [currentSlide, setCurrentSlide] = useState(0)
   const [isPaused, setIsPaused] = useState(false)
-  const [windowWidth, setWindowWidth] = useState(typeof window !== 'undefined' ? window.innerWidth : 1024)
   const autoPlayTimerRef = useRef<number | null>(null)
   const heroRef = useRef<HTMLDivElement>(null)
-
-  // Track window width for responsive button sizing
-  useEffect(() => {
-    const handleResize = () => {
-      setWindowWidth(window.innerWidth)
-    }
-    window.addEventListener('resize', handleResize)
-    return () => window.removeEventListener('resize', handleResize)
-  }, [])
-
-  // Determine button size based on breakpoint (desktop: md, mobile/tablet: sm)
-  // Desktop breakpoint is typically 1024px (lg in Tailwind)
-  const buttonSize = windowWidth >= 1024 ? 'md' : 'sm'
 
   // Default gradient overlay: left to right
   // gray-1000 at 90% opacity at 0%, 70% opacity at 33%, 0% opacity at 70% and 100%
@@ -255,7 +241,6 @@ const Hero = ({
                     rel="noopener noreferrer"
                   >
                     <Button
-                      size={buttonSize}
                       variant="primary"
                     >
                       {slide.buttonText}
@@ -263,7 +248,6 @@ const Hero = ({
                   </a>
                 ) : (
                   <Button
-                    size={buttonSize}
                     variant="primary"
                     onClick={slide.buttonOnClick}
                   >
@@ -317,8 +301,7 @@ const Hero = ({
               {showNavigation && (
                 <Button
                   iconOnly
-                  icon={<FaChevronLeft />}
-                  size="sm"
+                  icon={<JWPChevronLeft />}
                   variant="ghost"
                   onClick={goToPrevious}
                   className="flex-shrink-0"
@@ -354,8 +337,7 @@ const Hero = ({
               {showNavigation && (
                 <Button
                   iconOnly
-                  icon={<FaChevronRight />}
-                  size="sm"
+                  icon={<JWPChevronRight />}
                   variant="ghost"
                   onClick={goToNext}
                   className="flex-shrink-0"

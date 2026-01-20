@@ -1,6 +1,6 @@
 import { useRef, useLayoutEffect, useState } from 'react'
 import { NavLink, useLocation, useNavigate } from 'react-router-dom'
-import { FaBars } from 'react-icons/fa'
+import { JWPHamburgerHorizontal } from '../utils/iconMap'
 
 const navItems = [
   { to: '/', label: 'Home' },
@@ -22,6 +22,8 @@ const pageTitles: Record<string, string> = {
   '/design-system/form-controls': 'Form Controls',
   '/design-system/components': 'Components',
   '/design-system/padding': 'Padding',
+  '/design-system/icons': 'Icons',
+  '/design-system/test-icons': 'Test Icons',
   '/privacy-policy': 'Privacy Policy',
   '/sitemap': 'Site Map',
 }
@@ -177,7 +179,7 @@ const Navigation = () => {
               aria-expanded={menuOpen}
               onClick={() => setMenuOpen((v) => !v)}
             >
-              <FaBars />
+              <JWPHamburgerHorizontal />
             </button>
           </div>
           {menuOpen && (

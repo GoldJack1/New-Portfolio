@@ -6,7 +6,7 @@ import Checkbox from '../ui/Checkbox'
 import Radio from '../ui/Radio'
 import Toggle from '../ui/Toggle'
 import Slider from '../ui/Slider'
-import { FaHome } from 'react-icons/fa'
+import { JWPSearch1 } from '../../utils/iconMap'
 
 const FormControlsShowcase = () => {
   const [sliderValue, setSliderValue] = useState(50)
@@ -25,7 +25,7 @@ const FormControlsShowcase = () => {
             <Input label="Email Input" type="email" placeholder="email@example.com" />
             <Input label="Error State" error placeholder="Error input" />
             <Input label="Success State" success placeholder="Success input" />
-            <Input label="With Left Icon" iconLeft={<FaHome />} placeholder="Search..." />
+            <Input label="With Left Icon" iconLeft={<JWPSearch1 />} placeholder="Search..." />
           </div>
         </div>
         <div>

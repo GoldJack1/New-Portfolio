@@ -1,0 +1,307 @@
+{
+  "fontFamily": "Geologica Thin",
+  "unitsPerEm": 2000,
+  "generatedAt": "2026-01-20T11:49:01.244Z",
+  "note": "These are VISIBLE WIDTH measurements, not true stem widths. Use visual calibration for final values.",
+  "weights": {
+    "100": {
+      "stemWidth": 138.7,
+      "percentage": 6.93,
+      "strokeFor32pxViewBox": 2.22,
+      "rawMeasurements": [
+        {
+          "char": "l",
+          "width": 112,
+          "isSimpleStem": true
+        },
+        {
+          "char": "I",
+          "width": 116,
+          "isSimpleStem": true
+        },
+        {
+          "char": "i",
+          "width": 188,
+          "isSimpleStem": true
+        },
+        {
+          "char": "H",
+          "width": 116,
+          "isSimpleStem": false
+        },
+        {
+          "char": "n",
+          "width": 15,
+          "isSimpleStem": false
+        }
+      ]
+    },
+    "200": {
+      "stemWidth": 174,
+      "percentage": 8.7,
+      "strokeFor32pxViewBox": 2.78,
+      "rawMeasurements": [
+        {
+          "char": "l",
+          "width": 148,
+          "isSimpleStem": true
+        },
+        {
+          "char": "I",
+          "width": 152,
+          "isSimpleStem": true
+        },
+        {
+          "char": "i",
+          "width": 222,
+          "isSimpleStem": true
+        },
+        {
+          "char": "H",
+          "width": 152,
+          "isSimpleStem": false
+        },
+        {
+          "char": "n",
+          "width": 7,
+          "isSimpleStem": false
+        }
+      ]
+    },
+    "300": {
+      "stemWidth": 209.3,
+      "percentage": 10.47,
+      "strokeFor32pxViewBox": 3.35,
+      "rawMeasurements": [
+        {
+          "char": "l",
+          "width": 184,
+          "isSimpleStem": true
+        },
+        {
+          "char": "I",
+          "width": 188,
+          "isSimpleStem": true
+        },
+        {
+          "char": "i",
+          "width": 256,
+          "isSimpleStem": true
+        },
+        {
+          "char": "H",
+          "width": 188,
+          "isSimpleStem": false
+        },
+        {
+          "char": "n",
+          "width": 9,
+          "isSimpleStem": false
+        }
+      ]
+    },
+    "400": {
+      "stemWidth": 244.7,
+      "percentage": 12.23,
+      "strokeFor32pxViewBox": 3.91,
+      "rawMeasurements": [
+        {
+          "char": "l",
+          "width": 220,
+          "isSimpleStem": true
+        },
+        {
+          "char": "I",
+          "width": 224,
+          "isSimpleStem": true
+        },
+        {
+          "char": "i",
+          "width": 290,
+          "isSimpleStem": true
+        },
+        {
+          "char": "H",
+          "width": 224,
+          "isSimpleStem": false
+        },
+        {
+          "char": "n",
+          "width": 4,
+          "isSimpleStem": false
+        }
+      ]
+    },
+    "500": {
+      "stemWidth": 280,
+      "percentage": 14,
+      "strokeFor32pxViewBox": 4.48,
+      "rawMeasurements": [
+        {
+          "char": "l",
+          "width": 256,
+          "isSimpleStem": true
+        },
+        {
+          "char": "I",
+          "width": 260,
+          "isSimpleStem": true
+        },
+        {
+          "char": "i",
+          "width": 324,
+          "isSimpleStem": true
+        },
+        {
+          "char": "H",
+          "width": 260,
+          "isSimpleStem": false
+        },
+        {
+          "char": "n",
+          "width": 12,
+          "isSimpleStem": false
+        }
+      ]
+    },
+    "600": {
+      "stemWidth": 315.3,
+      "percentage": 15.77,
+      "strokeFor32pxViewBox": 5.05,
+      "rawMeasurements": [
+        {
+          "char": "l",
+          "width": 292,
+          "isSimpleStem": true
+        },
+        {
+          "char": "I",
+          "width": 296,
+          "isSimpleStem": true
+        },
+        {
+          "char": "i",
+          "width": 358,
+          "isSimpleStem": true
+        },
+        {
+          "char": "H",
+          "width": 296,
+          "isSimpleStem": false
+        },
+        {
+          "char": "n",
+          "width": 3,
+          "isSimpleStem": false
+        }
+      ]
+    },
+    "700": {
+      "stemWidth": 350.7,
+      "percentage": 17.53,
+      "strokeFor32pxViewBox": 5.61,
+      "rawMeasurements": [
+        {
+          "char": "l",
+          "width": 328,
+          "isSimpleStem": true
+        },
+        {
+          "char": "I",
+          "width": 332,
+          "isSimpleStem": true
+        },
+        {
+          "char": "i",
+          "width": 392,
+          "isSimpleStem": true
+        },
+        {
+          "char": "H",
+          "width": 332,
+          "isSimpleStem": false
+        },
+        {
+          "char": "n",
+          "width": 4,
+          "isSimpleStem": false
+        }
+      ]
+    },
+    "800": {
+      "stemWidth": 386,
+      "percentage": 19.3,
+      "strokeFor32pxViewBox": 6.18,
+      "rawMeasurements": [
+        {
+          "char": "l",
+          "width": 364,
+          "isSimpleStem": true
+        },
+        {
+          "char": "I",
+          "width": 368,
+          "isSimpleStem": true
+        },
+        {
+          "char": "i",
+          "width": 426,
+          "isSimpleStem": true
+        },
+        {
+          "char": "H",
+          "width": 368,
+          "isSimpleStem": false
+        },
+        {
+          "char": "n",
+          "width": 7,
+          "isSimpleStem": false
+        }
+      ]
+    },
+    "900": {
+      "stemWidth": 421.3,
+      "percentage": 21.07,
+      "strokeFor32pxViewBox": 6.74,
+      "rawMeasurements": [
+        {
+          "char": "l",
+          "width": 400,
+          "isSimpleStem": true
+        },
+        {
+          "char": "I",
+          "width": 404,
+          "isSimpleStem": true
+        },
+        {
+          "char": "i",
+          "width": 460,
+          "isSimpleStem": true
+        },
+        {
+          "char": "H",
+          "width": 404,
+          "isSimpleStem": false
+        },
+        {
+          "char": "n",
+          "width": 6,
+          "isSimpleStem": false
+        }
+      ]
+    }
+  },
+  "recommendedStrokeWidths": {
+    "100": 2.22,
+    "200": 2.78,
+    "300": 3.35,
+    "400": 3.91,
+    "500": 4.48,
+    "600": 5.05,
+    "700": 5.61,
+    "800": 6.18,
+    "900": 6.74
+  }
+}

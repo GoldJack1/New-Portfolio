@@ -1,5 +1,5 @@
 import { ReactNode, useState } from 'react'
-import { FaInfoCircle, FaCheckCircle, FaExclamationTriangle, FaTimesCircle, FaTimes } from 'react-icons/fa'
+import { JWPInfoCircleFilled2, JWPCheckmarkCircleFilled, JWPCrossCircleFilled, JWPCross } from '../../utils/iconMap'
 
 interface AlertProps {
   children: ReactNode
@@ -39,10 +39,10 @@ const Alert = ({
   const backgroundStyle = variant ? variantStyles[variant] : typeStyles[type]
 
   const icons = {
-    info: FaInfoCircle,
-    success: FaCheckCircle,
-    warning: FaExclamationTriangle,
-    error: FaTimesCircle,
+    info: JWPInfoCircleFilled2,
+    success: JWPCheckmarkCircleFilled,
+    warning: JWPInfoCircleFilled2,
+    error: JWPCrossCircleFilled,
   }
 
   const Icon = icons[type]
@@ -68,7 +68,7 @@ const Alert = ({
           className="flex-shrink-0 hover:opacity-70 transition-opacity"
           aria-label="Dismiss"
         >
-          <FaTimes className="w-4 h-4" />
+          <JWPCross className="w-4 h-4" />
         </button>
       )}
     </div>

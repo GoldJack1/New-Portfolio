@@ -3,7 +3,6 @@ import React, { ReactNode, CSSProperties } from 'react'
 interface ButtonProps {
   children?: ReactNode
   variant?: 'primary' | 'ghost'
-  size?: 'sm' | 'md' | 'lg'
   fontWeight?: 100 | 200 | 300 | 400 | 500 | 600 | 700 | 800 | 900
   icon?: ReactNode
   iconOnly?: boolean
@@ -17,7 +16,6 @@ interface ButtonProps {
 const Button = ({
   children,
   variant = 'primary',
-  size = 'md',
   fontWeight = 400,
   icon,
   iconOnly = false,
@@ -33,65 +31,28 @@ const Button = ({
       onClick?.()
     }
   }
-  // Icon sizes based on button size
-  const iconSizes: Record<'sm' | 'md' | 'lg', string> = {
-    sm: '16px',
-    md: '18px',
-    lg: '20px',
-  }
+  // Icon size (slightly smaller than font size for better visual alignment)
+  const iconSize = '16px'
 
   // Gap spacing between icon and text
-  const iconTextGaps: Record<'sm' | 'md' | 'lg', string> = {
-    sm: '10px',
-    md: '12px',
-    lg: '14px',
+  const iconTextGap = '10px'
+
+  // Styles for text buttons
+  const textButtonStyles: CSSProperties = {
+    padding: '0 16px',
+    height: '42px',
+    minWidth: '116px',
+    fontSize: '18px',
+    lineHeight: '28px',
+    letterSpacing: '0',
   }
 
-  // Size-specific styles for text buttons
-  const textSizeStyles: Record<'sm' | 'md' | 'lg', CSSProperties> = {
-    sm: {
-      padding: '8px 16px',
-      minWidth: '100px',
-      fontSize: '16px',
-      lineHeight: '24px',
-      letterSpacing: '0.01em',
-    },
-    md: {
-      padding: '10px 24px',
-      minWidth: '116px',
-      fontSize: '18px',
-      lineHeight: '28px',
-      letterSpacing: '0',
-    },
-    lg: {
-      padding: '12px 32px',
-      minWidth: '132px',
-      fontSize: '20px',
-      lineHeight: '30px',
-      letterSpacing: '0',
-    },
-  }
-
-  // Size-specific styles for icon-only buttons
-  const iconSizeStyles: Record<'sm' | 'md' | 'lg', CSSProperties> = {
-    sm: {
-      width: '40px',
-      height: '40px',
-      padding: '0',
-      minWidth: '0',
-    },
-    md: {
-      width: '48px',
-      height: '48px',
-      padding: '0',
-      minWidth: '0',
-    },
-    lg: {
-      width: '54px',
-      height: '54px',
-      padding: '0',
-      minWidth: '0',
-    },
+  // Styles for icon-only buttons
+  const iconButtonStyles: CSSProperties = {
+    width: '42px',
+    height: '42px',
+    padding: '0',
+    minWidth: '0',
   }
 
   // Get background style based on variant
@@ -118,21 +79,21 @@ const Button = ({
   const baseStyles = iconOnly
     ? 'rounded-full text-text-primary focus:outline-none cursor-pointer transition-all duration-200 flex items-center justify-center'
     : hasTextAndIcon
-    ? 'rounded-full text-text-primary focus:outline-none cursor-pointer transition-all duration-200 flex items-center'
+    ? 'rounded-full text-text-primary focus:outline-none cursor-pointer transition-all duration-200 flex items-center justify-center'
     : 'rounded-full text-text-primary focus:outline-none cursor-pointer transition-all duration-200'
   const disabledStyles = disabled
     ? 'opacity-50 cursor-not-allowed'
     : ''
 
   const combinedStyle: CSSProperties = {
-    ...(iconOnly ? iconSizeStyles[size] : textSizeStyles[size]),
+    ...(iconOnly ? iconButtonStyles : textButtonStyles),
     background: getBackgroundStyle(),
     ...(variant === 'primary' ? {
       backdropFilter: 'blur(18px)',
       WebkitBackdropFilter: 'blur(18px)',
     } : {}),
-    ...(iconOnly ? {} : { fontWeight, height: 'auto', width: 'auto' }),
-    ...(hasTextAndIcon ? { gap: iconTextGaps[size] } : {}),
+    ...(iconOnly ? {} : { fontWeight, width: 'auto' }),
+    ...(hasTextAndIcon ? { gap: iconTextGap } : {}),
   }
 
   // Handle hover with inline style approach using onMouseEnter/onMouseLeave
@@ -161,55 +122,37 @@ const Button = ({
   // Render icon with proper sizing and frame
   const renderIcon = () => {
     if (!icon) return null
-    const iconSize = iconSizes[size]
+    
+    // Icon frame height matches text line-height (28px) for buttons with text and icon
+    const iconFrameHeight = hasTextAndIcon ? textButtonStyles.lineHeight : iconSize
     
     return (
       <span
         style={{
-          width: iconSize,
-          height: iconSize,
-          minWidth: iconSize,
-          minHeight: iconSize,
-          maxWidth: iconSize,
-          maxHeight: iconSize,
-          display: 'flex',
+          display: 'inline-flex',
           alignItems: 'center',
           justifyContent: 'center',
-          fontSize: iconSize,
-          lineHeight: 1,
           flexShrink: 0,
-          overflow: 'hidden',
+          width: iconSize,
+          height: iconFrameHeight,
+          lineHeight: 0,
+          alignSelf: 'center',
+          ...(hasTextAndIcon ? {
+            marginTop: '5px',
+            marginBottom: '5px',
+          } : {}),
         }}
       >
-        <span
-          style={{
-            width: iconSize,
-            height: iconSize,
-            minWidth: iconSize,
-            minHeight: iconSize,
-            maxWidth: iconSize,
-            maxHeight: iconSize,
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            fontSize: iconSize,
-          }}
-        >
-          {React.isValidElement(icon)
-            ? React.cloneElement(icon as React.ReactElement<any>, {
-                style: {
-                  width: iconSize,
-                  height: iconSize,
-                  minWidth: iconSize,
-                  minHeight: iconSize,
-                  maxWidth: iconSize,
-                  maxHeight: iconSize,
-                  display: 'block',
-                  flexShrink: 0,
-                },
-              })
-            : icon}
-        </span>
+        {React.isValidElement(icon)
+          ? React.cloneElement(icon as React.ReactElement<any>, {
+              style: {
+                width: iconSize,
+                height: iconSize,
+                display: 'block',
+                flexShrink: 0,
+              },
+            })
+          : icon}
       </span>
     )
   }
@@ -222,7 +165,7 @@ const Button = ({
     
     if (hasTextAndIcon) {
       const iconElement = renderIcon()
-      const textElement = <span>{children}</span>
+      const textElement = <span style={{ display: 'inline-block', lineHeight: 'inherit' }}>{children}</span>
       
       return iconPosition === 'left' ? (
         <>
