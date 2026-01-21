@@ -49,12 +49,12 @@ const iconPaths: Record<string, { paths: string[]; strokeLinejoin?: 'round' }> =
  * 
  * Formula:
  * - Original content size = VIEWBOX_SIZE - BASE_STROKE_WIDTH (accounts for half stroke on each side)
- * - Available size with new stroke = VIEWBOX_SIZE - strokeWidth
+ * - Available size with new stroke = VIEWBOX_SIZE - strokeWidth - (inset * 2)
  * - Scale = available size / original content size
  */
-function calculateScaleFactor(strokeWidth: number): number {
+function calculateScaleFactor(strokeWidth: number, inset: number = 0): number {
   const originalContentSize = VIEWBOX_SIZE - BASE_STROKE_WIDTH
-  const availableSize = VIEWBOX_SIZE - strokeWidth
+  const availableSize = VIEWBOX_SIZE - strokeWidth - (inset * 2)
   return availableSize / originalContentSize
 }
 
@@ -76,6 +76,12 @@ export interface IconProps {
   strokeWidth?: number
   /** Color - defaults to currentColor */
   color?: string
+  /** 
+   * Inset padding in viewBox units (0-16). 
+   * Scales the icon down to add padding inside the icon container.
+   * For example, inset={2} adds 2 units of padding on each side.
+   */
+  inset?: number
   /** Accessibility label */
   'aria-label'?: string
   /** Hide from screen readers */
@@ -98,6 +104,9 @@ export interface IconProps {
  * 
  * // Custom stroke width
  * <Icon name="cross" strokeWidth={2} className="w-6 h-6" />
+ * 
+ * // With inset padding (adds space around the icon)
+ * <Icon name="chevron-left" weight={400} size={24} inset={2} />
  * ```
  */
 export function Icon({
@@ -107,6 +116,7 @@ export function Icon({
   size,
   strokeWidth: customStrokeWidth,
   color,
+  inset = 0,
   'aria-label': ariaLabel,
   'aria-hidden': ariaHidden,
 }: IconProps) {
@@ -120,8 +130,8 @@ export function Icon({
   // Calculate stroke width from weight or use custom value
   const calculatedStrokeWidth = customStrokeWidth ?? getStrokeWidth(weight)
   
-  // Calculate scale factor to fit the icon with its stroke
-  const scaleFactor = calculateScaleFactor(calculatedStrokeWidth)
+  // Calculate scale factor to fit the icon with its stroke and inset
+  const scaleFactor = calculateScaleFactor(calculatedStrokeWidth, inset)
   
   // Calculate translation to keep the scaled content centered
   // We scale from the center of the viewBox (16, 16)
@@ -141,7 +151,6 @@ export function Icon({
         display: 'inline-flex',
         alignItems: 'center',
         justifyContent: 'center',
-        verticalAlign: 'middle',
         ...sizeStyle,
       }}
       aria-label={ariaLabel}
@@ -159,7 +168,12 @@ export function Icon({
       >
         <g transform={`translate(${translateOffset}, ${translateOffset}) scale(${scaleFactor})`}>
           {iconData.paths.map((d, i) => (
-            <path key={i} d={d} strokeWidth={calculatedStrokeWidth / scaleFactor} />
+            <path 
+              key={i} 
+              d={d} 
+              strokeWidth={calculatedStrokeWidth / scaleFactor}
+              style={{ transition: 'stroke-width 200ms ease-out' }}
+            />
           ))}
         </g>
       </svg>

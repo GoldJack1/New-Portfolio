@@ -10,7 +10,7 @@ const Typography = () => {
       <section className={`w-full ${PADDING_CLASSES.page.full} flex-grow flex flex-col`}>
         <div className="mb-8">
           <Link to="/design-system">
-            <Button variant="ghost" icon={<Icon name="chevron-left" weight={400} size={20} />} className="mb-4">
+            <Button variant="ghost" icon={<Icon name="chevron-left" weight={400} />} className="mb-4">
               Back to Design System
             </Button>
           </Link>

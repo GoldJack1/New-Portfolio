@@ -17,11 +17,13 @@ const weightNames: Record<number, string> = {
 const weights: IconWeight[] = [100, 200, 300, 400, 500, 600, 700, 800, 900]
 
 const sizes = [
-  { px: 16, label: '16px', description: 'Small / Button icon' },
-  { px: 20, label: '20px', description: 'Default' },
-  { px: 24, label: '24px', description: 'Medium' },
-  { px: 32, label: '32px', description: 'Large' },
+  { px: 13, label: '13px', description: 'Inline with text (cap-height)' },
+  { px: 20, label: '20px', description: 'Default / Navigation' },
+  { px: 32, label: '32px', description: 'Large / Display' },
 ]
+
+// Cap-height ratio for inline icons (matches Button component)
+const CAP_HEIGHT_RATIO = 0.725
 
 // All sizes for the reference table (10-128)
 const referenceSizes = [10, 12, 14, 16, 18, 20, 24, 28, 32, 40, 48, 56, 64, 80, 96, 112, 128]
@@ -237,61 +239,61 @@ const TestIconShowcase = () => {
                 {weight} ({weightNames[weight]})
               </div>
               
-              {/* Mobile: 3 per row grid */}
+              {/* Mobile: 3 per row grid - 14px font, 10px icon (cap-height) */}
               <div 
                 className="grid grid-cols-3 gap-2 sm:hidden text-text-primary"
                 style={{ fontWeight: weight, fontSize: '14px' }}
               >
                 <span className="inline-flex items-center gap-1">
-                  <Icon name="plus" weight={weight as IconWeight} size={14} />
+                  <Icon name="plus" weight={weight as IconWeight} size={Math.round(14 * CAP_HEIGHT_RATIO)} />
                   <span>Add</span>
                 </span>
                 <span className="inline-flex items-center gap-1">
-                  <Icon name="minus" weight={weight as IconWeight} size={14} />
+                  <Icon name="minus" weight={weight as IconWeight} size={Math.round(14 * CAP_HEIGHT_RATIO)} />
                   <span>Remove</span>
                 </span>
                 <span className="inline-flex items-center gap-1">
-                  <Icon name="cross" weight={weight as IconWeight} size={14} />
+                  <Icon name="cross" weight={weight as IconWeight} size={Math.round(14 * CAP_HEIGHT_RATIO)} />
                   <span>Close</span>
                 </span>
                 <span className="inline-flex items-center gap-1">
-                  <Icon name="chevron-left" weight={weight as IconWeight} size={14} />
+                  <Icon name="chevron-left" weight={weight as IconWeight} size={Math.round(14 * CAP_HEIGHT_RATIO)} />
                   <span>Back</span>
                 </span>
                 <span className="inline-flex items-center gap-1">
                   <span>Next</span>
-                  <Icon name="chevron-right" weight={weight as IconWeight} size={14} />
+                  <Icon name="chevron-right" weight={weight as IconWeight} size={Math.round(14 * CAP_HEIGHT_RATIO)} />
                 </span>
               </div>
               
-              {/* Desktop: flex row */}
+              {/* Desktop: flex row - 16px font, 12px icon (cap-height) */}
               <div 
                 className="hidden sm:flex flex-wrap items-center gap-x-3 gap-y-2 text-text-primary"
                 style={{ fontWeight: weight, fontSize: '16px' }}
               >
                 <span className="inline-flex items-center gap-1">
-                  <Icon name="plus" weight={weight as IconWeight} size={16} />
+                  <Icon name="plus" weight={weight as IconWeight} size={Math.round(16 * CAP_HEIGHT_RATIO)} />
                   <span>Add</span>
                 </span>
                 <span className="text-text-tertiary">|</span>
                 <span className="inline-flex items-center gap-1">
-                  <Icon name="minus" weight={weight as IconWeight} size={16} />
+                  <Icon name="minus" weight={weight as IconWeight} size={Math.round(16 * CAP_HEIGHT_RATIO)} />
                   <span>Remove</span>
                 </span>
                 <span className="text-text-tertiary">|</span>
                 <span className="inline-flex items-center gap-1">
-                  <Icon name="cross" weight={weight as IconWeight} size={16} />
+                  <Icon name="cross" weight={weight as IconWeight} size={Math.round(16 * CAP_HEIGHT_RATIO)} />
                   <span>Close</span>
                 </span>
                 <span className="text-text-tertiary">|</span>
                 <span className="inline-flex items-center gap-1">
-                  <Icon name="chevron-left" weight={weight as IconWeight} size={16} />
+                  <Icon name="chevron-left" weight={weight as IconWeight} size={Math.round(16 * CAP_HEIGHT_RATIO)} />
                   <span>Back</span>
                 </span>
                 <span className="text-text-tertiary">|</span>
                 <span className="inline-flex items-center gap-1">
                   <span>Next</span>
-                  <Icon name="chevron-right" weight={weight as IconWeight} size={16} />
+                  <Icon name="chevron-right" weight={weight as IconWeight} size={Math.round(16 * CAP_HEIGHT_RATIO)} />
                 </span>
                 
                 {/* Weight label - right aligned */}

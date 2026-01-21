@@ -1,49 +1,78 @@
-import React, { ReactNode, CSSProperties } from 'react'
+import React, { ReactNode, CSSProperties, useState } from 'react'
+
+type FontWeight = 100 | 200 | 300 | 400 | 500 | 600 | 700 | 800 | 900
 
 interface ButtonProps {
   children?: ReactNode
-  variant?: 'primary' | 'ghost'
-  fontWeight?: 100 | 200 | 300 | 400 | 500 | 600 | 700 | 800 | 900
+  /** Button variant: 'primary' has glass background, 'ghost' is transparent with hover fill, 'weight' changes weight on hover */
+  variant?: 'primary' | 'ghost' | 'weight'
+  fontWeight?: FontWeight
+  /** For 'weight' variant: the weight to use on hover (default: 900) */
+  hoverWeight?: FontWeight
   icon?: ReactNode
   iconOnly?: boolean
   iconPosition?: 'left' | 'right'
+  /** Gap between icon and text in pixels (default: 6) */
+  iconGap?: number
+  /** Width behavior: 'fixed' uses minWidth, 'hug' fits content */
+  widthMode?: 'fixed' | 'hug'
   disabled?: boolean
   onClick?: () => void
   type?: 'button' | 'submit' | 'reset'
   className?: string
+  /** For 'weight' variant with icons: callback to get hovered state for dynamic icon weight */
+  onHoverChange?: (isHovered: boolean) => void
 }
 
 const Button = ({
   children,
   variant = 'primary',
   fontWeight = 400,
+  hoverWeight = 900,
   icon,
   iconOnly = false,
   iconPosition = 'left',
+  iconGap = 6,
+  widthMode = 'fixed',
   disabled = false,
   onClick,
   type = 'button',
   className = '',
+  onHoverChange,
 }: ButtonProps) => {
+  // Track hover state for weight variant
+  const [isHovered, setIsHovered] = useState(false)
+  
   // Handle click
   const handleClick = (_e: React.MouseEvent<HTMLButtonElement>) => {
     if (!disabled) {
       onClick?.()
     }
   }
-  // Icon size (slightly smaller than font size for better visual alignment)
-  const iconSize = '16px'
-
-  // Gap spacing between icon and text
-  const iconTextGap = '10px'
+  
+  // Current font weight based on hover state (for weight variant)
+  const currentFontWeight = variant === 'weight' && isHovered ? hoverWeight : fontWeight
+  // Typography and icon sizing
+  const fontSize = 18 // px
+  const lineHeightRatio = 1 // unitless, means lineHeight = fontSize * 1 = 18px
+  
+  // Icon sized to match cap-height (~75% of em-size)
+  // This follows Material/Apple HIG guidelines for optical balance
+  // Cap-height icons appear balanced with text weight, not oversized
+  const capHeightRatio = 0.725
+  const iconSizePx = Math.round(fontSize * capHeightRatio) // 18 * 0.75 ≈ 14px
+  
+  // Optical offset to align icon with text's visual center
+  // Positive = down, negative = up
+  const iconOpticalOffset = -0.6
 
   // Styles for text buttons
   const textButtonStyles: CSSProperties = {
     padding: '0 16px',
     height: '42px',
-    minWidth: '116px',
-    fontSize: '18px',
-    lineHeight: '28px',
+    minWidth: widthMode === 'fixed' ? '116px' : 'auto',
+    fontSize: `${fontSize}px`,
+    lineHeight: lineHeightRatio,
     letterSpacing: '0',
   }
 
@@ -60,6 +89,7 @@ const Button = ({
     if (variant === 'primary') {
       return 'linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.2)), rgba(255,255,255,0.25)'
     } else {
+      // ghost and weight variants have transparent background
       return 'transparent'
     }
   }
@@ -68,19 +98,19 @@ const Button = ({
   const getHoverBackgroundStyle = (): string => {
     if (variant === 'primary') {
       return 'rgba(0, 0, 0, 0.25)'
-    } else {
+    } else if (variant === 'ghost') {
       return 'rgba(255, 255, 255, 0.25)'
+    } else {
+      // weight variant has no background change on hover
+      return 'transparent'
     }
   }
 
   // Determine if we should render text + icon variant
   const hasTextAndIcon = !iconOnly && icon && children
 
-  const baseStyles = iconOnly
-    ? 'rounded-full text-text-primary focus:outline-none cursor-pointer transition-all duration-200 flex items-center justify-center'
-    : hasTextAndIcon
-    ? 'rounded-full text-text-primary focus:outline-none cursor-pointer transition-all duration-200 flex items-center justify-center'
-    : 'rounded-full text-text-primary focus:outline-none cursor-pointer transition-all duration-200'
+  // All button variants use flexbox for consistent centering
+  const baseStyles = 'rounded-full text-text-primary focus:outline-none cursor-pointer transition-all duration-200 flex items-center justify-center'
   const disabledStyles = disabled
     ? 'opacity-50 cursor-not-allowed'
     : ''
@@ -92,39 +122,56 @@ const Button = ({
       backdropFilter: 'blur(18px)',
       WebkitBackdropFilter: 'blur(18px)',
     } : {}),
-    ...(iconOnly ? {} : { fontWeight, width: 'auto' }),
-    ...(hasTextAndIcon ? { gap: iconTextGap } : {}),
+    ...(iconOnly ? {} : { fontWeight: currentFontWeight, width: 'auto' }),
+    ...(hasTextAndIcon ? { gap: `${iconGap}px` } : {}),
   }
 
   // Handle hover with inline style approach using onMouseEnter/onMouseLeave
   const handleMouseEnter = (e: React.MouseEvent<HTMLButtonElement>) => {
     if (!disabled) {
+      setIsHovered(true)
+      onHoverChange?.(true)
+      
       e.currentTarget.style.background = getHoverBackgroundStyle()
+      
       // Add backdrop blur on hover for ghost variant
       if (variant === 'ghost') {
         e.currentTarget.style.backdropFilter = 'blur(18px)'
         ;(e.currentTarget.style as any).webkitBackdropFilter = 'blur(18px)'
+      }
+      
+      // Update font weight for weight variant
+      if (variant === 'weight' && !iconOnly) {
+        e.currentTarget.style.fontWeight = String(hoverWeight)
       }
     }
   }
 
   const handleMouseLeave = (e: React.MouseEvent<HTMLButtonElement>) => {
     if (!disabled) {
+      setIsHovered(false)
+      onHoverChange?.(false)
+      
       e.currentTarget.style.background = getBackgroundStyle()
+      
       // Remove backdrop blur on mouse leave for ghost variant
       if (variant === 'ghost') {
         e.currentTarget.style.backdropFilter = 'none'
         ;(e.currentTarget.style as any).webkitBackdropFilter = 'none'
       }
+      
+      // Reset font weight for weight variant
+      if (variant === 'weight' && !iconOnly) {
+        e.currentTarget.style.fontWeight = String(fontWeight)
+      }
     }
   }
 
-  // Render icon with proper sizing and frame
+  // Render icon with proper sizing and optical alignment
   const renderIcon = () => {
     if (!icon) return null
     
-    // Icon frame height matches text line-height (28px) for buttons with text and icon
-    const iconFrameHeight = hasTextAndIcon ? textButtonStyles.lineHeight : iconSize
+    const iconSize = `${iconSizePx}px`
     
     return (
       <span
@@ -134,12 +181,13 @@ const Button = ({
           justifyContent: 'center',
           flexShrink: 0,
           width: iconSize,
-          height: iconFrameHeight,
+          height: iconSize,
           lineHeight: 0,
-          alignSelf: 'center',
+          // Apply optical offset only when icon is paired with text
+          // This shifts the icon down to align with text's visual center
           ...(hasTextAndIcon ? {
-            marginTop: '5px',
-            marginBottom: '5px',
+            position: 'relative',
+            top: `${iconOpticalOffset}px`,
           } : {}),
         }}
       >

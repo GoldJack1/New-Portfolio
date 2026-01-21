@@ -301,19 +301,15 @@ const Hero = ({
             >
               {/* Previous button */}
               {showNavigation && (
-                <div
-                  onMouseEnter={() => setPrevHovered(true)}
-                  onMouseLeave={() => setPrevHovered(false)}
-                >
-                  <Button
-                    iconOnly
-                    icon={<Icon name="chevron-left" weight={prevHovered ? 700 : 400} size={20} />}
-                    variant="ghost"
-                    onClick={goToPrevious}
-                    className="flex-shrink-0"
-                    aria-label="Previous slide"
-                  />
-                </div>
+                <Button
+                  iconOnly
+                  icon={<Icon name="chevron-left" weight={prevHovered ? 900 : 400} size={20} />}
+                  variant="weight"
+                  onClick={goToPrevious}
+                  onHoverChange={setPrevHovered}
+                  className="flex-shrink-0"
+                  aria-label="Previous slide"
+                />
               )}
 
               {/* Indicators */}
@@ -342,19 +338,15 @@ const Hero = ({
 
               {/* Next button */}
               {showNavigation && (
-                <div
-                  onMouseEnter={() => setNextHovered(true)}
-                  onMouseLeave={() => setNextHovered(false)}
-                >
-                  <Button
-                    iconOnly
-                    icon={<Icon name="chevron-right" weight={nextHovered ? 700 : 400} size={20} />}
-                    variant="ghost"
-                    onClick={goToNext}
-                    className="flex-shrink-0"
-                    aria-label="Next slide"
-                  />
-                </div>
+                <Button
+                  iconOnly
+                  icon={<Icon name="chevron-right" weight={nextHovered ? 900 : 400} size={20} />}
+                  variant="weight"
+                  onClick={goToNext}
+                  onHoverChange={setNextHovered}
+                  className="flex-shrink-0"
+                  aria-label="Next slide"
+                />
               )}
             </div>
           )}
