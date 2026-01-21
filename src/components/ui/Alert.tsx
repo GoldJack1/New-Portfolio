@@ -1,5 +1,6 @@
 import { ReactNode, useState } from 'react'
-import { JWPInfoCircleFilled2, JWPCheckmarkCircleFilled, JWPCrossCircleFilled, JWPCross } from '../../utils/iconMap'
+import { JWPInfoCircleFilled2, JWPCheckmarkCircleFilled, JWPCrossCircleFilled } from '../../utils/iconMap'
+import { Icon as StrokeIcon } from './Icon'
 
 interface AlertProps {
   children: ReactNode
@@ -68,7 +69,7 @@ const Alert = ({
           className="flex-shrink-0 hover:opacity-70 transition-opacity"
           aria-label="Dismiss"
         >
-          <JWPCross className="w-4 h-4" />
+          <StrokeIcon name="cross" weight={400} size={16} />
         </button>
       )}
     </div>

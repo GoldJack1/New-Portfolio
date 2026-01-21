@@ -78,7 +78,7 @@ const pageTitles: Record<string, string> = {
   '/design-system/components': 'Components',
   '/design-system/padding': 'Padding',
   '/design-system/icons': 'Icons',
-  '/design-system/test-icons': 'Test Icons',
+  '/design-system/stroke-based-icons': 'Stroke Based Icons',
   '/privacy-policy': 'Privacy Policy',
   '/sitemap': 'Site Map',
 }

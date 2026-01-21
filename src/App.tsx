@@ -348,7 +348,7 @@ function AppRoutes() {
         <Route path="/design-system/components" element={<AnimatedPage><Components /></AnimatedPage>} />
         <Route path="/design-system/padding" element={<AnimatedPage><Padding /></AnimatedPage>} />
         <Route path="/design-system/icons" element={<AnimatedPage><Icons /></AnimatedPage>} />
-        <Route path="/design-system/test-icons" element={<AnimatedPage><TestIcons /></AnimatedPage>} />
+        <Route path="/design-system/stroke-based-icons" element={<AnimatedPage><TestIcons /></AnimatedPage>} />
         <Route path="/design-system/icon-calibration" element={<AnimatedPage><IconCalibration /></AnimatedPage>} />
         <Route path="/design-system/static-hero" element={<AnimatedPage><StaticHero /></AnimatedPage>} />
         <Route path="/design-system/carousel-hero" element={<AnimatedPage><CarouselHero /></AnimatedPage>} />
