@@ -40,7 +40,7 @@ function calculateStrokeForSize(weight: number, iconSize: number): number {
 }
 
 // Available stroke icons
-const strokeIcons: StrokeIconName[] = ['cross', 'plus', 'minus', 'chevron-left', 'chevron-right']
+const strokeIcons: StrokeIconName[] = ['cross', 'plus', 'minus', 'chevron-left', 'chevron-right', 'hamburger']
 
 const TestIconShowcase = () => {
   // Calculator state

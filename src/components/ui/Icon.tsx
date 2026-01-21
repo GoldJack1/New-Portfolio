@@ -38,6 +38,13 @@ const iconPaths: Record<string, { paths: string[]; strokeLinejoin?: 'round' }> =
     ],
     strokeLinejoin: 'round'
   },
+  'hamburger': {
+    paths: [
+      'M30.89,16H1.11',
+      'M30.89,5.052H1.11',
+      'M30.89,26.948H1.11'
+    ]
+  },
 }
 
 /**

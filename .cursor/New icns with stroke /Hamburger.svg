@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <svg id="a" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
-  <path d="M16,1.11v29.78" fill="none" stroke="#000" stroke-linecap="round" stroke-width="2.22"/>
   <path d="M30.89,16H1.11" fill="none" stroke="#000" stroke-linecap="round" stroke-width="2.22"/>
+  <path d="M30.89,5.052H1.11" fill="none" stroke="#000" stroke-linecap="round" stroke-width="2.22"/>
+  <path d="M30.89,26.948H1.11" fill="none" stroke="#000" stroke-linecap="round" stroke-width="2.22"/>
 </svg>

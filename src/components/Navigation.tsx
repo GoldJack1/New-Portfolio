@@ -1,6 +1,61 @@
 import { useRef, useLayoutEffect, useState } from 'react'
 import { NavLink, useLocation, useNavigate } from 'react-router-dom'
-import { JWPHamburgerHorizontal } from '../utils/iconMap'
+import { getStrokeWidth } from '../config/iconWeights'
+
+// Animated hamburger/cross icon component
+const AnimatedMenuIcon = ({ isOpen, size = 13, weight = 400 }: { isOpen: boolean; size?: number; weight?: number }) => {
+  // Get stroke width in viewBox units (32x32)
+  const strokeWidth = getStrokeWidth(weight)
+  
+  return (
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 32 32"
+      fill="none"
+      stroke="currentColor"
+      strokeLinecap="round"
+      style={{ overflow: 'visible' }}
+    >
+      {/* Top line - rotates to become part of X */}
+      <line
+        x1="1.11"
+        y1={isOpen ? "1.11" : "5.052"}
+        x2="30.89"
+        y2={isOpen ? "30.89" : "5.052"}
+        strokeWidth={strokeWidth}
+        style={{
+          transition: 'all 300ms ease-in-out',
+          transformOrigin: 'center',
+        }}
+      />
+      {/* Middle line - fades out */}
+      <line
+        x1="1.11"
+        y1="16"
+        x2="30.89"
+        y2="16"
+        strokeWidth={strokeWidth}
+        style={{
+          transition: 'all 300ms ease-in-out',
+          opacity: isOpen ? 0 : 1,
+        }}
+      />
+      {/* Bottom line - rotates to become part of X */}
+      <line
+        x1={isOpen ? "1.11" : "1.11"}
+        y1={isOpen ? "30.89" : "26.948"}
+        x2={isOpen ? "30.89" : "30.89"}
+        y2={isOpen ? "1.11" : "26.948"}
+        strokeWidth={strokeWidth}
+        style={{
+          transition: 'all 300ms ease-in-out',
+          transformOrigin: 'center',
+        }}
+      />
+    </svg>
+  )
+}
 
 const navItems = [
   { to: '/', label: 'Home' },
@@ -175,11 +230,11 @@ const Navigation = () => {
             <span className="mobile-pill-title">{currentTitle}</span>
             <button
               className="mobile-hamburger"
-              aria-label="Open menu"
+              aria-label={menuOpen ? "Close menu" : "Open menu"}
               aria-expanded={menuOpen}
               onClick={() => setMenuOpen((v) => !v)}
             >
-              <JWPHamburgerHorizontal />
+              <AnimatedMenuIcon isOpen={menuOpen} weight={400} size={13} />
             </button>
           </div>
           {menuOpen && (
