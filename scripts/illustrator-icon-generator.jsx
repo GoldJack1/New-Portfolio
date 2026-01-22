@@ -305,6 +305,12 @@ function showDialog() {
     var fillCb = optionsPanel.add('checkbox', undefined, 'Scale to fill');
     fillCb.value = true;
     
+    var outsideStrokeCb = optionsPanel.add('checkbox', undefined, 'Is outside stroke');
+    outsideStrokeCb.value = false;
+    
+    var shrinkInnerCb = optionsPanel.add('checkbox', undefined, 'Shrink inner shapes for compound paths');
+    shrinkInnerCb.value = false;
+    
     var spacingGroup = optionsPanel.add('group');
     spacingGroup.spacing = 6;
     spacingGroup.add('statictext', undefined, 'Spacing:');
@@ -505,6 +511,8 @@ function showDialog() {
             fillArtboard: fillCb.value,
             padding: padding,
             paddingIsPercent: paddingIsPercent,
+            isOutsideStroke: outsideStrokeCb.value,
+            shrinkInnerShapes: shrinkInnerCb.value,
             exportToSVG: isExport,
             exportFolder: exportFolderInput.text,
             namingPattern: namingPattern
@@ -561,6 +569,13 @@ function generateArtboards(options) {
     var sourceIconWidth = sourceGroupBounds[2] - sourceGroupBounds[0];
     var sourceIconHeight = sourceGroupBounds[1] - sourceGroupBounds[3];
     
+    // Get original stroke width for compound shape scaling
+    var originalStrokeWidth = getOriginalStrokeWidth(sourceGroup);
+    // If no stroke found, use Regular weight at 32px as default reference
+    if (!originalStrokeWidth || originalStrokeWidth <= 0) {
+        originalStrokeWidth = STROKE_WIDTHS[400] || 3.91;
+    }
+    
     // Find the lowest point of all existing artboards to avoid overlap
     var lowestY = sourceBottom;
     for (var ab = 0; ab < doc.artboards.length; ab++) {
@@ -598,7 +613,9 @@ function generateArtboards(options) {
                 var baseStroke = STROKE_WIDTHS[weight] || STROKE_WIDTHS[400];
                 strokeWidth = (baseStroke / 32) * size;
                 
-                var availableSize = size - (paddingPx * 2) - strokeWidth;
+                // If stroke is outside, account for full stroke width on both sides
+                var strokeAdjustment = options.isOutsideStroke ? strokeWidth * 2 : strokeWidth;
+                var availableSize = size - (paddingPx * 2) - strokeAdjustment;
                 var scaleToFitWidth = availableSize / sourceIconWidth;
                 var scaleToFitHeight = availableSize / sourceIconHeight;
                 scaleFactor = Math.min(scaleToFitWidth, scaleToFitHeight);
@@ -637,6 +654,43 @@ function generateArtboards(options) {
             newGroup.position = [newLeft, newTop];
             applyStrokeWidth(newGroup, strokeWidth);
             
+            // Scale inner elements for compound shapes if enabled
+            if (options.shrinkInnerShapes && originalStrokeWidth > 0 && strokeWidth > 0) {
+                // Scale original stroke width to current size for comparison
+                var originalStrokeScaled = originalStrokeWidth * (size / sourceWidth);
+                // Calculate how much thicker the stroke got
+                var strokeIncrease = strokeWidth - originalStrokeScaled;
+                // Only shrink if stroke got thicker
+                if (strokeIncrease > 0.001) {
+                    // Find the outer shape size (largest element)
+                    var outerSize = getLargestElementSize(newGroup);
+                    
+                    // Mathematical approach: the stroke increase reduces available space
+                    // For centered strokes, the increase affects both sides, so we account for half on each side
+                    // The inner elements need to shrink to compensate for this space reduction
+                    var strokeIncreasePerSide = strokeIncrease / 2;
+                    // Calculate how much the inner should shrink based on available space
+                    // If outer size is known, shrink inner proportionally to stroke increase relative to outer
+                    if (outerSize > 0) {
+                        var reductionRatio = strokeIncreasePerSide / outerSize;
+                        var innerScaleFactor = Math.max(0.5, 1 - reductionRatio);
+                    } else {
+                        // Fallback: use a conservative ratio based on size
+                        var reductionRatio = strokeIncrease / size;
+                        var innerScaleFactor = Math.max(0.5, 1 - reductionRatio);
+                    }
+                    
+                    scaleInnerElements(newGroup, innerScaleFactor, true, outerSize);
+                    // Re-center after scaling inner elements
+                    var updatedBounds = newGroup.geometricBounds;
+                    var updatedWidth = updatedBounds[2] - updatedBounds[0];
+                    var updatedHeight = updatedBounds[1] - updatedBounds[3];
+                    var updatedLeft = artboardCenterX - (updatedWidth / 2);
+                    var updatedTop = artboardCenterY + (updatedHeight / 2);
+                    newGroup.position = [updatedLeft, updatedTop];
+                }
+            }
+            
             currentX += size + spacing;
             count++;
         }
@@ -666,6 +720,116 @@ function applyStrokeWidth(item, strokeWidth) {
         } else if (item.typename === 'GroupItem') {
             for (var j = 0; j < item.pageItems.length; j++) {
                 applyStrokeWidth(item.pageItems[j], strokeWidth);
+            }
+        }
+    } catch (e) {
+        // Item may be locked or unmodifiable, skip it
+    }
+}
+
+function getOriginalStrokeWidth(item) {
+    // Get the original stroke width from the source item as a reference
+    try {
+        if (item.typename === 'PathItem') {
+            if (item.stroked && item.strokeWidth > 0) {
+                return item.strokeWidth;
+            }
+        } else if (item.typename === 'CompoundPathItem') {
+            for (var i = 0; i < item.pathItems.length; i++) {
+                if (item.pathItems[i].stroked && item.pathItems[i].strokeWidth > 0) {
+                    return item.pathItems[i].strokeWidth;
+                }
+            }
+        } else if (item.typename === 'GroupItem') {
+            for (var j = 0; j < item.pageItems.length; j++) {
+                var stroke = getOriginalStrokeWidth(item.pageItems[j]);
+                if (stroke > 0) return stroke;
+            }
+        }
+    } catch (e) {
+        // Item may be locked or unmodifiable, skip it
+    }
+    return null;
+}
+
+function getLargestElementSize(item) {
+    // Find the largest element size to identify the outer shape
+    var maxSize = 0;
+    try {
+        if (item.typename === 'GroupItem') {
+            for (var j = 0; j < item.pageItems.length; j++) {
+                var childSize = getLargestElementSize(item.pageItems[j]);
+                if (childSize > maxSize) maxSize = childSize;
+            }
+        } else if (item.typename === 'PathItem' || item.typename === 'CompoundPathItem') {
+            var bounds = item.geometricBounds;
+            if (bounds && bounds.length === 4) {
+                var width = bounds[2] - bounds[0];
+                var height = bounds[1] - bounds[3];
+                maxSize = Math.max(width, height);
+            }
+        }
+    } catch (e) {
+        // Item may be locked or unmodifiable, skip it
+    }
+    return maxSize;
+}
+
+function scaleInnerElements(item, scaleFactor, isTopLevel, outerSize) {
+    // Recursively scale nested elements, but not the outer shape
+    // outerSize: size of the largest element (outer shape) - don't scale elements this size
+    // isTopLevel=true: don't scale this item, but scale all its children
+    // isTopLevel=false: scale this item if it's smaller than outerSize
+    try {
+        if (item.typename === 'GroupItem') {
+            if (isTopLevel) {
+                // Top level: scale all direct children that are smaller than outer
+                for (var j = 0; j < item.pageItems.length; j++) {
+                    scaleInnerElements(item.pageItems[j], scaleFactor, false, outerSize);
+                }
+            } else {
+                // Check if this group is smaller than outer (it's an inner element)
+                var bounds = item.geometricBounds;
+                if (bounds && bounds.length === 4) {
+                    var width = bounds[2] - bounds[0];
+                    var height = bounds[1] - bounds[3];
+                    var elementSize = Math.max(width, height);
+                    
+                    // Only scale if this element is significantly smaller than outer (it's inner)
+                    if (outerSize > 0 && elementSize < outerSize * 0.95) {
+                        item.resize(
+                            scaleFactor * 100, scaleFactor * 100,
+                            true, true, true, true,
+                            scaleFactor * 100,
+                            Transformation.CENTER
+                        );
+                    }
+                    
+                    // Continue scaling nested children
+                    for (var k = 0; k < item.pageItems.length; k++) {
+                        scaleInnerElements(item.pageItems[k], scaleFactor, false, outerSize);
+                    }
+                }
+            }
+        } else if (item.typename === 'PathItem' || item.typename === 'CompoundPathItem') {
+            // Scale individual paths only if they're smaller than outer
+            if (!isTopLevel) {
+                var pathBounds = item.geometricBounds;
+                if (pathBounds && pathBounds.length === 4) {
+                    var pathWidth = pathBounds[2] - pathBounds[0];
+                    var pathHeight = pathBounds[1] - pathBounds[3];
+                    var pathSize = Math.max(pathWidth, pathHeight);
+                    
+                    // Only scale if this path is significantly smaller than outer (it's inner)
+                    if (outerSize > 0 && pathSize < outerSize * 0.95) {
+                        item.resize(
+                            scaleFactor * 100, scaleFactor * 100,
+                            true, true, true, true,
+                            scaleFactor * 100,
+                            Transformation.CENTER
+                        );
+                    }
+                }
             }
         }
     } catch (e) {
@@ -740,6 +904,13 @@ function exportToSVG(options) {
     var sourceIconWidth = sourceGroupBounds[2] - sourceGroupBounds[0];
     var sourceIconHeight = sourceGroupBounds[1] - sourceGroupBounds[3];
     
+    // Get original stroke width for compound shape scaling
+    var originalStrokeWidth = getOriginalStrokeWidth(sourceGroup);
+    // If no stroke found, use Regular weight at 32px as default reference
+    if (!originalStrokeWidth || originalStrokeWidth <= 0) {
+        originalStrokeWidth = STROKE_WIDTHS[400] || 3.91;
+    }
+    
     options.sizes.sort(function(a, b) { return a - b; });
     options.weights.sort(function(a, b) { return a - b; });
     
@@ -763,7 +934,9 @@ function exportToSVG(options) {
                 var baseStroke = STROKE_WIDTHS[weight] || STROKE_WIDTHS[400];
                 strokeWidth = (baseStroke / 32) * size;
                 
-                var availableSize = size - (paddingPx * 2) - strokeWidth;
+                // If stroke is outside, account for full stroke width on both sides
+                var strokeAdjustment = options.isOutsideStroke ? strokeWidth * 2 : strokeWidth;
+                var availableSize = size - (paddingPx * 2) - strokeAdjustment;
                 var scaleToFitWidth = availableSize / sourceIconWidth;
                 var scaleToFitHeight = availableSize / sourceIconHeight;
                 scaleFactor = Math.min(scaleToFitWidth, scaleToFitHeight);
@@ -811,6 +984,43 @@ function exportToSVG(options) {
             
             // Apply stroke width
             applyStrokeWidth(tempGroup, strokeWidth);
+            
+            // Scale inner elements for compound shapes if enabled
+            if (options.shrinkInnerShapes && originalStrokeWidth > 0 && strokeWidth > 0) {
+                // Scale original stroke width to current size for comparison
+                var originalStrokeScaled = originalStrokeWidth * (size / sourceWidth);
+                // Calculate how much thicker the stroke got
+                var strokeIncrease = strokeWidth - originalStrokeScaled;
+                // Only shrink if stroke got thicker
+                if (strokeIncrease > 0.001) {
+                    // Find the outer shape size (largest element)
+                    var outerSize = getLargestElementSize(tempGroup);
+                    
+                    // Mathematical approach: the stroke increase reduces available space
+                    // For centered strokes, the increase affects both sides, so we account for half on each side
+                    // The inner elements need to shrink to compensate for this space reduction
+                    var strokeIncreasePerSide = strokeIncrease / 2;
+                    // Calculate how much the inner should shrink based on available space
+                    // If outer size is known, shrink inner proportionally to stroke increase relative to outer
+                    if (outerSize > 0) {
+                        var reductionRatio = strokeIncreasePerSide / outerSize;
+                        var innerScaleFactor = Math.max(0.5, 1 - reductionRatio);
+                    } else {
+                        // Fallback: use a conservative ratio based on size
+                        var reductionRatio = strokeIncrease / size;
+                        var innerScaleFactor = Math.max(0.5, 1 - reductionRatio);
+                    }
+                    
+                    scaleInnerElements(tempGroup, innerScaleFactor, true, outerSize);
+                    // Re-center after scaling inner elements
+                    var updatedBounds = tempGroup.geometricBounds;
+                    var updatedWidth = updatedBounds[2] - updatedBounds[0];
+                    var updatedHeight = updatedBounds[1] - updatedBounds[3];
+                    var updatedLeft = centerX - (updatedWidth / 2);
+                    var updatedTop = centerY + (updatedHeight / 2);
+                    tempGroup.position = [updatedLeft, updatedTop];
+                }
+            }
             
             // Generate filename based on pattern
             var fileName = options.namingPattern
