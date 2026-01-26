@@ -4,7 +4,7 @@ import Button from '../../components/ui/Button'
 import { PADDING_CLASSES } from '../../utils/paddingClasses'
 import { Icon } from '../../components/ui/Icon'
 
-const TestIcons = () => {
+const StrokeBasedIcons = () => {
   return (
     <div className="w-full overflow-x-hidden bg-gray-1000 min-h-screen flex flex-col pt-[150px]">
       <section className={`w-full ${PADDING_CLASSES.page.full} flex-grow flex flex-col`}>
@@ -28,4 +28,4 @@ const TestIcons = () => {
   )
 }
 
-export default TestIcons
+export default StrokeBasedIcons

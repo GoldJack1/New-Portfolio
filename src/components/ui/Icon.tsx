@@ -8,7 +8,17 @@ const BASE_STROKE_WIDTH = 2.22
 
 // SVG path data for each icon (32x32 viewBox)
 // Paths are designed with coordinates from 1.11 to 30.89 (half of base stroke inset)
-const iconPaths: Record<string, { paths: string[]; strokeLinejoin?: 'round' }> = {
+type IconPathData = {
+  paths: string[]
+  strokeLinejoin?: 'round'
+  compound?: {
+    outer: string[]  // Outer shape paths (e.g., circle)
+    inner: string[]  // Inner shape paths (e.g., checkmark, cross)
+    outerSize?: number // Optional: explicit outer size for calculation
+  }
+}
+
+const iconPaths: Record<string, IconPathData> = {
   'cross': {
     paths: [
       'M30.89,1.11L1.11,30.89',
@@ -63,6 +73,35 @@ const iconPaths: Record<string, { paths: string[]; strokeLinejoin?: 'round' }> =
       'M30.89,26.948H1.11'
     ]
   },
+  'circled-checkmark': {
+    paths: [], // Empty for simple icons, compound icons use compound property
+    compound: {
+      outer: [
+        // Circle: cx="16" cy="16" r="14.89" converted to path
+        'M 16,1.11 A 14.89,14.89 0 1,1 16,30.89 A 14.89,14.89 0 1,1 16,1.11'
+      ],
+      inner: [
+        'M10.54,17.56l3.94,4.49c.47.54,1.35.41,1.64-.25l5.33-12.18'
+      ],
+      outerSize: 29.78 // Circle diameter (14.89 * 2)
+    },
+    strokeLinejoin: 'round'
+  },
+  'circled-cross': {
+    paths: [], // Empty for simple icons, compound icons use compound property
+    compound: {
+      outer: [
+        // Circle: cx="16" cy="16" r="14.89" converted to path
+        'M 16,1.11 A 14.89,14.89 0 1,1 16,30.89 A 14.89,14.89 0 1,1 16,1.11'
+      ],
+      inner: [
+        'M22.38,9.62l-12.76,12.76',
+        'M9.62,9.62l12.76,12.76'
+      ],
+      outerSize: 29.78 // Circle diameter (14.89 * 2)
+    },
+    strokeLinejoin: 'round'
+  },
 }
 
 /**
@@ -81,6 +120,44 @@ function calculateScaleFactor(strokeWidth: number, inset: number = 0): number {
   const originalContentSize = VIEWBOX_SIZE - BASE_STROKE_WIDTH
   const availableSize = VIEWBOX_SIZE - strokeWidth - (inset * 2)
   return availableSize / originalContentSize
+}
+
+/**
+ * Calculate the inner scale factor for compound shapes
+ * 
+ * Based on Illustrator script logic: when stroke weight increases, inner shapes
+ * need to shrink to maintain visual balance. The inner scale factor is calculated
+ * based on the stroke increase relative to the outer shape size.
+ * 
+ * IMPORTANT: Icons are designed at weight 100 (BASE_STROKE_WIDTH = 2.22px) in a 32x32 viewBox.
+ * All stroke widths are in viewBox units (32x32), so no scaling is needed.
+ * 
+ * Formula:
+ * - Stroke increase = newStrokeWidth - BASE_STROKE_WIDTH (both in 32x32 viewBox units)
+ * - Stroke increase per side = strokeIncrease / 2
+ * - Reduction ratio = (strokeIncreasePerSide / outerSize) * shrinkMultiplier
+ * - Inner scale factor = max(0.5, 1 - reductionRatio)
+ * 
+ * @param strokeWidth - Current stroke width (in 32x32 viewBox units)
+ * @param outerSize - Size of the outer shape (diameter for circles, in viewBox units)
+ * @returns Scale factor to apply to inner shapes (0.5 to 1.0)
+ */
+function calculateCompoundScaleFactor(strokeWidth: number, outerSize: number): number {
+  // Icons are designed at weight 100 (BASE_STROKE_WIDTH = 2.22px) in 32x32 viewBox
+  // strokeWidth is already in viewBox units from getStrokeWidth(weight)
+  const strokeIncrease = strokeWidth - BASE_STROKE_WIDTH
+  
+  // If stroke hasn't increased, no scaling needed
+  if (strokeIncrease <= 0.001) {
+    return 1.0
+  }
+  
+  const strokeIncreasePerSide = strokeIncrease / 2
+  const shrinkMultiplier = 5.6 // Increased from 1.3 to make inner shapes shrink more noticeably
+  const reductionRatio = (strokeIncreasePerSide / outerSize) * shrinkMultiplier
+  const innerScaleFactor = Math.max(0.5, 1 - reductionRatio)
+  
+  return innerScaleFactor
 }
 
 export type StrokeIconName = keyof typeof iconPaths
@@ -163,6 +240,18 @@ export function Icon({
   const center = VIEWBOX_SIZE / 2
   const translateOffset = center * (1 - scaleFactor)
   
+  // For compound shapes, calculate inner scale factor
+  const compound = iconData.compound
+  const isCompound = !!compound
+  // For compound shapes, use the scaled outer size (after scaleFactor is applied)
+  // This matches the Illustrator script which gets outerSize after scaling the group
+  const scaledOuterSize = compound && compound.outerSize
+    ? compound.outerSize * scaleFactor
+    : 0
+  const innerScaleFactor = compound && scaledOuterSize > 0
+    ? calculateCompoundScaleFactor(calculatedStrokeWidth, scaledOuterSize)
+    : 1.0
+  
   // Determine size styling
   const sizeValue = size ?? '1em'
   const sizeStyle = typeof sizeValue === 'number' 
@@ -191,16 +280,44 @@ export function Icon({
         strokeLinejoin={iconData.strokeLinejoin}
         style={{ width: '100%', height: '100%' }}
       >
-        <g transform={`translate(${translateOffset}, ${translateOffset}) scale(${scaleFactor})`}>
-          {iconData.paths.map((d, i) => (
-            <path 
-              key={i} 
-              d={d} 
-              strokeWidth={calculatedStrokeWidth / scaleFactor}
-              style={{ transition: 'stroke-width 200ms ease-out' }}
-            />
-          ))}
-        </g>
+        {isCompound && compound ? (
+          <>
+            {/* Outer shape - scaled to fit, stroke width compensates for scaling */}
+            <g transform={`translate(${translateOffset}, ${translateOffset}) scale(${scaleFactor})`}>
+              {compound.outer.map((d, i) => (
+                <path 
+                  key={`outer-${i}`} 
+                  d={d} 
+                  strokeWidth={calculatedStrokeWidth / scaleFactor}
+                  style={{ transition: 'stroke-width 200ms ease-out' }}
+                />
+              ))}
+            </g>
+            {/* Inner shape - shrinks as stroke weight increases, stroke matches outer weight but appears thinner due to scale */}
+            {/* Both scale from the same center point (16, 16) to keep inner shape centered */}
+            <g transform={`translate(${center}, ${center}) scale(${scaleFactor * innerScaleFactor}) translate(${-center}, ${-center})`}>
+              {compound.inner.map((d, i) => (
+                <path 
+                  key={`inner-${i}`} 
+                  d={d} 
+                  strokeWidth={calculatedStrokeWidth / scaleFactor}
+                  style={{ transition: 'stroke-width 200ms ease-out, transform 200ms ease-out' }}
+                />
+              ))}
+            </g>
+          </>
+        ) : (
+          <g transform={`translate(${translateOffset}, ${translateOffset}) scale(${scaleFactor})`}>
+            {iconData.paths.map((d, i) => (
+              <path 
+                key={i} 
+                d={d} 
+                strokeWidth={calculatedStrokeWidth / scaleFactor}
+                style={{ transition: 'stroke-width 200ms ease-out' }}
+              />
+            ))}
+          </g>
+        )}
       </svg>
     </span>
   )

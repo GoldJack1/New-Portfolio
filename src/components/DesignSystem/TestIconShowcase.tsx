@@ -40,7 +40,19 @@ function calculateStrokeForSize(weight: number, iconSize: number): number {
 }
 
 // Available stroke icons
-const strokeIcons: StrokeIconName[] = ['cross', 'plus', 'minus', 'chevron-left', 'chevron-right', 'hamburger']
+const strokeIcons: StrokeIconName[] = [
+  'cross', 
+  'plus', 
+  'minus', 
+  'chevron-left', 
+  'chevron-right', 
+  'chevron-up',
+  'chevron-down',
+  'checkmark',
+  'hamburger',
+  'circled-checkmark',
+  'circled-cross'
+]
 
 const TestIconShowcase = () => {
   // Calculator state
@@ -107,8 +119,8 @@ const TestIconShowcase = () => {
               </span>
             </div>
             
-            {/* Mobile: 3 per row grid, Desktop: flex row */}
-            <div className="grid grid-cols-3 gap-3 sm:flex sm:items-center sm:gap-6">
+            {/* Mobile: 3 per row grid, Tablet: flex wrap, Desktop: flex row */}
+            <div className="grid grid-cols-3 gap-3 sm:flex sm:flex-wrap sm:items-center sm:gap-6 md:flex-nowrap">
               {strokeIcons.map((iconName) => (
                 <div
                   key={iconName}

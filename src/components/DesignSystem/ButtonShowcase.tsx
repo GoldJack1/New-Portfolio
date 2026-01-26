@@ -20,6 +20,8 @@ const strokeIconNames: { value: StrokeIconName; label: string }[] = [
   { value: 'chevron-down', label: 'Chevron Down' },
   { value: 'checkmark', label: 'Checkmark' },
   { value: 'hamburger', label: 'Hamburger' },
+  { value: 'circled-checkmark', label: 'Circled Checkmark' },
+  { value: 'circled-cross', label: 'Circled Cross' },
 ]
 
 // Legacy filled icons

@@ -19,7 +19,7 @@ import Padding from './pages/design-system/Padding'
 import StaticHero from './pages/design-system/StaticHero'
 import CarouselHero from './pages/design-system/CarouselHero'
 import Icons from './pages/design-system/Icons'
-import TestIcons from './pages/design-system/TestIcons'
+import StrokeBasedIcons from './pages/design-system/StrokeBasedIcons'
 import IconCalibration from './pages/design-system/IconCalibration'
 import PrivacyPolicy from './pages/PrivacyPolicy'
 import SiteMap from './pages/SiteMap'
@@ -348,7 +348,7 @@ function AppRoutes() {
         <Route path="/design-system/components" element={<AnimatedPage><Components /></AnimatedPage>} />
         <Route path="/design-system/padding" element={<AnimatedPage><Padding /></AnimatedPage>} />
         <Route path="/design-system/icons" element={<AnimatedPage><Icons /></AnimatedPage>} />
-        <Route path="/design-system/stroke-based-icons" element={<AnimatedPage><TestIcons /></AnimatedPage>} />
+        <Route path="/design-system/stroke-based-icons" element={<AnimatedPage><StrokeBasedIcons /></AnimatedPage>} />
         <Route path="/design-system/icon-calibration" element={<AnimatedPage><IconCalibration /></AnimatedPage>} />
         <Route path="/design-system/static-hero" element={<AnimatedPage><StaticHero /></AnimatedPage>} />
         <Route path="/design-system/carousel-hero" element={<AnimatedPage><CarouselHero /></AnimatedPage>} />

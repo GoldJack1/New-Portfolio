@@ -89,7 +89,7 @@ const IconShowcase = () => {
         <div>
           <h3 className="text-xl font-bold text-text-primary mb-2">Stroke-based Icons</h3>
           <p className="text-sm text-text-secondary mb-4">
-            Variable-weight icons that scale with font weight. Used in buttons, navigation, and UI controls.
+            Variable-weight icons that scale with font weight. Used in buttons, navigation, and UI controls. Compound shapes (circled icons) automatically shrink their inner elements as stroke weight increases.
           </p>
           
           {/* Weight Slider */}
