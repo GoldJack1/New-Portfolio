@@ -1,4 +1,14 @@
 import { getStrokeWidth } from '../../config/iconWeights'
+import { getClosestSize, getClosestWeight, getStarIconAssetPath } from '../../utils/starIcon'
+import { useState, useEffect, useMemo } from 'react'
+
+// Pre-load all Star icon SVGs using Vite's glob import
+// This creates a mapping of all star icon files at build time
+const starIconModules = import.meta.glob('../../assets/icons/star/**/*.svg', { 
+  query: '?url',
+  import: 'default',
+  eager: false 
+})
 
 // ViewBox size
 const VIEWBOX_SIZE = 32
@@ -18,7 +28,14 @@ type IconPathData = {
   }
 }
 
+// Special icon names that use static SVG files instead of path data
+const STATIC_ICONS = ['star'] as const
+type StaticIconName = typeof STATIC_ICONS[number]
+
 const iconPaths: Record<string, IconPathData> = {
+  'star': {
+    paths: [], // Star uses static SVGs, not path data
+  },
   'cross': {
     paths: [
       'M30.89,1.11L1.11,30.89',
@@ -160,7 +177,7 @@ function calculateCompoundScaleFactor(strokeWidth: number, outerSize: number): n
   return innerScaleFactor
 }
 
-export type StrokeIconName = keyof typeof iconPaths
+export type StrokeIconName = keyof typeof iconPaths | StaticIconName
 
 // Valid font weights
 export type IconWeight = 100 | 200 | 300 | 400 | 500 | 600 | 700 | 800 | 900
@@ -222,6 +239,18 @@ export function Icon({
   'aria-label': ariaLabel,
   'aria-hidden': ariaHidden,
 }: IconProps) {
+  // Handle static icons (like 'star') that use pre-generated SVG files
+  if (name === 'star') {
+    return <StaticStarIcon 
+      weight={weight}
+      className={className}
+      size={size}
+      color={color}
+      aria-label={ariaLabel}
+      aria-hidden={ariaHidden}
+    />
+  }
+  
   const iconData = iconPaths[name]
   
   if (!iconData) {
@@ -300,7 +329,7 @@ export function Icon({
                 <path 
                   key={`inner-${i}`} 
                   d={d} 
-                  strokeWidth={calculatedStrokeWidth / scaleFactor}
+                  strokeWidth={calculatedStrokeWidth / (scaleFactor * innerScaleFactor)}
                   style={{ transition: 'stroke-width 200ms ease-out, transform 200ms ease-out' }}
                 />
               ))}
@@ -319,6 +348,155 @@ export function Icon({
           </g>
         )}
       </svg>
+    </span>
+  )
+}
+
+/**
+ * Static Star Icon Component
+ * 
+ * Renders the Star icon using pre-generated static SVG files.
+ * No dynamic path calculations or stroke width adjustments are used.
+ */
+function StaticStarIcon({
+  weight = 400,
+  className = '',
+  size,
+  color,
+  'aria-label': ariaLabel,
+  'aria-hidden': ariaHidden,
+}: Omit<IconProps, 'name' | 'strokeWidth' | 'inset'>) {
+  // Determine the size to use
+  const sizeValue = size ?? 20 // Default to 20px if not specified
+  const sizeNum = typeof sizeValue === 'number' ? sizeValue : 20
+  
+  // Round to nearest available size and weight
+  const closestSize = getClosestSize(sizeNum)
+  const closestWeight = getClosestWeight(weight)
+  
+  // Get the asset path
+  const assetPath = getStarIconAssetPath(closestSize, closestWeight)
+  
+  // Load the SVG content dynamically
+  const [svgContent, setSvgContent] = useState<string | null>(null)
+  const [loading, setLoading] = useState(true)
+  
+  // Get the module path for this specific icon
+  const modulePath = useMemo(() => {
+    return `../../assets/icons/star/${assetPath}`
+  }, [assetPath])
+  
+  useEffect(() => {
+    let cancelled = false
+    
+    // Use the glob import to get the loader function for this specific path
+    const loader = starIconModules[modulePath]
+    
+    if (!loader) {
+      console.error(`Star icon not found: ${assetPath}`)
+      setLoading(false)
+      return
+    }
+    
+    // Load the asset URL
+    // The loader from import.meta.glob with ?url returns a Promise<string>
+    loader()
+      .then((url) => {
+        if (cancelled) return
+        
+        // Type assertion: Vite's glob import with ?url returns a string URL
+        const svgUrl = url as string
+        
+        // Fetch the SVG content from the URL
+        return fetch(svgUrl)
+          .then((res) => {
+            if (!res.ok) throw new Error(`Failed to fetch: ${res.statusText}`)
+            return res.text()
+          })
+          .then((text) => {
+            if (cancelled) return
+            
+            // Replace fill colors with currentColor for styling
+            let styledSvg = text
+              .replace(/fill="[^"]*"/g, 'fill="currentColor"')
+              .replace(/stroke="[^"]*"/g, 'stroke="currentColor"')
+            
+            // Remove XML declaration and comments if present
+            styledSvg = styledSvg.replace(/<\?xml[^>]*\?>/g, '')
+            styledSvg = styledSvg.replace(/<!--[\s\S]*?-->/g, '')
+            
+            setSvgContent(styledSvg)
+            setLoading(false)
+          })
+      })
+      .catch((err) => {
+        if (!cancelled) {
+          console.error(`Failed to load Star icon: ${assetPath}`, err)
+          setLoading(false)
+        }
+      })
+    
+    return () => {
+      cancelled = true
+    }
+  }, [modulePath, assetPath])
+  
+  // Determine size styling
+  const sizeStyle = typeof sizeValue === 'number' 
+    ? { width: `${sizeValue}px`, height: `${sizeValue}px` }
+    : { width: sizeValue, height: sizeValue }
+  
+  if (loading || !svgContent) {
+    return (
+      <span
+        className={className}
+        style={{
+          display: 'inline-flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          ...sizeStyle,
+        }}
+        aria-label={ariaLabel}
+        aria-hidden={ariaHidden ?? !ariaLabel}
+        role={ariaLabel ? 'img' : undefined}
+      />
+    )
+  }
+  
+  // Extract viewBox from SVG content
+  const viewBoxMatch = svgContent.match(/viewBox=["']([^"']*)["']/)
+  const viewBox = viewBoxMatch ? viewBoxMatch[1] : `0 0 ${closestSize} ${closestSize}`
+  
+  // Extract the inner content (everything between <svg> tags)
+  const innerContentMatch = svgContent.match(/<svg[^>]*>([\s\S]*)<\/svg>/i)
+  const innerContent = innerContentMatch ? innerContentMatch[1] : ''
+  
+  if (!innerContent) {
+    console.warn(`Failed to extract content from Star icon: ${assetPath}`)
+    return null
+  }
+  
+  return (
+    <span
+      className={className}
+      style={{
+        display: 'inline-flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        color: color || undefined,
+        ...sizeStyle,
+      }}
+      aria-label={ariaLabel}
+      aria-hidden={ariaHidden ?? !ariaLabel}
+      role={ariaLabel ? 'img' : undefined}
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox={viewBox}
+        fill="currentColor"
+        style={{ width: '100%', height: '100%' }}
+        dangerouslySetInnerHTML={{ __html: innerContent }}
+      />
     </span>
   )
 }

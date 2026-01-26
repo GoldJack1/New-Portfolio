@@ -51,7 +51,8 @@ const strokeIcons: StrokeIconName[] = [
   'checkmark',
   'hamburger',
   'circled-checkmark',
-  'circled-cross'
+  'circled-cross',
+  'star'
 ]
 
 const TestIconShowcase = () => {
