@@ -16,6 +16,9 @@ const strokeIconNames: { value: StrokeIconName; label: string }[] = [
   { value: 'cross', label: 'Cross' },
   { value: 'chevron-left', label: 'Chevron Left' },
   { value: 'chevron-right', label: 'Chevron Right' },
+  { value: 'chevron-up', label: 'Chevron Up' },
+  { value: 'chevron-down', label: 'Chevron Down' },
+  { value: 'checkmark', label: 'Checkmark' },
   { value: 'hamburger', label: 'Hamburger' },
 ]
 

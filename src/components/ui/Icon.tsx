@@ -38,6 +38,24 @@ const iconPaths: Record<string, { paths: string[]; strokeLinejoin?: 'round' }> =
     ],
     strokeLinejoin: 'round'
   },
+  'chevron-down': {
+    paths: [
+      'M1.11,9.13l12.44,12.72c1.34,1.37,3.56,1.37,4.9,0l12.44-12.72'
+    ],
+    strokeLinejoin: 'round'
+  },
+  'chevron-up': {
+    paths: [
+      'M1.11,22.87l12.44-12.72c1.34-1.37,3.56-1.37,4.9,0l12.44,12.72'
+    ],
+    strokeLinejoin: 'round'
+  },
+  'checkmark': {
+    paths: [
+      'M3.27,19.63l9.19,10.47c1.11,1.27,3.17.95,3.85-.6L28.73,1.11'
+    ],
+    strokeLinejoin: 'round'
+  },
   'hamburger': {
     paths: [
       'M30.89,16H1.11',
