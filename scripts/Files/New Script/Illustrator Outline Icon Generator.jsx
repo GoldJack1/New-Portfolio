@@ -1132,8 +1132,23 @@ function generateArtboards(options) {
               
               if (scaleFactor <= 0) scaleFactor = 0.1;
           } else {
-              scaleFactor = size / sourceWidth;
-              strokeWidth = calculateStroke(weight, size);
+              // For outline strokes, even when not filling artboard, we need to account for stroke extending outside
+              if (options.isOutsideStroke) {
+                  var baseStroke = STROKE_WIDTHS[weight] || STROKE_WIDTHS[400];
+                  strokeWidth = (baseStroke / 32) * size;
+                  // Scale down to account for stroke extending outside (strokeWidth * 2 on both sides)
+                  var strokeAdjustment = strokeWidth * 2;
+                  var availableSize = size - strokeAdjustment;
+                  // Use sourceIconWidth and sourceIconHeight (icon bounds) and take minimum for consistency
+                  var scaleToFitWidth = availableSize / sourceIconWidth;
+                  var scaleToFitHeight = availableSize / sourceIconHeight;
+                  scaleFactor = Math.min(scaleToFitWidth, scaleToFitHeight);
+                  
+                  if (scaleFactor <= 0) scaleFactor = 0.1;
+              } else {
+                  scaleFactor = size / sourceWidth;
+                  strokeWidth = calculateStroke(weight, size);
+              }
           }
           
           var artboardTop = currentY + size;
@@ -1290,8 +1305,23 @@ function exportToSVG(options) {
               
               if (scaleFactor <= 0) scaleFactor = 0.1;
           } else {
-              scaleFactor = size / sourceWidth;
-              strokeWidth = calculateStroke(weight, size);
+              // For outline strokes, even when not filling artboard, we need to account for stroke extending outside
+              if (options.isOutsideStroke) {
+                  var baseStroke = STROKE_WIDTHS[weight] || STROKE_WIDTHS[400];
+                  strokeWidth = (baseStroke / 32) * size;
+                  // Scale down to account for stroke extending outside (strokeWidth * 2 on both sides)
+                  var strokeAdjustment = strokeWidth * 2;
+                  var availableSize = size - strokeAdjustment;
+                  // Use sourceIconWidth and sourceIconHeight (icon bounds) and take minimum for consistency
+                  var scaleToFitWidth = availableSize / sourceIconWidth;
+                  var scaleToFitHeight = availableSize / sourceIconHeight;
+                  scaleFactor = Math.min(scaleToFitWidth, scaleToFitHeight);
+                  
+                  if (scaleFactor <= 0) scaleFactor = 0.1;
+              } else {
+                  scaleFactor = size / sourceWidth;
+                  strokeWidth = calculateStroke(weight, size);
+              }
           }
           
           // Create temporary document
