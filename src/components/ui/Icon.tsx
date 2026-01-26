@@ -1,14 +1,6 @@
 import { getStrokeWidth } from '../../config/iconWeights'
 import { getClosestSize, getClosestWeight, getStarIconAssetPath } from '../../utils/starIcon'
-import { useState, useEffect, useMemo } from 'react'
-
-// Pre-load all Star icon SVGs using Vite's glob import
-// This creates a mapping of all star icon files at build time
-const starIconModules = import.meta.glob('../../assets/icons/star/**/*.svg', { 
-  query: '?url',
-  import: 'default',
-  eager: false 
-})
+import { useState, useEffect } from 'react'
 
 // ViewBox size
 const VIEWBOX_SIZE = 32
@@ -381,53 +373,33 @@ function StaticStarIcon({
   const [svgContent, setSvgContent] = useState<string | null>(null)
   const [loading, setLoading] = useState(true)
   
-  // Get the module path for this specific icon
-  const modulePath = useMemo(() => {
-    return `../../assets/icons/star/${assetPath}`
-  }, [assetPath])
-  
   useEffect(() => {
     let cancelled = false
     
-    // Use the glob import to get the loader function for this specific path
-    const loader = starIconModules[modulePath]
+    // Construct the path to the SVG asset
+    // Files in public/ are served at the root, so /icons/star/...
+    const svgPath = `/icons/star/${assetPath}`
     
-    if (!loader) {
-      console.error(`Star icon not found: ${assetPath}`)
-      setLoading(false)
-      return
-    }
-    
-    // Load the asset URL
-    // The loader from import.meta.glob with ?url returns a Promise<string>
-    loader()
-      .then((url) => {
+    // Fetch the SVG content directly from the static asset
+    fetch(svgPath)
+      .then((res) => {
+        if (!res.ok) throw new Error(`Failed to fetch: ${res.statusText}`)
+        return res.text()
+      })
+      .then((text) => {
         if (cancelled) return
         
-        // Type assertion: Vite's glob import with ?url returns a string URL
-        const svgUrl = url as string
+        // Replace fill colors with currentColor for styling
+        let styledSvg = text
+          .replace(/fill="[^"]*"/g, 'fill="currentColor"')
+          .replace(/stroke="[^"]*"/g, 'stroke="currentColor"')
         
-        // Fetch the SVG content from the URL
-        return fetch(svgUrl)
-          .then((res) => {
-            if (!res.ok) throw new Error(`Failed to fetch: ${res.statusText}`)
-            return res.text()
-          })
-          .then((text) => {
-            if (cancelled) return
-            
-            // Replace fill colors with currentColor for styling
-            let styledSvg = text
-              .replace(/fill="[^"]*"/g, 'fill="currentColor"')
-              .replace(/stroke="[^"]*"/g, 'stroke="currentColor"')
-            
-            // Remove XML declaration and comments if present
-            styledSvg = styledSvg.replace(/<\?xml[^>]*\?>/g, '')
-            styledSvg = styledSvg.replace(/<!--[\s\S]*?-->/g, '')
-            
-            setSvgContent(styledSvg)
-            setLoading(false)
-          })
+        // Remove XML declaration and comments if present
+        styledSvg = styledSvg.replace(/<\?xml[^>]*\?>/g, '')
+        styledSvg = styledSvg.replace(/<!--[\s\S]*?-->/g, '')
+        
+        setSvgContent(styledSvg)
+        setLoading(false)
       })
       .catch((err) => {
         if (!cancelled) {
@@ -439,7 +411,7 @@ function StaticStarIcon({
     return () => {
       cancelled = true
     }
-  }, [modulePath, assetPath])
+  }, [assetPath])
   
   // Determine size styling
   const sizeStyle = typeof sizeValue === 'number' 
