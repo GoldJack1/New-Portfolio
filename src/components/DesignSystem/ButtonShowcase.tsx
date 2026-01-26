@@ -3,23 +3,10 @@ import Button from '../ui/Button'
 import Select from '../ui/Select'
 import { Icon, StrokeIconName } from '../ui/Icon'
 import { 
-  JWPStarFilled, 
-  JWPStarOutlined,
-  JWPChevronLeft,
-  JWPChevronRight,
-  JWPChevronUp,
-  JWPChevronDown,
-  JWPArrowLeft,
-  JWPArrowRight,
-  JWPArrowUp,
-  JWPArrowDown,
-  JWPCheckmark,
   JWPCheckmarkCircleFilled,
   JWPCrossCircleFilled,
   JWPInfoCircleFilled2,
   JWPSearch1,
-  JWPSettingsFilled,
-  JWPFilterFilled,
 } from '../../utils/iconMap'
 
 // Stroke icon names for dynamic generation
@@ -34,43 +21,17 @@ const strokeIconNames: { value: StrokeIconName; label: string }[] = [
 
 // Legacy filled icons
 const legacyIconComponents: Record<string, React.ReactElement> = {
-  'star-filled': <JWPStarFilled />,
-  'star-outlined': <JWPStarOutlined />,
-  'chevron-left': <JWPChevronLeft />,
-  'chevron-right': <JWPChevronRight />,
-  'chevron-up': <JWPChevronUp />,
-  'chevron-down': <JWPChevronDown />,
-  'arrow-left': <JWPArrowLeft />,
-  'arrow-right': <JWPArrowRight />,
-  'arrow-up': <JWPArrowUp />,
-  'arrow-down': <JWPArrowDown />,
-  'checkmark': <JWPCheckmark />,
   'checkmark-circle-filled': <JWPCheckmarkCircleFilled />,
   'cross-circle-filled': <JWPCrossCircleFilled />,
   'info-circle-filled': <JWPInfoCircleFilled2 />,
   'search': <JWPSearch1 />,
-  'settings-filled': <JWPSettingsFilled />,
-  'filter-filled': <JWPFilterFilled />,
 }
 
 const legacyIconOptions = [
-  { value: 'star-filled', label: 'Star (Filled)' },
-  { value: 'star-outlined', label: 'Star (Outlined)' },
-  { value: 'chevron-left', label: 'Chevron Left' },
-  { value: 'chevron-right', label: 'Chevron Right' },
-  { value: 'chevron-up', label: 'Chevron Up' },
-  { value: 'chevron-down', label: 'Chevron Down' },
-  { value: 'arrow-left', label: 'Arrow Left' },
-  { value: 'arrow-right', label: 'Arrow Right' },
-  { value: 'arrow-up', label: 'Arrow Up' },
-  { value: 'arrow-down', label: 'Arrow Down' },
-  { value: 'checkmark', label: 'Checkmark' },
   { value: 'checkmark-circle-filled', label: 'Checkmark Circle (Filled)' },
   { value: 'cross-circle-filled', label: 'Cross Circle (Filled)' },
   { value: 'info-circle-filled', label: 'Info Circle (Filled)' },
   { value: 'search', label: 'Search' },
-  { value: 'settings-filled', label: 'Settings (Filled)' },
-  { value: 'filter-filled', label: 'Filter (Filled)' },
 ]
 
 const weightOptions = [
