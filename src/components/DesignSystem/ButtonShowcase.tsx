@@ -21,6 +21,11 @@ const strokeIconNames: { value: StrokeIconName; label: string }[] = [
   { value: 'arrow-left', label: 'Arrow Left' },
   { value: 'arrow-right', label: 'Arrow Right' },
   { value: 'arrow-up', label: 'Arrow Up' },
+  { value: 'download', label: 'Download' },
+  { value: 'upload', label: 'Upload' },
+  { value: 'filter', label: 'Filter' },
+  { value: 'link', label: 'Link' },
+  { value: 'refresh', label: 'Refresh' },
   { value: 'star', label: 'Star' },
   { value: 'info-circle', label: 'Info Circle' },
 ]

@@ -14,6 +14,8 @@ const BASE_STROKE_WIDTH = 2.22
 type IconPathData = {
   paths: string[]
   strokeLinejoin?: 'round'
+  /** Rotation in degrees (negative = counter-clockwise / left). Applied around viewBox center (16, 16). */
+  rotate?: number
   compound?: {
     outer: string[]  // Outer shape paths (e.g., circle)
     inner: string[]  // Inner shape paths (e.g., checkmark, cross)
@@ -151,6 +153,44 @@ const iconPaths: Record<string, IconPathData> = {
       'M6,9.63L14.36,1.75c.9-.85,2.39-.85,3.29,0l8.35,7.88'
     ],
     strokeLinejoin: 'round'
+  },
+  'download': {
+    paths: [
+      'M16,1.11v20.53',
+      'M8.87,16.01l5.96,5.89c.64.61,1.7.61,2.35,0l5.96-5.89',
+      'M30.88,16.01v8.88c0,3.31-2.69,6-6,6H7.12c-3.31,0-6-2.69-6-6v-8.88'
+    ],
+    strokeLinejoin: 'round'
+  },
+  'upload': {
+    paths: [
+      'M16,22.35V1.82',
+      'M8.87,7.45L14.83,1.57c.64-.61,1.7-.61,2.35,0l5.96,5.89',
+      'M30.88,16.01v8.88c0,3.31-2.69,6-6,6H7.12c-3.31,0-6-2.69-6-6v-8.88'
+    ],
+    strokeLinejoin: 'round'
+  },
+  'filter': {
+    paths: [
+      'M4.32,1.11h23.37c.92,0,1.66.74,1.66,1.66h0c0,1.03-.35,2.03-.99,2.83l-6.61,9.68c-.5.47-.78,1.1-.78,1.76v8.01c-.2,3.97-5.87,5.84-9.08,5.84-.87,0-.82-.98-.82-2.46v-11.39c0-.66-.28-1.29-.78-1.76L3.65,5.6c-.64-.8-1-1.8-1-2.83h0c0-.92.74-1.66,1.66-1.66Z'
+    ],
+    strokeLinejoin: 'round'
+  },
+  'link': {
+    paths: [
+      'M13.11,11.21c-2.5-.17-5.14.63-7.05,2.53l-2.12,2.12c-3.51,3.51-3.59,9.11-.18,12.52,2.94,2.94,7.51,3.28,10.96,1.08',
+      'M18.89,20.79c2.5.17,5.14-.63,7.05-2.53l2.12-2.12c3.51-3.51,3.59-9.11.18-12.52-2.94-2.94-7.51-3.28-10.96-1.08',
+      'M21.68,10.32L10.32,21.68'
+    ],
+    strokeLinejoin: 'round'
+  },
+  'refresh': {
+    paths: [
+      'M26.83,26.1c-2.71,2.92-6.58,4.74-10.88,4.74-8.2,0-14.85-6.65-14.85-14.85S7.76,1.15,15.96,1.15c5.53,0,10.35,3.02,12.91,7.51',
+      'M21.89,10.31l6.74-.25c1.2,0,2.17-.97,2.17-2.17l.09-6.73'
+    ],
+    strokeLinejoin: 'round',
+    rotate: -45
   },
 }
 
@@ -339,6 +379,7 @@ export function Icon({
         alignItems: 'center',
         justifyContent: 'center',
         ...sizeStyle,
+        ...(name === 'refresh' && { overflow: 'visible' as const }),
       }}
       aria-label={ariaLabel}
       aria-hidden={ariaHidden ?? !ariaLabel}
@@ -351,6 +392,7 @@ export function Icon({
         stroke={color || 'currentColor'}
         strokeLinecap="round"
         strokeLinejoin={iconData.strokeLinejoin}
+        overflow={name === 'refresh' ? 'visible' : undefined}
         style={{ width: '100%', height: '100%' }}
       >
         {isCompound && compound ? (
@@ -380,7 +422,7 @@ export function Icon({
             </g>
           </>
         ) : (
-          <g transform={`translate(${translateOffset}, ${translateOffset}) scale(${scaleFactor})`}>
+          <g transform={`translate(${translateOffset}, ${translateOffset}) scale(${scaleFactor})${iconData.rotate != null ? ` rotate(${iconData.rotate} 16 16)` : ''}`}>
             {iconData.paths.map((d, i) => (
               <path 
                 key={i} 

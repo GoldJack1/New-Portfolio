@@ -57,6 +57,11 @@ const strokeIcons: StrokeIconName[] = [
   'arrow-left',
   'arrow-right',
   'arrow-up',
+  'download',
+  'upload',
+  'filter',
+  'link',
+  'refresh',
   'star',
   'info-circle'
 ]
