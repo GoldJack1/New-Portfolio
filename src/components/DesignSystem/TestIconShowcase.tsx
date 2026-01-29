@@ -52,6 +52,11 @@ const strokeIcons: StrokeIconName[] = [
   'hamburger',
   'circled-checkmark',
   'circled-cross',
+  'search',
+  'arrow-down',
+  'arrow-left',
+  'arrow-right',
+  'arrow-up',
   'star',
   'info-circle'
 ]

@@ -1,6 +1,8 @@
 import { useState } from 'react'
-import { iconMap } from '../../utils/iconMap'
 import { Icon, getStrokeIconNames, type StrokeIconName, type IconWeight } from '../ui/Icon'
+
+// Static icons use pre-generated SVG files (no path data in code)
+const STATIC_ICON_NAMES: StrokeIconName[] = ['star', 'info-circle']
 
 // Social Media Icon Components (from Footer.tsx)
 const LinkedInIcon = () => (
@@ -49,13 +51,10 @@ const socialIcons = [
   { name: 'Threads', component: ThreadsIcon },
 ]
 
-// Legacy icons that are actually used
-const legacyIconKeys = [
-  'search-variant-1',
-]
-
 const IconShowcase = () => {
-  const strokeIconNames = getStrokeIconNames()
+  const allStrokeIconNames = getStrokeIconNames()
+  const staticIconNames = allStrokeIconNames.filter((name) => STATIC_ICON_NAMES.includes(name as (typeof STATIC_ICON_NAMES)[number]))
+  const dynamicStrokeIconNames = allStrokeIconNames.filter((name) => !STATIC_ICON_NAMES.includes(name as (typeof STATIC_ICON_NAMES)[number]))
   const [strokeWeight, setStrokeWeight] = useState<IconWeight>(400)
 
   const formatIconName = (key: string): string => {
@@ -82,14 +81,12 @@ const IconShowcase = () => {
       <h2 className="text-2xl sm:text-3xl font-extrabold text-text-primary mb-6 break-words">Icons</h2>
       <div className="space-y-8 bg-gray-900 p-6 sm:p-8 rounded-2xl w-full min-w-0">
         
-        {/* Stroke-based Icons */}
+        {/* Static Icons */}
         <div>
-          <h3 className="text-xl font-bold text-text-primary mb-2">Stroke-based Icons</h3>
+          <h3 className="text-xl font-bold text-text-primary mb-2">Static</h3>
           <p className="text-sm text-text-secondary mb-4">
-            Variable-weight icons that scale with font weight. Used in buttons, navigation, and UI controls. Compound shapes (circled icons) automatically shrink their inner elements as stroke weight increases.
+            Pre-generated SVG files per size and weight. Picked at runtime from public/icons (star, info-circle).
           </p>
-          
-          {/* Weight Slider */}
           <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 mb-6 p-4 bg-gray-800 rounded-xl">
             <label className="text-sm text-text-secondary whitespace-nowrap">
               Weight: <span className="text-text-primary font-medium">{strokeWeight} ({weightLabels[strokeWeight]})</span>
@@ -104,9 +101,8 @@ const IconShowcase = () => {
               className="flex-1 w-full sm:w-auto accent-text-primary"
             />
           </div>
-          
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
-            {strokeIconNames.map((iconName) => (
+            {staticIconNames.map((iconName) => (
               <div
                 key={iconName}
                 className="flex flex-col items-center justify-center p-4 bg-gray-800 rounded-xl hover:bg-gray-750 transition-colors"
@@ -122,31 +118,40 @@ const IconShowcase = () => {
           </div>
         </div>
 
-        {/* Legacy Icons */}
+        {/* Dynamic Stroke CSS */}
         <div>
-          <h3 className="text-xl font-bold text-text-primary mb-2">Legacy Icons</h3>
+          <h3 className="text-xl font-bold text-text-primary mb-2">Dynamic Stroke CSS</h3>
           <p className="text-sm text-text-secondary mb-4">
-            Filled SVG icons used for status indicators and alerts.
+            Path data in code; stroke width and scale come from CSS/weight. Used in buttons, navigation, and UI controls. Compound shapes (circled icons) shrink inner elements as stroke weight increases.
           </p>
+          <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 mb-6 p-4 bg-gray-800 rounded-xl">
+            <label className="text-sm text-text-secondary whitespace-nowrap">
+              Weight: <span className="text-text-primary font-medium">{strokeWeight} ({weightLabels[strokeWeight]})</span>
+            </label>
+            <input
+              type="range"
+              min="100"
+              max="900"
+              step="100"
+              value={strokeWeight}
+              onChange={(e) => setStrokeWeight(Number(e.target.value) as IconWeight)}
+              className="flex-1 w-full sm:w-auto accent-text-primary"
+            />
+          </div>
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
-            {legacyIconKeys.map((iconKey) => {
-              const IconComponent = iconMap[iconKey as keyof typeof iconMap]
-              if (!IconComponent) return null
-              
-              return (
-                <div
-                  key={iconKey}
-                  className="flex flex-col items-center justify-center p-4 bg-gray-800 rounded-xl hover:bg-gray-750 transition-colors"
-                >
-                  <div className="w-8 h-8 flex items-center justify-center mb-2 text-text-primary">
-                    <IconComponent className="w-full h-full" />
-                  </div>
-                  <span className="text-xs text-text-secondary text-center break-words">
-                    {formatIconName(iconKey)}
-                  </span>
+            {dynamicStrokeIconNames.map((iconName) => (
+              <div
+                key={iconName}
+                className="flex flex-col items-center justify-center p-4 bg-gray-800 rounded-xl hover:bg-gray-750 transition-colors"
+              >
+                <div className="w-8 h-8 flex items-center justify-center mb-2 text-text-primary">
+                  <Icon name={iconName as StrokeIconName} weight={strokeWeight} size={24} />
                 </div>
-              )
-            })}
+                <span className="text-xs text-text-secondary text-center break-words">
+                  {formatIconName(iconName)}
+                </span>
+              </div>
+            ))}
           </div>
         </div>
 

@@ -29,6 +29,9 @@ const iconPaths: Record<string, IconPathData> = {
   'star': {
     paths: [], // Star uses static SVGs, not path data
   },
+  'info-circle': {
+    paths: [], // Info Circle uses static SVGs, not path data
+  },
   'cross': {
     paths: [
       'M30.89,1.11L1.11,30.89',
@@ -110,6 +113,43 @@ const iconPaths: Record<string, IconPathData> = {
       ],
       outerSize: 29.78 // Circle diameter (14.89 * 2)
     },
+    strokeLinejoin: 'round'
+  },
+  'search': {
+    paths: [
+      // Circle: cx="11.18" cy="11.17" r="10.06" converted to path (stroke-only)
+      'M 11.18,1.11 A 10.06,10.06 0 1,1 11.18,21.23 A 10.06,10.06 0 1,1 11.18,1.11',
+      // Handle
+      'M18.99,19l11.89,11.89'
+    ],
+    strokeLinejoin: 'round'
+  },
+  'arrow-down': {
+    paths: [
+      'M16.01,1.11v28.78',
+      'M6,22.37l8.35,7.88c.9.85,2.39.85,3.29,0l8.35-7.88'
+    ],
+    strokeLinejoin: 'round'
+  },
+  'arrow-left': {
+    paths: [
+      'M30.89,16.01H2.11',
+      'M9.63,6L1.75,14.36c-.85.9-.85,2.39,0,3.29l7.88,8.35'
+    ],
+    strokeLinejoin: 'round'
+  },
+  'arrow-right': {
+    paths: [
+      'M1.11,16.01h28.78',
+      'M22.37,6l7.88,8.35c.85.9.85,2.39,0,3.29l-7.88,8.35'
+    ],
+    strokeLinejoin: 'round'
+  },
+  'arrow-up': {
+    paths: [
+      'M16.01,30.89V2.11',
+      'M6,9.63L14.36,1.75c.9-.85,2.39-.85,3.29,0l8.35,7.88'
+    ],
     strokeLinejoin: 'round'
   },
 }

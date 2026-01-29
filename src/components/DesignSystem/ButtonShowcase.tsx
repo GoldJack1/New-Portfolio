@@ -2,7 +2,6 @@ import React, { useState } from 'react'
 import Button from '../ui/Button'
 import Select from '../ui/Select'
 import { Icon, StrokeIconName } from '../ui/Icon'
-import { JWPSearch1 } from '../../utils/iconMap'
 
 // Stroke icon names for dynamic generation
 const strokeIconNames: { value: StrokeIconName; label: string }[] = [
@@ -17,6 +16,11 @@ const strokeIconNames: { value: StrokeIconName; label: string }[] = [
   { value: 'hamburger', label: 'Hamburger' },
   { value: 'circled-checkmark', label: 'Circled Checkmark' },
   { value: 'circled-cross', label: 'Circled Cross' },
+  { value: 'search', label: 'Search' },
+  { value: 'arrow-down', label: 'Arrow Down' },
+  { value: 'arrow-left', label: 'Arrow Left' },
+  { value: 'arrow-right', label: 'Arrow Right' },
+  { value: 'arrow-up', label: 'Arrow Up' },
   { value: 'star', label: 'Star' },
   { value: 'info-circle', label: 'Info Circle' },
 ]
@@ -26,14 +30,12 @@ const legacyIconComponents: Record<string, React.ReactElement> = {
   'checkmark-circle-filled': <Icon name="circled-checkmark" weight={400} size={20} />,
   'cross-circle-filled': <Icon name="circled-cross" weight={400} size={20} />,
   'info-circle-filled': <Icon name="info-circle" weight={400} size={20} />,
-  'search': <JWPSearch1 />,
 }
 
 const legacyIconOptions = [
   { value: 'checkmark-circle-filled', label: 'Checkmark Circle (Filled)' },
   { value: 'cross-circle-filled', label: 'Cross Circle (Filled)' },
   { value: 'info-circle-filled', label: 'Info Circle (Filled)' },
-  { value: 'search', label: 'Search' },
 ]
 
 const weightOptions = [
