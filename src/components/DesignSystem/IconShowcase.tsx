@@ -51,9 +51,6 @@ const socialIcons = [
 
 // Legacy icons that are actually used
 const legacyIconKeys = [
-  'info-circle-filled-variant-2',
-  'checkmark-circle-filled',
-  'cross-circle-filled',
   'search-variant-1',
 ]
 

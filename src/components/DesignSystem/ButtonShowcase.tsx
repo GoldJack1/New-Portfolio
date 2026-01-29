@@ -2,12 +2,7 @@ import React, { useState } from 'react'
 import Button from '../ui/Button'
 import Select from '../ui/Select'
 import { Icon, StrokeIconName } from '../ui/Icon'
-import { 
-  JWPCheckmarkCircleFilled,
-  JWPCrossCircleFilled,
-  JWPInfoCircleFilled2,
-  JWPSearch1,
-} from '../../utils/iconMap'
+import { JWPSearch1 } from '../../utils/iconMap'
 
 // Stroke icon names for dynamic generation
 const strokeIconNames: { value: StrokeIconName; label: string }[] = [
@@ -28,9 +23,9 @@ const strokeIconNames: { value: StrokeIconName; label: string }[] = [
 
 // Legacy filled icons
 const legacyIconComponents: Record<string, React.ReactElement> = {
-  'checkmark-circle-filled': <JWPCheckmarkCircleFilled />,
-  'cross-circle-filled': <JWPCrossCircleFilled />,
-  'info-circle-filled': <JWPInfoCircleFilled2 />,
+  'checkmark-circle-filled': <Icon name="circled-checkmark" weight={400} size={20} />,
+  'cross-circle-filled': <Icon name="circled-cross" weight={400} size={20} />,
+  'info-circle-filled': <Icon name="info-circle" weight={400} size={20} />,
   'search': <JWPSearch1 />,
 }
 

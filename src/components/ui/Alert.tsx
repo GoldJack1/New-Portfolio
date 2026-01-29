@@ -1,6 +1,5 @@
 import { ReactNode, useState } from 'react'
-import { JWPInfoCircleFilled2, JWPCheckmarkCircleFilled, JWPCrossCircleFilled } from '../../utils/iconMap'
-import { Icon as StrokeIcon } from './Icon'
+import { Icon } from './Icon'
 
 interface AlertProps {
   children: ReactNode
@@ -39,14 +38,14 @@ const Alert = ({
   // Use variant if provided, otherwise fall back to type-based styling
   const backgroundStyle = variant ? variantStyles[variant] : typeStyles[type]
 
-  const icons = {
-    info: JWPInfoCircleFilled2,
-    success: JWPCheckmarkCircleFilled,
-    warning: JWPInfoCircleFilled2,
-    error: JWPCrossCircleFilled,
+  const iconNames = {
+    info: 'info-circle' as const,
+    success: 'circled-checkmark' as const,
+    warning: 'info-circle' as const,
+    error: 'circled-cross' as const,
   }
 
-  const Icon = icons[type]
+  const iconName = iconNames[type]
 
   const handleDismiss = () => {
     setIsVisible(false)
@@ -61,7 +60,7 @@ const Alert = ({
         ${className}
       `}
     >
-      <Icon className="w-5 h-5 mt-0.5 flex-shrink-0" />
+      <Icon name={iconName} weight={400} size={20} className="mt-0.5 flex-shrink-0" />
       <div className="flex-1">{children}</div>
       {dismissible && (
         <button
@@ -69,7 +68,7 @@ const Alert = ({
           className="flex-shrink-0 hover:opacity-70 transition-opacity"
           aria-label="Dismiss"
         >
-          <StrokeIcon name="cross" weight={400} size={16} />
+          <Icon name="cross" weight={400} size={16} />
         </button>
       )}
     </div>
