@@ -63,7 +63,8 @@ const strokeIcons: StrokeIconName[] = [
   'link',
   'refresh',
   'star',
-  'info-circle'
+  'info-circle',
+  'help-circle'
 ]
 
 const TestIconShowcase = () => {

@@ -28,6 +28,7 @@ const strokeIconNames: { value: StrokeIconName; label: string }[] = [
   { value: 'refresh', label: 'Refresh' },
   { value: 'star', label: 'Star' },
   { value: 'info-circle', label: 'Info Circle' },
+  { value: 'help-circle', label: 'Help Circle' },
 ]
 
 // Legacy filled icons

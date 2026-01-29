@@ -1,6 +1,7 @@
 import { getStrokeWidth } from '../../config/iconWeights'
 import { getClosestSize, getClosestWeight, getStarIconAssetPath } from '../../utils/starIcon'
 import { getClosestSize as getInfoCircleClosestSize, getClosestWeight as getInfoCircleClosestWeight, getInfoCircleIconAssetPath } from '../../utils/infoCircleIcon'
+import { getClosestSize as getHelpCircleClosestSize, getClosestWeight as getHelpCircleClosestWeight, getHelpCircleIconAssetPath } from '../../utils/helpCircleIcon'
 import { useState, useEffect } from 'react'
 
 // ViewBox size
@@ -24,7 +25,7 @@ type IconPathData = {
 }
 
 // Special icon names that use static SVG files instead of path data
-const STATIC_ICONS = ['star', 'info-circle'] as const
+const STATIC_ICONS = ['star', 'info-circle', 'help-circle'] as const
 type StaticIconName = typeof STATIC_ICONS[number]
 
 const iconPaths: Record<string, IconPathData> = {
@@ -33,6 +34,9 @@ const iconPaths: Record<string, IconPathData> = {
   },
   'info-circle': {
     paths: [], // Info Circle uses static SVGs, not path data
+  },
+  'help-circle': {
+    paths: [], // Help Circle uses static SVGs, not path data
   },
   'cross': {
     paths: [
@@ -326,6 +330,17 @@ export function Icon({
   
   if (name === 'info-circle') {
     return <StaticInfoCircleIcon 
+      weight={weight}
+      className={className}
+      size={size}
+      color={color}
+      aria-label={ariaLabel}
+      aria-hidden={ariaHidden}
+    />
+  }
+  
+  if (name === 'help-circle') {
+    return <StaticHelpCircleIcon 
       weight={weight}
       className={className}
       size={size}
@@ -668,6 +683,109 @@ function StaticInfoCircleIcon({
   
   if (!innerContent) {
     console.warn(`Failed to extract content from Info Circle icon: ${assetPath}`)
+    return null
+  }
+  
+  return (
+    <span
+      className={className}
+      style={{
+        display: 'inline-flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        color: color || undefined,
+        ...sizeStyle,
+      }}
+      aria-label={ariaLabel}
+      aria-hidden={ariaHidden ?? !ariaLabel}
+      role={ariaLabel ? 'img' : undefined}
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox={viewBox}
+        fill="currentColor"
+        style={{ width: '100%', height: '100%' }}
+        dangerouslySetInnerHTML={{ __html: innerContent }}
+      />
+    </span>
+  )
+}
+
+/**
+ * Static Help Circle Icon Component
+ *
+ * Renders the Help Circle icon using pre-generated static SVG files.
+ * No dynamic path calculations or stroke width adjustments are used.
+ */
+function StaticHelpCircleIcon({
+  weight = 400,
+  className = '',
+  size,
+  color,
+  'aria-label': ariaLabel,
+  'aria-hidden': ariaHidden,
+}: Omit<IconProps, 'name' | 'strokeWidth' | 'inset'>) {
+  const sizeValue = size ?? 20
+  const sizeNum = typeof sizeValue === 'number' ? sizeValue : 20
+  
+  const closestSize = getHelpCircleClosestSize(sizeNum)
+  const closestWeight = getHelpCircleClosestWeight(weight)
+  const assetPath = getHelpCircleIconAssetPath(closestSize, closestWeight)
+  
+  const [svgContent, setSvgContent] = useState<string | null>(null)
+  const [loading, setLoading] = useState(true)
+  
+  useEffect(() => {
+    let cancelled = false
+    const svgPath = `/icons/help-circle/${assetPath}`
+    
+    fetch(svgPath)
+      .then((res) => {
+        if (!res.ok) throw new Error(`Failed to fetch: ${res.statusText}`)
+        return res.text()
+      })
+      .then((text) => {
+        if (cancelled) return
+        let styledSvg = text
+          .replace(/fill="(?!none)[^"]*"/g, 'fill="currentColor"')
+          .replace(/stroke="[^"]*"/g, 'stroke="currentColor"')
+        styledSvg = styledSvg.replace(/<\?xml[^>]*\?>/g, '').replace(/<!--[\s\S]*?-->/g, '')
+        setSvgContent(styledSvg)
+        setLoading(false)
+      })
+      .catch((err) => {
+        if (!cancelled) {
+          console.error(`Failed to load Help Circle icon: ${assetPath}`, err)
+          setLoading(false)
+        }
+      })
+    
+    return () => { cancelled = true }
+  }, [assetPath])
+  
+  const sizeStyle = typeof sizeValue === 'number'
+    ? { width: `${sizeValue}px`, height: `${sizeValue}px` }
+    : { width: sizeValue, height: sizeValue }
+  
+  if (loading || !svgContent) {
+    return (
+      <span
+        className={className}
+        style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', ...sizeStyle }}
+        aria-label={ariaLabel}
+        aria-hidden={ariaHidden ?? !ariaLabel}
+        role={ariaLabel ? 'img' : undefined}
+      />
+    )
+  }
+  
+  const viewBoxMatch = svgContent.match(/viewBox=["']([^"']*)["']/)
+  const viewBox = viewBoxMatch ? viewBoxMatch[1] : `0 0 ${closestSize} ${closestSize}`
+  const innerContentMatch = svgContent.match(/<svg[^>]*>([\s\S]*)<\/svg>/i)
+  const innerContent = innerContentMatch ? innerContentMatch[1] : ''
+  
+  if (!innerContent) {
+    console.warn(`Failed to extract content from Help Circle icon: ${assetPath}`)
     return null
   }
   
