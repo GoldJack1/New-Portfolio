@@ -1,5 +1,6 @@
 import { getStrokeWidth } from '../../config/iconWeights'
 import { getClosestSize, getClosestWeight, getStarIconAssetPath } from '../../utils/starIcon'
+import { getClosestSize as getInfoCircleClosestSize, getClosestWeight as getInfoCircleClosestWeight, getInfoCircleIconAssetPath } from '../../utils/infoCircleIcon'
 import { useState, useEffect } from 'react'
 
 // ViewBox size
@@ -21,7 +22,7 @@ type IconPathData = {
 }
 
 // Special icon names that use static SVG files instead of path data
-const STATIC_ICONS = ['star'] as const
+const STATIC_ICONS = ['star', 'info-circle'] as const
 type StaticIconName = typeof STATIC_ICONS[number]
 
 const iconPaths: Record<string, IconPathData> = {
@@ -231,9 +232,20 @@ export function Icon({
   'aria-label': ariaLabel,
   'aria-hidden': ariaHidden,
 }: IconProps) {
-  // Handle static icons (like 'star') that use pre-generated SVG files
+  // Handle static icons (like 'star', 'info-circle') that use pre-generated SVG files
   if (name === 'star') {
     return <StaticStarIcon 
+      weight={weight}
+      className={className}
+      size={size}
+      color={color}
+      aria-label={ariaLabel}
+      aria-hidden={ariaHidden}
+    />
+  }
+  
+  if (name === 'info-circle') {
+    return <StaticInfoCircleIcon 
       weight={weight}
       className={className}
       size={size}
@@ -445,6 +457,135 @@ function StaticStarIcon({
   
   if (!innerContent) {
     console.warn(`Failed to extract content from Star icon: ${assetPath}`)
+    return null
+  }
+  
+  return (
+    <span
+      className={className}
+      style={{
+        display: 'inline-flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        color: color || undefined,
+        ...sizeStyle,
+      }}
+      aria-label={ariaLabel}
+      aria-hidden={ariaHidden ?? !ariaLabel}
+      role={ariaLabel ? 'img' : undefined}
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox={viewBox}
+        fill="currentColor"
+        style={{ width: '100%', height: '100%' }}
+        dangerouslySetInnerHTML={{ __html: innerContent }}
+      />
+    </span>
+  )
+}
+
+/**
+ * Static Info Circle Icon Component
+ * 
+ * Renders the Info Circle icon using pre-generated static SVG files.
+ * No dynamic path calculations or stroke width adjustments are used.
+ */
+function StaticInfoCircleIcon({
+  weight = 400,
+  className = '',
+  size,
+  color,
+  'aria-label': ariaLabel,
+  'aria-hidden': ariaHidden,
+}: Omit<IconProps, 'name' | 'strokeWidth' | 'inset'>) {
+  // Determine the size to use
+  const sizeValue = size ?? 20 // Default to 20px if not specified
+  const sizeNum = typeof sizeValue === 'number' ? sizeValue : 20
+  
+  // Round to nearest available size and weight
+  const closestSize = getInfoCircleClosestSize(sizeNum)
+  const closestWeight = getInfoCircleClosestWeight(weight)
+  
+  // Get the asset path
+  const assetPath = getInfoCircleIconAssetPath(closestSize, closestWeight)
+  
+  // Load the SVG content dynamically
+  const [svgContent, setSvgContent] = useState<string | null>(null)
+  const [loading, setLoading] = useState(true)
+  
+  useEffect(() => {
+    let cancelled = false
+    
+    // Construct the path to the SVG asset
+    // Files in public/ are served at the root, so /icons/info-circle/...
+    const svgPath = `/icons/info-circle/${assetPath}`
+    
+    // Fetch the SVG content directly from the static asset
+    fetch(svgPath)
+      .then((res) => {
+        if (!res.ok) throw new Error(`Failed to fetch: ${res.statusText}`)
+        return res.text()
+      })
+      .then((text) => {
+        if (cancelled) return
+        
+        // Replace fill colors with currentColor for styling (but preserve fill="none" for the circle)
+        let styledSvg = text
+          .replace(/fill="(?!none)[^"]*"/g, 'fill="currentColor"')
+          .replace(/stroke="[^"]*"/g, 'stroke="currentColor"')
+        
+        // Remove XML declaration and comments if present
+        styledSvg = styledSvg.replace(/<\?xml[^>]*\?>/g, '')
+        styledSvg = styledSvg.replace(/<!--[\s\S]*?-->/g, '')
+        
+        setSvgContent(styledSvg)
+        setLoading(false)
+      })
+      .catch((err) => {
+        if (!cancelled) {
+          console.error(`Failed to load Info Circle icon: ${assetPath}`, err)
+          setLoading(false)
+        }
+      })
+    
+    return () => {
+      cancelled = true
+    }
+  }, [assetPath])
+  
+  // Determine size styling
+  const sizeStyle = typeof sizeValue === 'number' 
+    ? { width: `${sizeValue}px`, height: `${sizeValue}px` }
+    : { width: sizeValue, height: sizeValue }
+  
+  if (loading || !svgContent) {
+    return (
+      <span
+        className={className}
+        style={{
+          display: 'inline-flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          ...sizeStyle,
+        }}
+        aria-label={ariaLabel}
+        aria-hidden={ariaHidden ?? !ariaLabel}
+        role={ariaLabel ? 'img' : undefined}
+      />
+    )
+  }
+  
+  // Extract viewBox from SVG content
+  const viewBoxMatch = svgContent.match(/viewBox=["']([^"']*)["']/)
+  const viewBox = viewBoxMatch ? viewBoxMatch[1] : `0 0 ${closestSize} ${closestSize}`
+  
+  // Extract the inner content (everything between <svg> tags)
+  const innerContentMatch = svgContent.match(/<svg[^>]*>([\s\S]*)<\/svg>/i)
+  const innerContent = innerContentMatch ? innerContentMatch[1] : ''
+  
+  if (!innerContent) {
+    console.warn(`Failed to extract content from Info Circle icon: ${assetPath}`)
     return null
   }
   
