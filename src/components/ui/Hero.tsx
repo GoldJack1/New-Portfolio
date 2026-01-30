@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef, useCallback } from 'react'
 import Button from './Button'
 import { Icon } from './Icon'
 
@@ -51,8 +51,10 @@ const Hero = ({
   const [isPaused, setIsPaused] = useState(false)
   const [prevHovered, setPrevHovered] = useState(false)
   const [nextHovered, setNextHovered] = useState(false)
+  const [loadedSlides, setLoadedSlides] = useState<Set<number>>(new Set())
   const autoPlayTimerRef = useRef<number | null>(null)
   const heroRef = useRef<HTMLDivElement>(null)
+  const videoRefsRef = useRef<(HTMLVideoElement | null)[]>([])
 
   // Default gradient overlay: left to right
   // gray-1000 at 90% opacity at 0%, 70% opacity at 33%, 0% opacity at 70% and 100%
@@ -129,39 +131,87 @@ const Hero = ({
     return () => window.removeEventListener('keydown', handleKeyDown)
   }, [isCarousel, displaySlides.length])
 
+  // Play active video, pause others when currentSlide changes
+  useEffect(() => {
+    const refs = videoRefsRef.current
+    refs.forEach((video, i) => {
+      if (video) {
+        if (i === currentSlide) {
+          video.play().catch(() => {})
+        } else {
+          video.pause()
+        }
+      }
+    })
+  }, [currentSlide])
+
+  // Preload first slide media in document head for earlier fetch
+  const firstSlide = displaySlides[0]
+  const firstSlideMediaUrl = firstSlide?.backgroundValue
+  const firstSlideMediaType = firstSlide?.backgroundType
+  useEffect(() => {
+    const first = displaySlides[0]
+    if (!first || (first.backgroundType !== 'image' && first.backgroundType !== 'video')) return
+    const as = first.backgroundType === 'video' ? 'video' : 'image'
+    const link = document.createElement('link')
+    link.rel = 'preload'
+    link.as = as
+    link.href = first.backgroundValue
+    if (as === 'video') {
+      link.setAttribute('type', 'video/mp4')
+    }
+    document.head.appendChild(link)
+    return () => {
+      document.head.removeChild(link)
+    }
+  }, [firstSlideMediaUrl, firstSlideMediaType])
+
+  const onMediaLoaded = useCallback((index: number) => {
+    setLoadedSlides((prev) => new Set(prev).add(index))
+  }, [])
+
   // Render background based on type
-  const renderBackground = (slide: HeroSlide, isActive: boolean = true) => {
+  const renderBackground = (
+    slide: HeroSlide,
+    isActive: boolean = true,
+    slideIndex: number = 0,
+    isMediaLoaded: boolean = false
+  ) => {
     const { backgroundType, backgroundValue } = slide
 
     switch (backgroundType) {
       case 'video':
         return (
           <>
-            {!isActive && slide.fallbackBackground && (
+            <div className="absolute inset-0 w-full h-full bg-black" aria-hidden />
+            {slide.fallbackBackground && (
               <div
                 className="absolute inset-0 w-full h-full"
                 style={{ background: slide.fallbackBackground }}
               />
             )}
-            {isActive && (
-              <video
-                key={`video-${backgroundValue}`}
-                className="absolute inset-0 w-full h-full object-cover"
-                autoPlay
-                loop
-                muted
-                playsInline
-                preload="auto"
-              >
-                <source src={backgroundValue} type="video/mp4" />
-                Your browser does not support the video tag.
-              </video>
-            )}
+            <video
+              key={`video-${backgroundValue}`}
+              ref={(el) => {
+                if (el) videoRefsRef.current[slideIndex] = el
+              }}
+              className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-300 ${isActive && isMediaLoaded ? 'opacity-100' : 'opacity-0 pointer-events-none invisible'}`}
+              loop
+              muted
+              playsInline
+              preload="auto"
+              aria-hidden={!isActive}
+              onCanPlayThrough={() => onMediaLoaded(slideIndex)}
+            >
+              <source src={backgroundValue} type="video/mp4" />
+              Your browser does not support the video tag.
+            </video>
           </>
         )
       case 'image':
         return (
           <>
+            <div className="absolute inset-0 w-full h-full bg-black" aria-hidden />
             {slide.fallbackBackground && (
               <div
                 className="absolute inset-0 w-full h-full"
@@ -171,8 +221,11 @@ const Hero = ({
             <img
               src={backgroundValue}
               alt=""
-              className="absolute inset-0 w-full h-full object-cover"
-              loading="lazy"
+              className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-300 ${isMediaLoaded ? 'opacity-100' : 'opacity-0'}`}
+              loading="eager"
+              decoding="async"
+              fetchPriority={isActive ? 'high' : undefined}
+              onLoad={() => onMediaLoaded(slideIndex)}
               onError={(e) => {
                 // Hide broken image and show fallback
                 const target = e.target as HTMLImageElement
@@ -200,13 +253,13 @@ const Hero = ({
   }
 
   // Render slide content
-  const renderSlideContent = (slide: HeroSlide, isActive: boolean = true) => {
+  const renderSlideContent = (slide: HeroSlide, isActive: boolean = true, slideIndex: number = 0) => {
     const gradientOverlay = slide.gradientOverlay || defaultGradient
 
     return (
       <div className="relative w-full h-full">
         {/* Background layer */}
-        {renderBackground(slide, isActive)}
+        {renderBackground(slide, isActive, slideIndex, loadedSlides.has(slideIndex))}
 
         {/* Gradient overlay - responsive for mobile */}
         <div
@@ -290,7 +343,7 @@ const Hero = ({
                   }`}
                   aria-hidden={!isActive}
                 >
-                  {renderSlideContent(slide, isActive)}
+                  {renderSlideContent(slide, isActive, index)}
                 </div>
               )
             })}
@@ -355,7 +408,7 @@ const Hero = ({
         </>
       ) : (
         // Standalone mode
-        renderSlideContent(displaySlides[0])
+        renderSlideContent(displaySlides[0], true, 0)
       )}
     </div>
   )

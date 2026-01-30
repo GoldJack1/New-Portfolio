@@ -11,7 +11,8 @@ const Projects = () => {
       backgroundValue: project1Image,
       fallbackBackground: HERO_GRADIENTS.projects,
       heading: 'Great British Railways',
-      subtext: "A new era for Britain's Railways, uniting track and Train under one brand.",
+      subtext: "A Branding & App Concept for GBR, Designed in April 2025, before the actual branding was revealed.",
+      caption: "(Full Project Page & more coming soon, in the meantime, you can check out the app prototype in Figma)",
       buttonText: 'View Prototype in Figma',
       buttonLink: 'https://www.figma.com/proto/FkHh8mUk0VdeWrYTuB5TvW/GBR-App-Concept?page-id=0%3A1&node-id=926-16114&p=f&t=O3dJI1ieVvsrb1CN-0&scaling=scale-down&content-scaling=fixed&starting-point-node-id=926%3A16114&show-proto-sidebar=1',
     },
@@ -22,7 +23,7 @@ const Projects = () => {
       heading: 'Rail Statistics',
       subtext: "A functional app, for train enthusiasts to track stations visited across Great Britain and train tickets.",
       caption: "(Major Update & Android Relase coming February 2026)",
-      buttonText: 'Download App',
+      buttonText: 'Download Beta App',
       buttonLink: 'https://linktr.ee/Railstatistics',
     },
     {
