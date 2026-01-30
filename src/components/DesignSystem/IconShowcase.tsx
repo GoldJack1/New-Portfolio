@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { Icon, getStrokeIconNames, type StrokeIconName, type IconWeight } from '../ui/Icon'
+import Slider from '../ui/Slider'
 
 // Static icons use pre-generated SVG files (no path data in code)
 const STATIC_ICON_NAMES: StrokeIconName[] = ['star', 'info-circle', 'help-circle', 'controls']
@@ -87,19 +88,18 @@ const IconShowcase = () => {
           <p className="text-sm text-text-secondary mb-4">
             Pre-generated SVG files per size and weight. Picked at runtime from public/icons (star, info-circle, help-circle, controls).
           </p>
-          <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 mb-6 p-4 bg-gray-800 rounded-xl">
-            <label className="text-sm text-text-secondary whitespace-nowrap">
-              Weight: <span className="text-text-primary font-medium">{strokeWeight} ({weightLabels[strokeWeight]})</span>
-            </label>
-            <input
-              type="range"
-              min="100"
-              max="900"
-              step="100"
+          <div className="mb-6 p-4 bg-gray-800 rounded-xl">
+            <Slider
+              label="Weight"
+              min={100}
+              max={900}
+              step={100}
               value={strokeWeight}
-              onChange={(e) => setStrokeWeight(Number(e.target.value) as IconWeight)}
-              className="flex-1 w-full sm:w-auto accent-text-primary"
+              onChange={(v) => setStrokeWeight(v as IconWeight)}
             />
+            <p className="text-xs text-text-tertiary mt-2">
+              {strokeWeight} — {weightLabels[strokeWeight]}
+            </p>
           </div>
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
             {staticIconNames.map((iconName) => (
@@ -124,19 +124,18 @@ const IconShowcase = () => {
           <p className="text-sm text-text-secondary mb-4">
             Path data in code; stroke width and scale come from CSS/weight. Used in buttons, navigation, and UI controls. Compound shapes (circled icons) shrink inner elements as stroke weight increases.
           </p>
-          <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 mb-6 p-4 bg-gray-800 rounded-xl">
-            <label className="text-sm text-text-secondary whitespace-nowrap">
-              Weight: <span className="text-text-primary font-medium">{strokeWeight} ({weightLabels[strokeWeight]})</span>
-            </label>
-            <input
-              type="range"
-              min="100"
-              max="900"
-              step="100"
+          <div className="mb-6 p-4 bg-gray-800 rounded-xl">
+            <Slider
+              label="Weight"
+              min={100}
+              max={900}
+              step={100}
               value={strokeWeight}
-              onChange={(e) => setStrokeWeight(Number(e.target.value) as IconWeight)}
-              className="flex-1 w-full sm:w-auto accent-text-primary"
+              onChange={(v) => setStrokeWeight(v as IconWeight)}
             />
+            <p className="text-xs text-text-tertiary mt-2">
+              {strokeWeight} — {weightLabels[strokeWeight]}
+            </p>
           </div>
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
             {dynamicStrokeIconNames.map((iconName) => (

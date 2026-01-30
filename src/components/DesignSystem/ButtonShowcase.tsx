@@ -1,6 +1,7 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import Button from '../ui/Button'
 import Select from '../ui/Select'
+import Slider from '../ui/Slider'
 import { Icon, StrokeIconName } from '../ui/Icon'
 
 // Stroke icon names for dynamic generation
@@ -33,19 +34,6 @@ const strokeIconNames: { value: StrokeIconName; label: string }[] = [
   { value: 'info-circle', label: 'Info Circle' },
   { value: 'help-circle', label: 'Help Circle' },
   { value: 'controls', label: 'Controls' },
-]
-
-// Legacy filled icons
-const legacyIconComponents: Record<string, React.ReactElement> = {
-  'checkmark-circle-filled': <Icon name="circled-checkmark" weight={400} size={20} />,
-  'cross-circle-filled': <Icon name="circled-cross" weight={400} size={20} />,
-  'info-circle-filled': <Icon name="info-circle" weight={400} size={20} />,
-}
-
-const legacyIconOptions = [
-  { value: 'checkmark-circle-filled', label: 'Checkmark Circle (Filled)' },
-  { value: 'cross-circle-filled', label: 'Cross Circle (Filled)' },
-  { value: 'info-circle-filled', label: 'Info Circle (Filled)' },
 ]
 
 const weightOptions = [
@@ -84,7 +72,6 @@ const iconSizeOptions = [
 const ButtonShowcase = () => {
   // Icon-only button state
   const [iconOnlyStrokeIcon, setIconOnlyStrokeIcon] = useState<StrokeIconName>('plus')
-  const [iconOnlyLegacyIcon, setIconOnlyLegacyIcon] = useState('')
   const [iconOnlyWeight, setIconOnlyWeight] = useState(400)
   const [iconOnlySize, setIconOnlySize] = useState(20)
   const [iconOnlyInset, setIconOnlyInset] = useState(0)
@@ -92,21 +79,17 @@ const ButtonShowcase = () => {
   
   // Button with icon state
   const [selectedStrokeIcon, setSelectedStrokeIcon] = useState<StrokeIconName>('chevron-left')
-  const [selectedLegacyIcon, setSelectedLegacyIcon] = useState('')
   const [iconWeight, setIconWeight] = useState(400)
   const [iconSize, setIconSize] = useState(13)
   const [textWeight, setTextWeight] = useState(400)
   const [buttonText, setButtonText] = useState('Button with Icon')
   const [iconInset, setIconInset] = useState(0)
-  const [iconGap, setIconGap] = useState(6)
+  const [iconGap, setIconGap] = useState(10)
   const [widthMode, setWidthMode] = useState<'fixed' | 'hug'>('fixed')
   const [withIconWeightHovered, setWithIconWeightHovered] = useState(false)
 
   // Generate the icon based on current settings
   const getDemoIcon = () => {
-    if (selectedLegacyIcon) {
-      return legacyIconComponents[selectedLegacyIcon]
-    }
     if (selectedStrokeIcon) {
       return <Icon name={selectedStrokeIcon} weight={iconWeight} size={iconSize} inset={iconInset} />
     }
@@ -117,11 +100,7 @@ const ButtonShowcase = () => {
 
   // Generate the icon for icon-only buttons
   const getIconOnlyIcon = (forWeightVariant = false) => {
-    if (iconOnlyLegacyIcon) {
-      return legacyIconComponents[iconOnlyLegacyIcon]
-    }
     if (iconOnlyStrokeIcon) {
-      // For weight variant, use dynamic weight based on hover state
       const weight = forWeightVariant && iconOnlyWeightHovered ? 900 : iconOnlyWeight
       return <Icon name={iconOnlyStrokeIcon} weight={weight} size={iconOnlySize} inset={iconOnlyInset} />
     }
@@ -133,9 +112,6 @@ const ButtonShowcase = () => {
   
   // Generate icon for buttons with icons (weight variant)
   const getWeightVariantIcon = () => {
-    if (selectedLegacyIcon) {
-      return legacyIconComponents[selectedLegacyIcon]
-    }
     if (selectedStrokeIcon) {
       const weight = withIconWeightHovered ? 900 : iconWeight
       return <Icon name={selectedStrokeIcon} weight={weight} size={iconSize} inset={iconInset} />
@@ -206,25 +182,7 @@ const ButtonShowcase = () => {
                   ...strokeIconNames.map(icon => ({ value: icon.value, label: icon.label }))
                 ]}
                 value={iconOnlyStrokeIcon}
-                onChange={(e) => {
-                  setIconOnlyStrokeIcon(e.target.value as StrokeIconName)
-                  if (e.target.value) setIconOnlyLegacyIcon('')
-                }}
-              />
-              
-              {/* Legacy Icon Select */}
-              <Select
-                label="Legacy Icon"
-                placeholder="Select legacy icon"
-                options={[
-                  { value: '', label: 'None' },
-                  ...legacyIconOptions
-                ]}
-                value={iconOnlyLegacyIcon}
-                onChange={(e) => {
-                  setIconOnlyLegacyIcon(e.target.value)
-                  if (e.target.value) setIconOnlyStrokeIcon('' as StrokeIconName)
-                }}
+                onChange={(e) => setIconOnlyStrokeIcon(e.target.value as StrokeIconName)}
               />
               
               {/* Icon Size */}
@@ -234,37 +192,28 @@ const ButtonShowcase = () => {
                 options={iconSizeOptions}
                 value={iconOnlySize.toString()}
                 onChange={(e) => setIconOnlySize(Number(e.target.value))}
-                disabled={!!iconOnlyLegacyIcon}
               />
             </div>
             
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              {/* Icon Weight (only for stroke icons) */}
+              {/* Icon Weight */}
               <Select
                 label="Icon Weight"
                 placeholder="Select weight"
                 options={weightOptions}
                 value={iconOnlyWeight.toString()}
                 onChange={(e) => setIconOnlyWeight(Number(e.target.value))}
-                disabled={!!iconOnlyLegacyIcon}
               />
               
-              {/* Icon Inset (only for stroke icons) */}
+              {/* Icon Inset */}
               <Select
                 label="Icon Inset"
                 placeholder="Select inset"
                 options={insetOptions}
                 value={iconOnlyInset.toString()}
                 onChange={(e) => setIconOnlyInset(Number(e.target.value))}
-                disabled={!!iconOnlyLegacyIcon}
               />
             </div>
-            
-            {iconOnlyLegacyIcon && (
-              <p className="text-xs text-text-tertiary mt-2">
-                Icon weight, size, and inset options are only available for stroke icons.
-              </p>
-            )}
           </div>
           
           {/* Preview */}
@@ -309,25 +258,7 @@ const ButtonShowcase = () => {
                   ...strokeIconNames.map(icon => ({ value: icon.value, label: icon.label }))
                 ]}
                 value={selectedStrokeIcon}
-                onChange={(e) => {
-                  setSelectedStrokeIcon(e.target.value as StrokeIconName)
-                  if (e.target.value) setSelectedLegacyIcon('')
-                }}
-              />
-              
-              {/* Legacy Icon Select */}
-              <Select
-                label="Legacy Icon"
-                placeholder="Select legacy icon"
-                options={[
-                  { value: '', label: 'None' },
-                  ...legacyIconOptions
-                ]}
-                value={selectedLegacyIcon}
-                onChange={(e) => {
-                  setSelectedLegacyIcon(e.target.value)
-                  if (e.target.value) setSelectedStrokeIcon('' as StrokeIconName)
-                }}
+                onChange={(e) => setSelectedStrokeIcon(e.target.value as StrokeIconName)}
               />
               
               {/* Button Text Input */}
@@ -353,17 +284,15 @@ const ButtonShowcase = () => {
                 options={iconSizeOptions}
                 value={iconSize.toString()}
                 onChange={(e) => setIconSize(Number(e.target.value))}
-                disabled={!!selectedLegacyIcon}
               />
               
-              {/* Icon Weight (only for stroke icons) */}
+              {/* Icon Weight */}
               <Select
                 label="Icon Weight"
                 placeholder="Select weight"
                 options={weightOptions}
                 value={iconWeight.toString()}
                 onChange={(e) => setIconWeight(Number(e.target.value))}
-                disabled={!!selectedLegacyIcon}
               />
               
               {/* Text Weight */}
@@ -375,14 +304,13 @@ const ButtonShowcase = () => {
                 onChange={(e) => setTextWeight(Number(e.target.value))}
               />
               
-              {/* Icon Inset (only for stroke icons) */}
+              {/* Icon Inset */}
               <Select
                 label="Icon Inset"
                 placeholder="Select inset"
                 options={insetOptions}
                 value={iconInset.toString()}
                 onChange={(e) => setIconInset(Number(e.target.value))}
-                disabled={!!selectedLegacyIcon}
               />
             </div>
             
@@ -397,26 +325,14 @@ const ButtonShowcase = () => {
               />
               
               {/* Icon Gap */}
-              <div>
-                <label className="block text-sm font-medium text-text-secondary mb-1">
-                  Icon Gap ({iconGap}px)
-                </label>
-                <input
-                  type="range"
-                  min="0"
-                  max="24"
-                  value={iconGap}
-                  onChange={(e) => setIconGap(Number(e.target.value))}
-                  className="w-full h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer"
-                />
-              </div>
+              <Slider
+                label="Icon Gap (px)"
+                min={0}
+                max={24}
+                value={iconGap}
+                onChange={setIconGap}
+              />
             </div>
-            
-            {selectedLegacyIcon && (
-              <p className="text-xs text-text-tertiary mt-2">
-                Icon size, weight, and inset options are only available for stroke icons.
-              </p>
-            )}
             
             {/* Icon Size Reference */}
             <div className="mt-4 p-4 bg-gray-800 rounded-lg">

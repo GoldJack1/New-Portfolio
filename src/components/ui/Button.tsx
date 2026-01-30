@@ -32,7 +32,7 @@ const Button = ({
   icon,
   iconOnly = false,
   iconPosition = 'left',
-  iconGap = 6,
+  iconGap = 10,
   widthMode = 'fixed',
   disabled = false,
   onClick,
