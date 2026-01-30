@@ -56,9 +56,9 @@ const Hero = ({
 
   // Default gradient overlay: left to right
   // gray-1000 at 90% opacity at 0%, 70% opacity at 33%, 0% opacity at 70% and 100%
-  const defaultGradient = 'linear-gradient(to right, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.7) 33%, rgba(0,0,0,0) 70%, rgba(0,0,0,0) 100%)'
+  const defaultGradient = 'linear-gradient(to right, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.8) 33%, rgba(0,0,0,0.4) 70%, rgba(0,0,0,0) 100%)'
   // Mobile gradient overlay: stronger overlay for better text readability on smaller screens
-  const mobileGradient = 'linear-gradient(to right, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.6) 33%, rgba(0,0,0,0.2) 70%, rgba(0,0,0,0.0) 100%)'
+  const mobileGradient = 'linear-gradient(to right, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.8) 33%, rgba(0,0,0,0.6) 70%, rgba(0,0,0,0.3) 100%)'
 
   // Auto-play functionality
   useEffect(() => {
@@ -219,23 +219,23 @@ const Hero = ({
         />
 
         {/* Content layer */}
-        <div className="relative z-10 flex items-center justify-start h-full py-12 sm:py-16 lg:py-24 pl-4 lg:pl-8">
-          <div className="max-w-full sm:max-w-[50%] lg:max-w-[50%] w-full text-left flex flex-col gap-[5px] sm:gap-[10px]">
-            <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-medium text-text-primary break-words m-0" style={{ lineHeight: 'normal', letterSpacing: '-0.01em' }}>
+        <div className="relative z-10 flex items-center justify-start h-full py-12 sm:py-16 lg:py-24 pl-4 pr-4 lg:pl-8 lg:pr-8">
+          <div className="max-w-[75%] sm:max-w-[50%] w-full text-left flex flex-col gap-[5px] sm:gap-[10px]">
+            <h1 className="text-3xl md:text-4xl lg:text-5xl font-medium text-text-primary break-words m-0" style={{ lineHeight: 'normal', letterSpacing: '-0.01em' }}>
               {slide.heading}
             </h1>
             {slide.subtext && (
-              <p className="text-base sm:text-lg md:text-xl font-normal text-text-secondary break-words m-0" style={{ lineHeight: 'normal', letterSpacing: '0' }}>
+              <p className="text-lg md:text-xl font-normal text-text-secondary break-words m-0" style={{ lineHeight: 'normal', letterSpacing: '0' }}>
                 {slide.subtext}
               </p>
             )}
             {slide.caption && (
-              <p className="text-xs sm:text-xs md:text-sm font-normal text-text-tertiary break-words m-0" style={{ lineHeight: 'normal', letterSpacing: '0.01em' }}>
+              <p className="text-sm sm:text-xs md:text-sm font-normal text-text-tertiary break-words m-0" style={{ lineHeight: 'normal', letterSpacing: '0.01em' }}>
                 {slide.caption}
               </p>
             )}
             {slide.buttonText && (
-              <div>
+              <div className="pt-2.5">
                 {slide.buttonLink ? (
                   <a 
                     href={slide.buttonLink}
@@ -244,6 +244,8 @@ const Hero = ({
                   >
                     <Button
                       variant="primary"
+                      icon={<Icon name="link" weight={400} size={14} />}
+                      iconPosition="left"
                     >
                       {slide.buttonText}
                     </Button>

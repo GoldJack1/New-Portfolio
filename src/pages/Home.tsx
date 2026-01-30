@@ -11,8 +11,8 @@ const Home = () => {
           backgroundValue: homeImage,
           fallbackBackground: HERO_GRADIENTS.home,
           heading: 'Welcome to my portfolio!',
-          subtext: 'This website is currently under construction, please check back soon for updates.',
-          caption: '(Will be completed by Spring 2026)',
+          subtext: 'This website is currently under construction, please check back soon for updates. In the meantime, you can check out some of my recent projects.',
+          caption: '(Will hopefully be completed by Spring 2026)',
         }]}
         height="100vh"
       />

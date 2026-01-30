@@ -12,7 +12,7 @@ const Projects = () => {
       fallbackBackground: HERO_GRADIENTS.projects,
       heading: 'Great British Railways',
       subtext: "A new era for Britain's Railways, uniting track and Train under one brand.",
-      buttonText: 'View Project',
+      buttonText: 'View Prototype in Figma',
       buttonLink: 'https://www.figma.com/proto/FkHh8mUk0VdeWrYTuB5TvW/GBR-App-Concept?page-id=0%3A1&node-id=926-16114&p=f&t=O3dJI1ieVvsrb1CN-0&scaling=scale-down&content-scaling=fixed&starting-point-node-id=926%3A16114&show-proto-sidebar=1',
     },
     {
@@ -22,7 +22,7 @@ const Projects = () => {
       heading: 'Rail Statistics',
       subtext: "A functional app, for train enthusiasts to track stations visited across Great Britain and train tickets.",
       caption: "(Major Update & Android Relase coming February 2026)",
-      buttonText: 'View Project',
+      buttonText: 'Download App',
       buttonLink: 'https://linktr.ee/Railstatistics',
     },
     {
@@ -30,7 +30,7 @@ const Projects = () => {
       backgroundValue: project3Video,
       heading: 'INTERNET + TELETEXT = WEBTEXT',
       subtext: 'A retro-inspired concept blending the nostalgia of teletext with the use of todays modern web.',
-      buttonText: 'View Project',
+      buttonText: 'View on Youtube',
       buttonLink: 'https://youtu.be/uCOQdq30EuQ?si=njU-BTOkkkIk_O5Y',
     },
   ]
