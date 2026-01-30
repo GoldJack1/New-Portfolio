@@ -221,16 +221,16 @@ const Hero = ({
         {/* Content layer */}
         <div className="relative z-10 flex items-center justify-start h-full py-12 sm:py-16 lg:py-24 pl-4 lg:pl-8">
           <div className="max-w-full sm:max-w-[50%] lg:max-w-[50%] w-full text-left flex flex-col gap-[5px] sm:gap-[10px]">
-            <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-medium text-text-primary break-words m-0" style={{ lineHeight: '1.25', letterSpacing: '-0.01em' }}>
+            <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-medium text-text-primary break-words m-0" style={{ lineHeight: 'normal', letterSpacing: '-0.01em' }}>
               {slide.heading}
             </h1>
             {slide.subtext && (
-              <p className="text-base sm:text-lg md:text-xl font-normal text-text-secondary break-words m-0" style={{ lineHeight: '1.5', letterSpacing: '0' }}>
+              <p className="text-base sm:text-lg md:text-xl font-normal text-text-secondary break-words m-0" style={{ lineHeight: 'normal', letterSpacing: '0' }}>
                 {slide.subtext}
               </p>
             )}
             {slide.caption && (
-              <p className="text-xs sm:text-xs md:text-sm font-normal text-text-tertiary break-words m-0" style={{ lineHeight: '1.4', letterSpacing: '0.01em' }}>
+              <p className="text-xs sm:text-xs md:text-sm font-normal text-text-tertiary break-words m-0" style={{ lineHeight: 'normal', letterSpacing: '0.01em' }}>
                 {slide.caption}
               </p>
             )}

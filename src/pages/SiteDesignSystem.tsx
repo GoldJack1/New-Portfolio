@@ -12,6 +12,7 @@ const SiteDesignSystem = () => {
     { path: '/design-system/padding', title: 'Padding', description: 'Universal padding system for consistent spacing across the site' },
     { path: '/design-system/icons', title: 'Icons', description: 'Complete collection of custom JWP icons organized by category' },
     { path: '/design-system/stroke-based-icons', title: 'Stroke Based Icons', description: 'Stroke-based icons with variable weight at different sizes' },
+    { path: '/design-system/icon-calibration', title: 'Icon Calibration', description: 'Calibrate stroke-based icons against text weight and size' },
     { path: '/design-system/static-hero', title: 'Static Hero', description: 'Standalone hero component with various background types' },
     { path: '/design-system/carousel-hero', title: 'Carousel Hero', description: 'Hero component with carousel functionality, auto-play, and navigation' },
   ]

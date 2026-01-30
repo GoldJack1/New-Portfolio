@@ -92,6 +92,7 @@
 
   body {
     @apply font-geologica bg-gray-1000 text-text-primary;
+    line-height: normal;
     overflow-x: hidden;
     width: 100%;
     min-height: 100vh;

@@ -387,7 +387,7 @@ const TypographyShowcase = () => {
             </div>
 
             <div className="space-y-1">
-              <span className="text-text-tertiary block text-xs" style={{ fontSize: '12px', lineHeight: '1.4', letterSpacing: '0.01em', WebkitTextSizeAdjust: '100%' }}>Small Caption - Smallest text size for fine print</span>
+              <span className="text-text-tertiary block text-xs" style={{ fontSize: '12px', lineHeight: 'normal', letterSpacing: '0.01em', WebkitTextSizeAdjust: '100%' }}>Small Caption - Smallest text size for fine print</span>
               <p className="text-sm text-text-primary">
                 Size: 12px (may render larger due to browser minimum font size settings)
                 <br />
