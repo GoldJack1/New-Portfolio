@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { Icon, getStrokeIconNames, type StrokeIconName, type IconWeight } from '../ui/Icon'
 
 // Static icons use pre-generated SVG files (no path data in code)
-const STATIC_ICON_NAMES: StrokeIconName[] = ['star', 'info-circle', 'help-circle']
+const STATIC_ICON_NAMES: StrokeIconName[] = ['star', 'info-circle', 'help-circle', 'controls']
 
 // Social Media Icon Components (from Footer.tsx)
 const LinkedInIcon = () => (
@@ -85,7 +85,7 @@ const IconShowcase = () => {
         <div>
           <h3 className="text-xl font-bold text-text-primary mb-2">Static</h3>
           <p className="text-sm text-text-secondary mb-4">
-            Pre-generated SVG files per size and weight. Picked at runtime from public/icons (star, info-circle, help-circle).
+            Pre-generated SVG files per size and weight. Picked at runtime from public/icons (star, info-circle, help-circle, controls).
           </p>
           <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 mb-6 p-4 bg-gray-800 rounded-xl">
             <label className="text-sm text-text-secondary whitespace-nowrap">

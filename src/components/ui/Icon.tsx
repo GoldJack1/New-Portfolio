@@ -1,5 +1,6 @@
 import { getStrokeWidth } from '../../config/iconWeights'
 import { getClosestSize, getClosestWeight, getStarIconAssetPath } from '../../utils/starIcon'
+import { getClosestSize as getControlsClosestSize, getClosestWeight as getControlsClosestWeight, getControlsIconAssetPath } from '../../utils/controlsIcon'
 import { getClosestSize as getInfoCircleClosestSize, getClosestWeight as getInfoCircleClosestWeight, getInfoCircleIconAssetPath } from '../../utils/infoCircleIcon'
 import { getClosestSize as getHelpCircleClosestSize, getClosestWeight as getHelpCircleClosestWeight, getHelpCircleIconAssetPath } from '../../utils/helpCircleIcon'
 import { useState, useEffect } from 'react'
@@ -25,7 +26,7 @@ type IconPathData = {
 }
 
 // Special icon names that use static SVG files instead of path data
-const STATIC_ICONS = ['star', 'info-circle', 'help-circle'] as const
+const STATIC_ICONS = ['star', 'info-circle', 'help-circle', 'controls'] as const
 type StaticIconName = typeof STATIC_ICONS[number]
 
 const iconPaths: Record<string, IconPathData> = {
@@ -37,6 +38,9 @@ const iconPaths: Record<string, IconPathData> = {
   },
   'help-circle': {
     paths: [], // Help Circle uses static SVGs, not path data
+  },
+  'controls': {
+    paths: [], // Controls uses static SVGs, not path data
   },
   'cross': {
     paths: [
@@ -196,6 +200,30 @@ const iconPaths: Record<string, IconPathData> = {
     strokeLinejoin: 'round',
     rotate: -45
   },
+  'location': {
+    paths: [
+      'M15.84,18.43v10.19c0,2.48,3.4,3.16,4.36.87L30.71,4.25c.78-1.87-1.09-3.74-2.96-2.96L2.51,11.81c-2.29.95-1.6,4.36.87,4.36h10.19c1.25,0,2.27,1.01,2.27,2.27Z'
+    ],
+    strokeLinejoin: 'round'
+  },
+  'sort-horizontal': {
+    paths: [
+      'M30.83,23.42H1.9',
+      'M7.52,30.89l-5.89-6.24c-.64-.67-.64-1.78,0-2.46l5.89-6.24',
+      'M1.17,8.57h28.93',
+      'M24.48,16.05l5.89-6.24c.64-.67.64-1.78,0-2.46l-5.89-6.24'
+    ],
+    strokeLinejoin: 'round'
+  },
+  'sort-vertical': {
+    paths: [
+      'M8.58,30.83V1.9',
+      'M1.11,7.52L7.35,1.63c.67-.64,1.78-.64,2.46,0l6.24,5.89',
+      'M23.43,1.17v28.93',
+      'M15.95,24.48l6.24,5.89c.67.64,1.78.64,2.46,0l6.24-5.89'
+    ],
+    strokeLinejoin: 'round'
+  },
 }
 
 /**
@@ -341,6 +369,17 @@ export function Icon({
   
   if (name === 'help-circle') {
     return <StaticHelpCircleIcon 
+      weight={weight}
+      className={className}
+      size={size}
+      color={color}
+      aria-label={ariaLabel}
+      aria-hidden={ariaHidden}
+    />
+  }
+  
+  if (name === 'controls') {
+    return <StaticControlsIcon 
       weight={weight}
       className={className}
       size={size}
@@ -789,6 +828,109 @@ function StaticHelpCircleIcon({
     return null
   }
   
+  return (
+    <span
+      className={className}
+      style={{
+        display: 'inline-flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        color: color || undefined,
+        ...sizeStyle,
+      }}
+      aria-label={ariaLabel}
+      aria-hidden={ariaHidden ?? !ariaLabel}
+      role={ariaLabel ? 'img' : undefined}
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox={viewBox}
+        fill="currentColor"
+        style={{ width: '100%', height: '100%' }}
+        dangerouslySetInnerHTML={{ __html: innerContent }}
+      />
+    </span>
+  )
+}
+
+/**
+ * Static Controls Icon Component
+ *
+ * Renders the Controls icon using pre-generated static SVG files.
+ * No dynamic path calculations or stroke width adjustments are used.
+ */
+function StaticControlsIcon({
+  weight = 400,
+  className = '',
+  size,
+  color,
+  'aria-label': ariaLabel,
+  'aria-hidden': ariaHidden,
+}: Omit<IconProps, 'name' | 'strokeWidth' | 'inset'>) {
+  const sizeValue = size ?? 20
+  const sizeNum = typeof sizeValue === 'number' ? sizeValue : 20
+
+  const closestSize = getControlsClosestSize(sizeNum)
+  const closestWeight = getControlsClosestWeight(weight)
+  const assetPath = getControlsIconAssetPath(closestSize, closestWeight)
+
+  const [svgContent, setSvgContent] = useState<string | null>(null)
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    let cancelled = false
+    const svgPath = `/icons/controls/${assetPath}`
+
+    fetch(svgPath)
+      .then((res) => {
+        if (!res.ok) throw new Error(`Failed to fetch: ${res.statusText}`)
+        return res.text()
+      })
+      .then((text) => {
+        if (cancelled) return
+        let styledSvg = text
+          .replace(/fill="[^"]*"/g, 'fill="currentColor"')
+          .replace(/stroke="[^"]*"/g, 'stroke="currentColor"')
+        styledSvg = styledSvg.replace(/<\?xml[^>]*\?>/g, '').replace(/<!--[\s\S]*?-->/g, '')
+        setSvgContent(styledSvg)
+        setLoading(false)
+      })
+      .catch((err) => {
+        if (!cancelled) {
+          console.error(`Failed to load Controls icon: ${assetPath}`, err)
+          setLoading(false)
+        }
+      })
+
+    return () => { cancelled = true }
+  }, [assetPath])
+
+  const sizeStyle = typeof sizeValue === 'number'
+    ? { width: `${sizeValue}px`, height: `${sizeValue}px` }
+    : { width: sizeValue, height: sizeValue }
+
+  if (loading || !svgContent) {
+    return (
+      <span
+        className={className}
+        style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', ...sizeStyle }}
+        aria-label={ariaLabel}
+        aria-hidden={ariaHidden ?? !ariaLabel}
+        role={ariaLabel ? 'img' : undefined}
+      />
+    )
+  }
+
+  const viewBoxMatch = svgContent.match(/viewBox=["']([^"']*)["']/)
+  const viewBox = viewBoxMatch ? viewBoxMatch[1] : `0 0 ${closestSize} ${closestSize}`
+  const innerContentMatch = svgContent.match(/<svg[^>]*>([\s\S]*)<\/svg>/i)
+  const innerContent = innerContentMatch ? innerContentMatch[1] : ''
+
+  if (!innerContent) {
+    console.warn(`Failed to extract content from Controls icon: ${assetPath}`)
+    return null
+  }
+
   return (
     <span
       className={className}

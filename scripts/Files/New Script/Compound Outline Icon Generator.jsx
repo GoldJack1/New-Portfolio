@@ -79,6 +79,15 @@ if (app.name !== "Adobe Illustrator") {
    return baseStrokeScaled + adjustment;
  }
  
+ function calculateInnerScaleFactor(weight, basePercent, incrementPercent, isIncrease) {
+   var weightUnits = (weight - 100) / 100;
+   var scalePercent = basePercent / 100 + weightUnits * (isIncrease ? incrementPercent : -incrementPercent) / 100;
+   var factor = scalePercent;
+   if (factor < 0.1) factor = 0.1;
+   if (factor > 3) factor = 3;
+   return factor;
+ }
+ 
  function applyStrokeWidth(item, strokeWidth) {
    try {
        if (item.typename === 'PathItem') {
@@ -317,6 +326,7 @@ if (app.name !== "Adobe Illustrator") {
   var sizeRangeInput;
   var fillCb, shrinkInnerCb;
   var customInnerStrokeCb, innerStrokeBaseInput, innerStrokeIncreaseRadio, innerStrokeDecreaseRadio, innerStrokeIncrementInput;
+  var increaseInnerSizeCb, innerSizeBaseInput, innerSizeIncreaseRadio, innerSizeDecreaseRadio, innerSizeIncrementInput;
   var artboardOutputCb, svgOutputCb;
   var spacingInput, layoutDropdown, rowsInput, colsInput;
   var exportFolderInput, namingInput, embedRasterCb, organizeByFoldersCb, cssLocationDropdown, fontSubsettingDropdown, coordPrecisionInput;
@@ -733,6 +743,52 @@ if (app.name !== "Adobe Illustrator") {
        innerStrokeContainer.visible = this.value;
    };
    
+   // Increase Inner Shapes Size Options
+   increaseInnerSizeCb = compoundPanel.add("checkbox", undefined, "Increase inner shapes size");
+   increaseInnerSizeCb.value = false;
+   
+   var innerSizeContainer = compoundPanel.add("group");
+   innerSizeContainer.orientation = "column";
+   innerSizeContainer.alignChildren = ["left", "top"];
+   innerSizeContainer.spacing = 6;
+   innerSizeContainer.visible = false;
+   
+   var baseScaleRow = innerSizeContainer.add("group");
+   baseScaleRow.orientation = "row";
+   baseScaleRow.spacing = 8;
+   baseScaleRow.alignChildren = ["left", "center"];
+   baseScaleRow.add("statictext", undefined, "Base scale at weight 100:");
+   innerSizeBaseInput = baseScaleRow.add("edittext", undefined, "100");
+   innerSizeBaseInput.characters = 8;
+   innerSizeBaseInput.preferredSize = [60, 22];
+   baseScaleRow.add("statictext", undefined, "%");
+   
+   var innerSizeRadioContainer = innerSizeContainer.add("group");
+   innerSizeRadioContainer.orientation = "row";
+   innerSizeRadioContainer.spacing = 8;
+   innerSizeRadioContainer.alignChildren = ["left", "center"];
+   
+   var innerSizeRadioGroup = innerSizeRadioContainer.add("group");
+   innerSizeRadioGroup.orientation = "row";
+   innerSizeRadioGroup.spacing = 4;
+   innerSizeIncreaseRadio = innerSizeRadioGroup.add("radiobutton", undefined, "Increase by");
+   innerSizeIncreaseRadio.value = true;
+   innerSizeDecreaseRadio = innerSizeRadioGroup.add("radiobutton", undefined, "Decrease by");
+   
+   var innerSizeIncrementRow = innerSizeContainer.add("group");
+   innerSizeIncrementRow.orientation = "row";
+   innerSizeIncrementRow.spacing = 8;
+   innerSizeIncrementRow.alignChildren = ["left", "center"];
+   innerSizeIncrementRow.add("statictext", undefined, "Per 100 weight units:");
+   innerSizeIncrementInput = innerSizeIncrementRow.add("edittext", undefined, "2");
+   innerSizeIncrementInput.characters = 8;
+   innerSizeIncrementInput.preferredSize = [60, 22];
+   innerSizeIncrementRow.add("statictext", undefined, "%");
+   
+   increaseInnerSizeCb.onClick = function() {
+       innerSizeContainer.visible = this.value;
+   };
+   
    // ============================================================================
    // TAB 4: OUTPUT TYPE
    // ============================================================================
@@ -1120,7 +1176,11 @@ if (app.name !== "Adobe Illustrator") {
                    customInnerStroke: customInnerStrokeCb.value,
                    innerStrokeBase: parseFloat(innerStrokeBaseInput.text) || 0.3,
                    innerStrokeIncrement: parseFloat(innerStrokeIncrementInput.text) || 0.1,
-                   innerStrokeIncrease: innerStrokeIncreaseRadio.value
+                   innerStrokeIncrease: innerStrokeIncreaseRadio.value,
+                   increaseInnerSize: increaseInnerSizeCb.value,
+                   innerSizeBase: parseFloat(innerSizeBaseInput.text) || 100,
+                   innerSizeIncrement: parseFloat(innerSizeIncrementInput.text) || 2,
+                   innerSizeIncrease: innerSizeIncreaseRadio.value
                };
                
                if (artboardOutputCb.value) {
@@ -1388,6 +1448,19 @@ if (app.name !== "Adobe Illustrator") {
                    var updatedTop = artboardCenterY + (updatedHeight / 2);
                    newGroup.position = [updatedLeft, updatedTop];
                }
+           }
+           
+           // Increase inner shapes size if enabled
+           if (options.increaseInnerSize) {
+               var outerSize = getLargestElementSize(newGroup);
+               var innerSizeScaleFactor = calculateInnerScaleFactor(weight, options.innerSizeBase, options.innerSizeIncrement, options.innerSizeIncrease);
+               scaleInnerElements(newGroup, innerSizeScaleFactor, true, outerSize);
+               var updatedBounds = newGroup.geometricBounds;
+               var updatedWidth = updatedBounds[2] - updatedBounds[0];
+               var updatedHeight = updatedBounds[1] - updatedBounds[3];
+               var updatedLeft = artboardCenterX - (updatedWidth / 2);
+               var updatedTop = artboardCenterY + (updatedHeight / 2);
+               newGroup.position = [updatedLeft, updatedTop];
            }
            
            // Apply custom inner stroke after scaling if enabled
@@ -1665,6 +1738,19 @@ if (app.name !== "Adobe Illustrator") {
                       var updatedTop = centerY + (updatedHeight / 2);
                       tempGroup.position = [updatedLeft, updatedTop];
                   }
+              }
+              
+              // Increase inner shapes size if enabled
+              if (options.increaseInnerSize) {
+                  var outerSize = getLargestElementSize(tempGroup);
+                  var innerSizeScaleFactor = calculateInnerScaleFactor(weight, options.innerSizeBase, options.innerSizeIncrement, options.innerSizeIncrease);
+                  scaleInnerElements(tempGroup, innerSizeScaleFactor, true, outerSize);
+                  var updatedBounds = tempGroup.geometricBounds;
+                  var updatedWidth = updatedBounds[2] - updatedBounds[0];
+                  var updatedHeight = updatedBounds[1] - updatedBounds[3];
+                  var updatedLeft = centerX - (updatedWidth / 2);
+                  var updatedTop = centerY + (updatedHeight / 2);
+                  tempGroup.position = [updatedLeft, updatedTop];
               }
               
               // Apply custom inner stroke after scaling if enabled

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Layer_1" xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 65 65">
+  <!-- Generator: Adobe Illustrator 30.1.0, SVG Export Plug-In . SVG Version: 2.1.1 Build 136)  -->
+  <path d="M62.75,32.5H2.25" fill="none" stroke="#000" stroke-linecap="round" stroke-width="4.51"/>
+  <path d="M62.75,11.01H2.25" fill="none" stroke="#000" stroke-linecap="round" stroke-width="4.51"/>
+  <path d="M62.75,53.99H2.25" fill="none" stroke="#000" stroke-linecap="round" stroke-width="4.51"/>
+  <circle cx="53.44" cy="11.01" r="6.98" stroke="#000" stroke-miterlimit="10" stroke-width=".2"/>
+  <circle cx="11.56" cy="32.5" r="6.98" stroke="#000" stroke-miterlimit="10" stroke-width=".2"/>
+  <circle cx="32.5" cy="53.99" r="6.98" stroke="#000" stroke-miterlimit="10" stroke-width=".2"/>
+</svg>

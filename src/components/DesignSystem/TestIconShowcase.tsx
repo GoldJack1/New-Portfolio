@@ -62,9 +62,13 @@ const strokeIcons: StrokeIconName[] = [
   'filter',
   'link',
   'refresh',
+  'location',
+  'sort-horizontal',
+  'sort-vertical',
   'star',
   'info-circle',
-  'help-circle'
+  'help-circle',
+  'controls'
 ]
 
 const TestIconShowcase = () => {
