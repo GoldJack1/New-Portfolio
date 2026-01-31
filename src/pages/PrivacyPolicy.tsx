@@ -1,13 +1,16 @@
+import SubpageHero from '../components/ui/SubpageHero'
 import { PADDING_CLASSES } from '../utils/paddingClasses'
+import project1Image from '../assets/images/projects/Hero Imgs/Project 1.jpg'
 
 const PrivacyPolicy = () => {
   return (
-    <div className="w-full overflow-x-hidden bg-gray-1000 min-h-screen flex flex-col pt-[150px]">
-      <section className={`w-full ${PADDING_CLASSES.page.full} flex-grow flex flex-col`}>
-        <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-text-primary mb-8 break-words">
-          Privacy Policy
-        </h1>
-        <div className="space-y-6 text-base sm:text-lg font-light text-text-primary">
+    <div className="w-full overflow-x-hidden bg-gray-1000 min-h-screen flex flex-col">
+      <SubpageHero
+        image={project1Image}
+        pageName="Privacy Policy"
+      />
+      <section className={`w-full ${PADDING_CLASSES.page.full} pt-16 lg:pt-24 flex-grow flex flex-col`}>
+        <div className="max-w-3xl space-y-6 text-base sm:text-lg font-light text-text-primary">
           <p className="break-words">
             This privacy policy describes how we collect, use, and protect your personal information.
           </p>
