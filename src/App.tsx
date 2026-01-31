@@ -23,6 +23,9 @@ import StrokeBasedIcons from './pages/design-system/StrokeBasedIcons'
 import IconCalibration from './pages/design-system/IconCalibration'
 import PrivacyPolicy from './pages/PrivacyPolicy'
 import SiteMap from './pages/SiteMap'
+import GreatBritishRailwaysConcept from './pages/projects/GreatBritishRailwaysConcept'
+import RailStatistics from './pages/projects/RailStatistics'
+import Webtext from './pages/projects/Webtext'
 
 /**
  * Check if device is mobile (matches Navigation.tsx breakpoint)
@@ -338,6 +341,9 @@ function AppRoutes() {
         <Routes location={location} key={location.pathname}>
         <Route path="/" element={<AnimatedPage><Home /></AnimatedPage>} />
         <Route path="/projects" element={<AnimatedPage><Projects /></AnimatedPage>} />
+        <Route path="/projects/great-british-railways-concept" element={<AnimatedPage><GreatBritishRailwaysConcept /></AnimatedPage>} />
+        <Route path="/projects/rail-statistics" element={<AnimatedPage><RailStatistics /></AnimatedPage>} />
+        <Route path="/projects/webtext" element={<AnimatedPage><Webtext /></AnimatedPage>} />
         <Route path="/about" element={<AnimatedPage><About /></AnimatedPage>} />
         <Route path="/contact" element={<AnimatedPage><Contact /></AnimatedPage>} />
         <Route path="/design-system" element={<AnimatedPage><SiteDesignSystem /></AnimatedPage>} />

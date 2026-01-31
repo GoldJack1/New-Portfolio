@@ -8,8 +8,9 @@ const PrivacyPolicy = () => {
       <SubpageHero
         image={project1Image}
         pageName="Privacy Policy"
+        shrinkOnScroll
       />
-      <section className={`w-full ${PADDING_CLASSES.page.full} pt-16 lg:pt-24 flex-grow flex flex-col`}>
+      <section className={`w-full ${PADDING_CLASSES.page.horizontal} pt-5 pb-5 flex-grow flex flex-col`}>
         <div className="max-w-3xl space-y-6 text-base sm:text-lg font-light text-text-primary">
           <p className="break-words">
             This privacy policy describes how we collect, use, and protect your personal information.

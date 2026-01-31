@@ -10,7 +10,15 @@ interface PageLink {
 const SiteMap = () => {
   const pages: PageLink[] = [
     { path: '/', label: 'Home' },
-    { path: '/projects', label: 'Projects' },
+    { 
+      path: '/projects', 
+      label: 'Projects',
+      children: [
+        { path: '/projects/great-british-railways-concept', label: 'Great British Railways Concept' },
+        { path: '/projects/rail-statistics', label: 'Rail Statistics' },
+        { path: '/projects/webtext', label: 'Webtext' },
+      ]
+    },
     { path: '/about', label: 'About' },
     { path: '/contact', label: 'Contact' },
     { 

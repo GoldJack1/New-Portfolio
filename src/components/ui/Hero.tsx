@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef, useCallback } from 'react'
+import { Link } from 'react-router-dom'
 import Button from './Button'
 import { Icon } from './Icon'
 
@@ -290,19 +291,31 @@ const Hero = ({
             {slide.buttonText && (
               <div className="pt-2.5">
                 {slide.buttonLink ? (
-                  <a 
-                    href={slide.buttonLink}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <Button
-                      variant="primary"
-                      icon={<Icon name="link" weight={400} size={14} />}
-                      iconPosition="left"
+                  slide.buttonLink.startsWith('/') ? (
+                    <Link to={slide.buttonLink}>
+                      <Button
+                        variant="primary"
+                        icon={<Icon name="chevron-right" weight={400} size={14} />}
+                        iconPosition="right"
+                      >
+                        {slide.buttonText}
+                      </Button>
+                    </Link>
+                  ) : (
+                    <a
+                      href={slide.buttonLink}
+                      target="_blank"
+                      rel="noopener noreferrer"
                     >
-                      {slide.buttonText}
-                    </Button>
-                  </a>
+                      <Button
+                        variant="primary"
+                        icon={<Icon name="link" weight={400} size={14} />}
+                        iconPosition="left"
+                      >
+                        {slide.buttonText}
+                      </Button>
+                    </a>
+                  )
                 ) : (
                   <Button
                     variant="primary"

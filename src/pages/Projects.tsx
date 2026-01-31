@@ -13,8 +13,8 @@ const Projects = () => {
       heading: 'Great British Railways',
       subtext: "A Branding & App Concept for GBR, Designed in April 2025, before the actual branding was revealed.",
       caption: "(Full Project Page & more coming soon, in the meantime, you can check out the app prototype in Figma)",
-      buttonText: 'View Prototype in Figma',
-      buttonLink: 'https://www.figma.com/proto/FkHh8mUk0VdeWrYTuB5TvW/GBR-App-Concept?page-id=0%3A1&node-id=926-16114&p=f&t=O3dJI1ieVvsrb1CN-0&scaling=scale-down&content-scaling=fixed&starting-point-node-id=926%3A16114&show-proto-sidebar=1',
+      buttonText: 'View Project',
+      buttonLink: '/projects/great-british-railways-concept',
     },
     {
       backgroundType: 'image',
@@ -31,8 +31,8 @@ const Projects = () => {
       backgroundValue: project3Video,
       heading: 'INTERNET + TELETEXT = WEBTEXT',
       subtext: 'A retro-inspired concept blending the nostalgia of teletext with the use of todays modern web.',
-      buttonText: 'View on Youtube',
-      buttonLink: 'https://youtu.be/uCOQdq30EuQ?si=njU-BTOkkkIk_O5Y',
+      buttonText: 'View Project',
+      buttonLink: '/projects/webtext',
     },
   ]
 
