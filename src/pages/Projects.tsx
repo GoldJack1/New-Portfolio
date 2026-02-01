@@ -1,8 +1,12 @@
 import Hero, { HeroSlide } from '../components/ui/Hero'
+import Button from '../components/ui/Button'
+import Icon from '../components/ui/Icon'
 import { HERO_GRADIENTS } from '../utils/heroGradients'
 import project1Image from '../assets/images/projects/Hero Imgs/Project 1.jpg'
 import project2Image from '../assets/images/projects/Hero Imgs/Project 2.jpg'
 import project3Video from '../assets/images/projects/Hero Imgs/Project 3.mp4'
+
+const OLD_PORTFOLIO_URL = 'https://jackawingate.myportfolio.com/'
 
 const Projects = () => {
   const projectSlides: HeroSlide[] = [
@@ -47,6 +51,22 @@ const Projects = () => {
         showIndicators={true}
         height="100vh"
       />
+      <section className="w-full px-6 py-10 sm:px-8 md:px-12 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6">
+        <p className="text-text-primary text-lg font-normal max-w-xl">
+          There's a few more projects you should check out on my old site.
+        </p>
+        <div className="w-fit flex-shrink-0">
+          <Button
+            variant="primary"
+            widthMode="hug"
+            icon={<Icon name="link" weight={400} />}
+            iconPosition="right"
+            onClick={() => window.open(OLD_PORTFOLIO_URL, '_blank', 'noopener,noreferrer')}
+          >
+            View More Projects
+          </Button>
+        </div>
+      </section>
     </div>
   )
 }

@@ -1,6 +1,6 @@
 import Hero from '../components/ui/Hero'
 import { HERO_GRADIENTS } from '../utils/heroGradients'
-import homeImage from '../assets/images/home/IMG_6734.JPG'
+import homeImage from '../assets/images/home/IMG_6734.jpg'
 
 const Home = () => {
   return (

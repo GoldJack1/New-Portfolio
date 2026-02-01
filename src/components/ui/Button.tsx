@@ -122,7 +122,10 @@ const Button = ({
       backdropFilter: 'blur(18px)',
       WebkitBackdropFilter: 'blur(18px)',
     } : {}),
-    ...(iconOnly ? {} : { fontWeight: currentFontWeight, width: 'auto' }),
+    ...(iconOnly ? {} : {
+      fontWeight: currentFontWeight,
+      width: widthMode === 'hug' ? 'fit-content' : 'auto',
+    }),
     ...(hasTextAndIcon ? { gap: `${iconGap}px` } : {}),
   }
 

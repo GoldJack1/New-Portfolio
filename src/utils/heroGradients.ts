@@ -8,8 +8,8 @@
 export type PageBackgroundColor = 'home' | 'projects' | 'about' | 'contact'
 
 const PAGE_BACKGROUND_COLORS = {
-  home: '#FFE100',      // Red
-  projects: '#00FF37',  // Green
+  home: '#000000',      // Red
+  projects: '#000000',  // Green
   about: '#00CFFF',     // Blue
   contact: '#FF0000',   // Purple
 } as const
