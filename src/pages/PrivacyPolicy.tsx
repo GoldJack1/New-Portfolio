@@ -8,7 +8,7 @@ const PrivacyPolicy = () => {
       <SubpageHero
         image={project1Image}
         pageName="Privacy Policy"
-        shrinkOnScroll
+        shrinkOnScroll={false}
       />
       <section className={`w-full ${PADDING_CLASSES.page.horizontal} pt-5 pb-5 flex-grow flex flex-col`}>
         <div className="max-w-3xl space-y-6 text-base sm:text-lg font-light text-text-primary">

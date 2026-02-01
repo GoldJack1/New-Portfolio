@@ -1,3 +1,4 @@
+import { lazy, Suspense } from 'react'
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom'
 import { AnimatePresence, motion } from 'framer-motion'
 import { useEffect, useState, useRef } from 'react'
@@ -5,27 +6,28 @@ import Navigation from './components/Navigation'
 import Footer from './components/Footer'
 import ScrollToTop from './components/ScrollToTop'
 import AnimatedPage from './components/AnimatedPage'
-import Home from './pages/Home'
-import Projects from './pages/Projects'
-import About from './pages/About'
-import Contact from './pages/Contact'
-import SiteDesignSystem from './pages/SiteDesignSystem'
-import Colors from './pages/design-system/Colors'
-import Typography from './pages/design-system/Typography'
-import Buttons from './pages/design-system/Buttons'
-import FormControls from './pages/design-system/FormControls'
-import Components from './pages/design-system/Components'
-import Padding from './pages/design-system/Padding'
-import StaticHero from './pages/design-system/StaticHero'
-import CarouselHero from './pages/design-system/CarouselHero'
-import Icons from './pages/design-system/Icons'
-import StrokeBasedIcons from './pages/design-system/StrokeBasedIcons'
-import IconCalibration from './pages/design-system/IconCalibration'
-import PrivacyPolicy from './pages/PrivacyPolicy'
-import SiteMap from './pages/SiteMap'
-import GreatBritishRailwaysConcept from './pages/projects/GreatBritishRailwaysConcept'
-import RailStatistics from './pages/projects/RailStatistics'
-import Webtext from './pages/projects/Webtext'
+
+const Home = lazy(() => import('./pages/Home'))
+const Projects = lazy(() => import('./pages/Projects'))
+const About = lazy(() => import('./pages/About'))
+const Contact = lazy(() => import('./pages/Contact'))
+const SiteDesignSystem = lazy(() => import('./pages/SiteDesignSystem'))
+const Colors = lazy(() => import('./pages/design-system/Colors'))
+const Typography = lazy(() => import('./pages/design-system/Typography'))
+const Buttons = lazy(() => import('./pages/design-system/Buttons'))
+const FormControls = lazy(() => import('./pages/design-system/FormControls'))
+const Components = lazy(() => import('./pages/design-system/Components'))
+const Padding = lazy(() => import('./pages/design-system/Padding'))
+const StaticHero = lazy(() => import('./pages/design-system/StaticHero'))
+const CarouselHero = lazy(() => import('./pages/design-system/CarouselHero'))
+const Icons = lazy(() => import('./pages/design-system/Icons'))
+const StrokeBasedIcons = lazy(() => import('./pages/design-system/StrokeBasedIcons'))
+const IconCalibration = lazy(() => import('./pages/design-system/IconCalibration'))
+const PrivacyPolicy = lazy(() => import('./pages/PrivacyPolicy'))
+const SiteMap = lazy(() => import('./pages/SiteMap'))
+const GreatBritishRailwaysConcept = lazy(() => import('./pages/projects/GreatBritishRailwaysConcept'))
+const RailStatistics = lazy(() => import('./pages/projects/RailStatistics'))
+const Webtext = lazy(() => import('./pages/projects/Webtext'))
 
 /**
  * Check if device is mobile (matches Navigation.tsx breakpoint)
@@ -338,6 +340,7 @@ function AppRoutes() {
       }}
     >
       <AnimatePresence initial={false}>
+        <Suspense fallback={<div className="min-h-[50vh] flex items-center justify-center text-text-secondary" aria-hidden="true">Loading…</div>}>
         <Routes location={location} key={location.pathname}>
         <Route path="/" element={<AnimatedPage><Home /></AnimatedPage>} />
         <Route path="/projects" element={<AnimatedPage><Projects /></AnimatedPage>} />
@@ -361,6 +364,7 @@ function AppRoutes() {
         <Route path="/privacy-policy" element={<AnimatedPage><PrivacyPolicy /></AnimatedPage>} />
         <Route path="/sitemap" element={<AnimatedPage><SiteMap /></AnimatedPage>} />
         </Routes>
+        </Suspense>
       </AnimatePresence>
     </motion.div>
   )

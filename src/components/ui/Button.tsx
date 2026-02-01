@@ -238,6 +238,7 @@ const Button = ({
       disabled={disabled}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
+      data-variant={variant}
       className={`${baseStyles} ${disabledStyles} ${className}`.trim()}
       style={combinedStyle}
     >

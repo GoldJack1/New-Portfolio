@@ -12,7 +12,7 @@ const RailStatistics = () => {
         image={project2Image}
         pageName="Rail Statistics"
         subtext="Track stations visited across Great Britain"
-        shrinkOnScroll
+        shrinkOnScroll={false}
       />
       <section className={`w-full ${PADDING_CLASSES.page.horizontal} pt-5 pb-5 flex-grow flex flex-col`}>
         <Link to="/projects" className="h-[45px] inline-flex">

@@ -12,7 +12,7 @@ const Webtext = () => {
         video={project3Video}
         pageName="Webtext"
         subtext="INTERNET + TELETEXT = WEBTEXT"
-        shrinkOnScroll
+        shrinkOnScroll={false}
       />
       <section className={`w-full ${PADDING_CLASSES.page.horizontal} pt-5 pb-5 flex-grow flex flex-col`}>
         <Link to="/projects" className="h-[45px] inline-flex">
@@ -21,7 +21,7 @@ const Webtext = () => {
           </Button>
         </Link>
         <div className="w-full">
-          <p className="mb-4 text-base sm:text-lg font-light text-text-secondary break-words">
+          <p className="mt-4 mb-4 text-base sm:text-lg font-light text-text-secondary break-words">
             Warning: This video has some intermittent moments of flickering on the CRT. Please skip forward to 0:36 if you have epilepsy.
           </p>
           <div className="relative w-full aspect-video rounded-lg overflow-hidden">

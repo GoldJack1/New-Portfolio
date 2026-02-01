@@ -1,10 +1,15 @@
+import { useEffect } from 'react'
 import Hero, { HeroSlide } from '../components/ui/Hero'
 import { HERO_GRADIENTS } from '../utils/heroGradients'
+import { prefetchGBRPDFUrl } from '../hooks/useGBRPDFUrl'
 import project1Image from '../assets/images/projects/Hero Imgs/Project 1.jpg'
 import project2Image from '../assets/images/projects/Hero Imgs/Project 2.jpg'
 import project3Video from '../assets/images/projects/Hero Imgs/Project 3.mp4'
 
 const Projects = () => {
+  useEffect(() => {
+    prefetchGBRPDFUrl()
+  }, [])
   const projectSlides: HeroSlide[] = [
     {
       backgroundType: 'image',

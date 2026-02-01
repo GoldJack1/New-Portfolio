@@ -53,7 +53,7 @@ const Hero = ({
   const [prevHovered, setPrevHovered] = useState(false)
   const [nextHovered, setNextHovered] = useState(false)
   const [loadedSlides, setLoadedSlides] = useState<Set<number>>(new Set())
-  const autoPlayTimerRef = useRef<number | null>(null)
+  const autoPlayTimerRef = useRef<ReturnType<typeof setInterval> | null>(null)
   const heroRef = useRef<HTMLDivElement>(null)
   const videoRefsRef = useRef<(HTMLVideoElement | null)[]>([])
 

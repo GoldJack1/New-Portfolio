@@ -127,6 +127,16 @@
     color: var(--text-primary); /* Text Primary - white at 100% */
   }
 
+  /* Primary button variant - glass background (ensures it wins over other styles) */
+  button[data-variant="primary"] {
+    background: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), rgba(255, 255, 255, 0.25) !important;
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+  }
+  button[data-variant="primary"]:hover:not(:disabled) {
+    background: rgba(0, 0, 0, 0.25) !important;
+  }
+
   /* Override range input slider thumb color */
   input[type="range"] {
     -webkit-appearance: none;

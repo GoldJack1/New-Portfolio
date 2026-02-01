@@ -115,11 +115,11 @@ const SubpageHero = ({
 
       {/* Content */}
       <div className="absolute inset-0 z-10 flex flex-col items-center justify-center px-4">
-        <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-text-primary text-center break-words m-0">
+        <h1 className="text-3xl sm:text-4xl md:text-5xl font-semibold text-text-primary text-center break-words m-0">
           {pageName}
         </h1>
         {subtext && (
-          <p className="mt-2 text-lg text-text-secondary text-center break-words m-0">
+          <p className="mt-2 text-lg font-light text-text-secondary text-center break-words m-0">
             {subtext}
           </p>
         )}

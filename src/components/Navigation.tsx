@@ -64,10 +64,13 @@ const navItems = [
   { to: '/contact', label: 'Contact' },
 ]
 
-// Page title mapping for all pages
+// Page title mapping for all pages (used for mobile pill and any route)
 const pageTitles: Record<string, string> = {
   '/': 'Home',
   '/projects': 'Projects',
+  '/projects/great-british-railways-concept': 'Great British Railways Concept',
+  '/projects/rail-statistics': 'Rail Statistics',
+  '/projects/webtext': 'Webtext',
   '/about': 'About',
   '/contact': 'Contact',
   '/design-system': 'Site Design System',
@@ -79,6 +82,9 @@ const pageTitles: Record<string, string> = {
   '/design-system/padding': 'Padding',
   '/design-system/icons': 'Icons',
   '/design-system/stroke-based-icons': 'Stroke Based Icons',
+  '/design-system/icon-calibration': 'Icon Calibration',
+  '/design-system/static-hero': 'Static Hero',
+  '/design-system/carousel-hero': 'Carousel Hero',
   '/privacy-policy': 'Privacy Policy',
   '/sitemap': 'Site Map',
 }
