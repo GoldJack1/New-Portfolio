@@ -6,7 +6,7 @@ import { PADDING_CLASSES } from '../../utils/paddingClasses'
 import project1Image from '../../assets/images/projects/Hero Imgs/Project 1.jpg'
 import { useGBRPDFUrl } from '../../hooks/useGBRPDFUrl'
 
-const GBR_PDF_FILENAME = 'Final Outcome PDF Version WEB.pdf'
+const GBR_PDF_FILENAME = 'Final Outcome PDF Compressed.pdf'
 const GBR_APP_PROTOTYPE_URL = 'https://www.figma.com/proto/FkHh8mUk0VdeWrYTuB5TvW/GBR-App-Concept?node-id=926-16114&starting-point-node-id=926%3A16114'
 
 const GreatBritishRailwaysConcept = () => {
@@ -15,15 +15,21 @@ const GreatBritishRailwaysConcept = () => {
   const handleDownload = async () => {
     if (!url) return
     try {
-      const res = await fetch(url)
+      const res = await fetch(url, { mode: 'cors' })
+      if (!res.ok) throw new Error(`HTTP ${res.status}`)
       const blob = await res.blob()
       const blobUrl = URL.createObjectURL(blob)
       const a = document.createElement('a')
       a.href = blobUrl
       a.download = GBR_PDF_FILENAME
+      a.rel = 'noopener noreferrer'
+      document.body.appendChild(a)
       a.click()
-      URL.revokeObjectURL(blobUrl)
+      document.body.removeChild(a)
+      // Revoke after a delay so the browser has time to start the download
+      setTimeout(() => URL.revokeObjectURL(blobUrl), 2000)
     } catch {
+      // CORS or fetch failed: open in new tab so user can save from there
       window.open(url, '_blank', 'noopener,noreferrer')
     }
   }
@@ -55,10 +61,18 @@ const GreatBritishRailwaysConcept = () => {
           </p>
           </div>
 
-          <div className="mt-8 w-full">
+          <div className="mt-8 w-full relative min-h-[400px]">
             {loading && (
-              <div className="flex items-center justify-center min-h-[400px] text-text-secondary">
-                Loading PDF…
+              <div
+                className="absolute inset-0 z-10 flex flex-col items-center justify-center gap-4 rounded border border-gray-700 bg-gray-1000/95 text-text-secondary"
+                aria-live="polite"
+                aria-busy="true"
+              >
+                <div
+                  className="h-10 w-10 rounded-full border-2 border-gray-600 border-t-text-secondary motion-safe:animate-spin"
+                  aria-hidden
+                />
+                <p className="text-lg font-medium">Loading PDF…</p>
               </div>
             )}
             {error && (
@@ -71,6 +85,9 @@ const GreatBritishRailwaysConcept = () => {
             )}
             {url && !loading && !error && (
               <div className="w-full flex flex-col gap-3 items-start">
+                <p className="text-sm text-text-secondary">
+                  This PDF may take a moment to load.
+                </p>
                 <div className="flex flex-wrap gap-3">
                   <Button
                     variant="primary"

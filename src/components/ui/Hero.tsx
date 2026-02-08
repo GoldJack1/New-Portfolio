@@ -222,7 +222,7 @@ const Hero = ({
             <img
               src={backgroundValue}
               alt=""
-              className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-300 ${isMediaLoaded ? 'opacity-100' : 'opacity-0'}`}
+              className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-300 ${slide.fallbackBackground ? 'opacity-100' : (isMediaLoaded ? 'opacity-100' : 'opacity-0')}`}
               loading="eager"
               decoding="async"
               fetchPriority={isActive ? 'high' : undefined}
