@@ -175,12 +175,7 @@ const Hero = ({
   // Root-relative paths (e.g. /images/...) are left as-is so the browser always requests same-origin (avoids cert/permission issues on some hosts).
   const resolveAssetUrl = (url: string): string => {
     if (url.startsWith('http://') || url.startsWith('https://') || url.startsWith('//') || url.startsWith('data:')) return url
-    if (url.startsWith('/') && !url.startsWith('//')) {
-      // #region agent log
-      fetch('http://127.0.0.1:7244/ingest/4855bd2b-5619-4bd9-9f43-f729df4ca55f',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'Hero.tsx:resolveAssetUrl',message:'use as-is root-relative',data:{url,runId:'post-fix'},timestamp:Date.now()})}).catch(()=>{});
-      // #endregion
-      return url
-    }
+    if (url.startsWith('/') && !url.startsWith('//')) return url
     if (typeof window === 'undefined') return url
     try {
       const base = window.location.origin + import.meta.env.BASE_URL
@@ -248,9 +243,6 @@ const Hero = ({
               onLoad={() => onMediaLoaded(slideIndex)}
               onError={(e) => {
                 const target = e.target as HTMLImageElement
-                // #region agent log
-                fetch('http://127.0.0.1:7244/ingest/4855bd2b-5619-4bd9-9f43-f729df4ca55f',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'Hero.tsx:img.onError',message:'hero image load failed',data:{src:target?.src,runId:'post-fix'},timestamp:Date.now()})}).catch(()=>{});
-                // #endregion
                 target.style.display = 'none'
               }}
             />
