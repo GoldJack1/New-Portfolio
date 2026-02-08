@@ -172,12 +172,13 @@ const Hero = ({
   }, [])
 
   // Resolve relative asset URLs (e.g. from Vite imports) so they work on all routes.
-  // With base: './', ./assets/xxx resolves to /path/assets/xxx when pathname is /path, causing 404.
+  // With base: './', paths like ./assets/xxx or /assets/xxx resolve wrong when pathname is not / (e.g. /projects).
   const resolveAssetUrl = (url: string): string => {
-    if (url.startsWith('./') || (url.startsWith('/') && !url.startsWith('//'))) {
+    const isAbsolute = url.startsWith('http://') || url.startsWith('https://') || url.startsWith('//') || url.startsWith('data:')
+    if (!isAbsolute && typeof window !== 'undefined') {
       try {
-        const base = typeof window !== 'undefined' ? window.location.origin + import.meta.env.BASE_URL : ''
-        return base ? new URL(url, base).href : url
+        const base = window.location.origin + import.meta.env.BASE_URL
+        return new URL(url, base).href
       } catch {
         return url
       }
