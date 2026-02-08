@@ -171,6 +171,20 @@ const Hero = ({
     setLoadedSlides((prev) => new Set(prev).add(index))
   }, [])
 
+  // Resolve relative asset URLs (e.g. from Vite imports) so they work on all routes.
+  // With base: './', ./assets/xxx resolves to /path/assets/xxx when pathname is /path, causing 404.
+  const resolveAssetUrl = (url: string): string => {
+    if (url.startsWith('./') || (url.startsWith('/') && !url.startsWith('//'))) {
+      try {
+        const base = typeof window !== 'undefined' ? window.location.origin + import.meta.env.BASE_URL : ''
+        return base ? new URL(url, base).href : url
+      } catch {
+        return url
+      }
+    }
+    return url
+  }
+
   // Render background based on type
   const renderBackground = (
     slide: HeroSlide,
@@ -204,7 +218,7 @@ const Hero = ({
               aria-hidden={!isActive}
               onCanPlayThrough={() => onMediaLoaded(slideIndex)}
             >
-              <source src={backgroundValue} type="video/mp4" />
+              <source src={resolveAssetUrl(backgroundValue)} type="video/mp4" />
               Your browser does not support the video tag.
             </video>
           </>
@@ -220,7 +234,7 @@ const Hero = ({
               />
             )}
             <img
-              src={backgroundValue}
+              src={resolveAssetUrl(backgroundValue)}
               alt=""
               className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-300 ${slide.fallbackBackground ? 'opacity-100' : (isMediaLoaded ? 'opacity-100' : 'opacity-0')}`}
               loading="eager"

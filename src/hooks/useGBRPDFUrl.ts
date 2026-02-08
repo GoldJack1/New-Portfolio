@@ -5,7 +5,7 @@ import { storage } from '../config/firebase'
 const GBR_PDF_PATH = 'Projects/GBR/Final Outcome PDF Compressed.pdf'
 
 const STORAGE_NOT_CONFIGURED = new Error(
-  "Firebase Storage is not configured. Add VITE_FIREBASE_STORAGE_BUCKET to your .env (e.g. your-project.firebasestorage.app). See .env.example."
+  'The PDF viewer is not available for this deployment. Please try again later.'
 )
 
 let cachedUrl: string | null = null
