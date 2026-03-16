@@ -26,8 +26,8 @@ const Projects = () => {
       fallbackBackground: HERO_GRADIENTS.projects,
       heading: 'Rail Statistics',
       subtext: "A functional app, for train enthusiasts to track stations visited across Great Britain and train tickets.",
-      caption: "(Major Update & Android Relase coming February 2026)",
-      buttonText: 'Download Beta App',
+      caption: "(Now available on Google Play & Apple App Stores)",
+      buttonText: 'Download App',
       buttonLink: 'https://linktr.ee/Railstatistics',
     },
     {
